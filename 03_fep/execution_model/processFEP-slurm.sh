@@ -12,7 +12,7 @@
 # Stage 0 set cluster specific parameters
 CPUQUEUE="serial"
 GPUQUEUE="GTX1080"
-
+export BSSHOME="/home/users/common/BioSimSpace"
 # Max run time for various categories of jobs. Should work for most use cases. 
 PARAMTIME="01:00:00"
 PREPTIME="00:15:00"
