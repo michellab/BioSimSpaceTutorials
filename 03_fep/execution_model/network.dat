@@ -1,0 +1,7 @@
+#ligA ligB number_of_windows
+lig00 lig01 7
+lig01 lig00 7
+lig01 lig02 12
+lig02 lig01 12
+lig02 lig00 7
+lig00 lig02 7
