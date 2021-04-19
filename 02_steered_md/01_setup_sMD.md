@@ -236,4 +236,4 @@ scp amber_input user@somer.cluster:/path/to/simulation/dir
 
 Simply unzip this and submit a `pmemd.cuda` job on the cluster available to you. Since the PLUMED usage is in the `amber.cfg` file, no other steps are necessary.
 
-Alternatively an example script 01_run_sMD.py is available. It will run the same set up steps as above on your cluster, as well as the actual sMD simulation and will copy the output files from `/tmp` to the local running directory. It requires a topology, equilibrated coordinate, and reference PDB files (same as this example).
+Alternatively an [example script](01_run_sMD.py) is available. It will run the same set up steps as above on your cluster, as well as the actual sMD simulation and will copy the output files from `/tmp` to the local running directory. It requires a topology, equilibrated coordinate, and reference PDB files (same as this example).
