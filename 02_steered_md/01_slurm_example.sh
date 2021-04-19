@@ -12,5 +12,5 @@ source /home/adele/software/amber20_20.04/amber20/amber.sh
 
 #run python script
 #output will be saved in current directory
-~/sire.app/bin/python ~/Documents/BioSimSpaceTutorials/02_steered_md/01_run_sMD.py --topology ~/Documents/BioSimSpaceTutorials/02_steered_md/data/system.prm7 --coordinates ~/Documents/BioSimSpaceTutorials/02_steered_md/data/system.rst7 --reference ~/Documents/BioSimSpaceTutorials/02_steered_md/data/reference.pdb --steering_runtime 1 --total_runtime 1.2 --force 3500 --rmsd 0.5
+~/sire.app/bin/python ~/Documents/BioSimSpaceTutorials/02_steered_md/01_run_sMD.py --topology ~/Documents/BioSimSpaceTutorials/02_steered_md/data/system.prm7 --coordinates ~/Documents/BioSimSpaceTutorials/02_steered_md/data/system.rst7 --reference ~/Documents/BioSimSpaceTutorials/02_steered_md/data/reference.pdb --steering_runtime 1 --total_runtime 1.2 --force 3500
 
