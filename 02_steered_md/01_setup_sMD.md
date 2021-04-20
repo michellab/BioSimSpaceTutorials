@@ -17,9 +17,9 @@ In order to have a more complete view of the protein ensemble, enhanced sampling
 
 PLUMED is a library that, among other things, has enhanced sampling algorithms. It works with multiple MD engines, including GROMACS and AMBER. PLUMED uses a [moving restraint](https://www.plumed.org/doc-v2.5/user-doc/html/_m_o_v_i_n_g_r_e_s_t_r_a_i_n_t.html) that is calculated as follows:
 
-$V(\vec{s},t) = \frac{1}{2} \kappa(t) ( \vec{s} - \vec{s}_0(t) )^2$     (Eq. 1)
+V(s&#8407;,t) = 1&frasl;2 &kappa;(t) ( s&#8407; - s&#8407;<sub>0</sub>(t) )<sup>2</sup>     (Eq. 1)
 
-where $\vec{s}_0$ and $\kappa$ are time dependent and specified in the PLUMED input. $\vec{s}_0$ is the target CV value and $\kappa$ is the force constant in kJ mol$^{-1}$. The values of both of them are set at specific steps, and linearly interpolated in between.
+where s&#8407;<sub>0</sub> and &kappa; are time dependent and specified in the PLUMED input. s&#8407;<sub>0</sub> is the target CV value and &kappa; is the force constant in kJ mol<sup>-1</sup>. The values of both of them are set at specific steps, and linearly interpolated in between.
 
 This tutorial focuses on running the prerequisite simulations using BSS.The example system used is protein tyrosine phosphatase 1B(PTP1B), which exists in two dominant conformations: WPD loop open and WPD loop closed:
 
@@ -74,7 +74,7 @@ The requirements for the reference structure are that all atoms found in `refere
 
 #### Setting up a steered MD protocol
 
-To create a protocol, we need to set up the steering restraints and schedule. As shown in equation 1, steered MD is defined by the expected CV value and the force constant $\kappa$ at some time *t*. Generally sMD has four stages:
+To create a protocol, we need to set up the steering restraints and schedule. As shown in equation 1, steered MD is defined by the expected CV value and the force constant &kappa; at some time *t*. Generally sMD has four stages:
 
 | Stage          | Expected end CV | Force constant  |
 | -------------- | --------------- | --------------- |
@@ -94,7 +94,7 @@ relax = 152 * BSS.Units.Time.nanosecond
 
 The length of the steering step is the most important here and will depend on the system, the steering force constant, and the magnitude of the change sMD is supposed to accomplish.
 
-Then the restraints specify the expected end CV values and the force constant ($\\kappa$(t) and $\vec(s)_0$(t)) at each step created above.
+Then the restraints specify the expected end CV values and the force constant (&kappa;(t) and s&#8407;<sub>0</sub>(t)) at each step created above.
 
 ```python
 nm = BSS.Units.Length.nanometer
@@ -104,7 +104,7 @@ restraint_3 = BSS.Metadynamics.Restraint(0*nm, 3500)
 restraint_4 = BSS.Metadynamics.Restraint(0*nm, 0)
 ```
 
-In this scenario, we will be using a 3500 $kJ mol^{-1}$ force constant and our target RMSD value is 0 (as close as possible to the target structure). These schedule steps and restraints are used to create a steering protocol.
+In this scenario, we will be using a 3500 kJ mol<sup>-1</sup> force constant and our target RMSD value is 0 (as close as possible to the target structure). These schedule steps and restraints are used to create a steering protocol.
 
 ```python
 protocol = BSS.Protocol.Steering(rmsd_cv, [start, apply_force, steer, relax], [restraint_1, restraint_2, restraint_3, restraint_4], runtime=152*BSS.Units.Time.nanosecond)
