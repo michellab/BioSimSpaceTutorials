@@ -3,10 +3,10 @@ Author: Adele Hardie
 Email: adele.hardie@ed.ac.uk
 
 #### Requirements:
-
-
-
-
+* BioSimSpace
+* AMBER compiled with PLUMED
+* An equilibrated starting system
+* A target structure
 
 ## Introduction
 
@@ -22,6 +22,7 @@ $V(\vec{s},t) = \frac{1}{2} \kappa(t) ( \vec{s} - \vec{s}_0(t) )^2$     (Eq. 1)
 where $\vec{s}_0$ and $\kappa$ are time dependent and specified in the PLUMED input. $\vec{s}_0$ is the target CV value and $\kappa$ is the force constant in kJ mol$^{-1}$. The values of both of them are set at specific steps, and linearly interpolated in between.
 
 This tutorial focuses on running the prerequisite simulations using BSS.The example system used is protein tyrosine phosphatase 1B(PTP1B), which exists in two dominant conformations: WPD loop open and WPD loop closed:
+
 <img src="figures/open-close.png" width=250>
 
 ## Set up steered MD
@@ -235,4 +236,4 @@ scp amber_input user@somer.cluster:/path/to/simulation/dir
 
 Simply unzip this and submit a `pmemd.cuda` job on the cluster available to you. Since the PLUMED usage is in the `amber.cfg` file, no other steps are necessary.
 
-Alternatively an example script 01_run_sMD.py is available. It will run the same set up steps as above on your cluster, as well as the actual sMD simulation and will copy the output files from `/tmp` to the local running directory. It requires a topology, equilibrated coordinate, and reference PDB files (same as this example).
+Alternatively an [example script](01_run_sMD.py) is available. It will run the same set up steps as above on your cluster, as well as the actual sMD simulation and will copy the output files from `/tmp` to the local running directory. It requires a topology, equilibrated coordinate, and reference PDB files (same as this example).
