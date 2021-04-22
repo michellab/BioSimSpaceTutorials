@@ -112,10 +112,6 @@ protocol = BSS.Protocol.Steering(rmsd_cv, [start, apply_force, steer, relax], [r
 
 #### A quick look at GROMACS
 
-BioSimSpace only has native implementation for steered MD with GROMACS at the moment. Luckily it's quite easy 
-
-o adjust the standard AMBER production process to do the same thing, but for now let's have a look at how sMD can be run with GROMACS.
-
 We have previously created a protocol for sMD, so all that is needed is to plug it into a GROMACS process.
 
 ```python
@@ -133,42 +129,14 @@ The argument `-plumed plumed.dat` tells GROMACS to use PLUMED, looking at the `p
 
 #### Steered MD in AMBER
 
-If we tried to create an AMBER process with a steering error, we would get an error:
+Just as with GROMACS, we simply need to create a process in AMBER:
 
 ```python
 process = BSS.Process.Amber(system, protocol)
 IncompatibleError: Unsupported protocol: 'Steering'
 ```
 
-However, since all that is required for steered MD is to let AMBER know to use PLUMED and to put the appropriate files in the working directory, we can modify a standard production process to achieve the same result.
-
-A small workaround to get the contents of the PLUMED input file:
-
-```python
-plumed = BSS.Process._plumed.Plumed('.')
-conf, files = plumed.createConfig(system, protocol)
-```
-
-`conf` contains PLUMED input file as a list of strings. Now that we have that, we can create a new protocol that is supported by `BioSimSpace.Process.Amber` and use it.
-
-```python
-protocol = BSS.Protocol.Production(runtime=152*BSS.Units.Time.nanosecond)
-process = BSS.Process.Amber(system, protocol, exe=f'{os.environ["AMBERHOME"]}/bin/pmemd.cuda')
-```
-
-Start by saving the required files in the working directory:
-
-```python
-plumed_file = open(f'{process.workDir()}/plumed.in', 'w')
-plumed_file.writelines(map(lambda x: x + '\n', conf))
-plumed_file.close()
-ref_file = open(f'{process.workDir()}/reference.pdb', 'w')
-ref_file.writelines(map(lambda x: x + '\n', rmsd_cv.getReferencePDB()))
-ref_file.close()
-```
-
-At the moment, the process configuration does not point AMBER towards using PLUMED.
-
+Check the configuration of the process:
 ```python
 process.getConfig()
 ['Production.',
@@ -194,13 +162,8 @@ process.getConfig()
  ' /']
 ```
 
-This can easily be changed by adding `plumed=1` and `plumedfile="plumed.in"` to the list of configurations.
+The lines `plumed=1` and `plumedfile="plumed.in"` are what specify that PLUMED will be used. The process can now be started to run steered MD.
 
-```python
-process.setConfig(process.getConfig()[:-1]+['  plumed=1,', '  plumedfile="plumed.in",', ' /'])
-```
-
-Now the standard process will run a steered MD simulation.
 
 **Note:** when BioSimSpace writes the new topology file for an AMBER process, some unidentified small change causes PTP1B to stat unfolding on the timescale of a few ns. This is circumvented by simply copying over the original topology (this should not be necessary for other systems).
 
