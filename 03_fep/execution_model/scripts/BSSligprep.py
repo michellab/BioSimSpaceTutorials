@@ -4,24 +4,6 @@ import sys
 import csv
 
 
-# free input
-# X steps energy minimise with BSS.Protocol.Minimize
-# X ps NVT equilibration with restraints on all non solvent atoms
-# X ps NVT equilibration with restraints on backbone atoms and ligand
-# X ps NVT equilibration unrestrained
-# X ps NPT equilibration restraints on non solvent atoms
-# X ps NPT equilibration unrestrained
-
-# bound input
-# X steps energy minimise with BSS.Protocol.Minimize
-# X ps NVT equilibration with restraints on all non solvent atoms
-# X ps NVT equilibration with restraints on backbone atoms and ligand
-# X ps NVT equilibration unrestrained
-# X ps NPT equilibration restraints on non solvent atoms
-# X ps NPT equilibration unrestrained
-# Save last snapshot of free equilibration
-# Save last snapshot of bound equilibration
-
 ### preamble.
 print (f"{sys.argv[0]} {sys.argv[1]}")
 idx = int( sys.argv[1] )
@@ -94,18 +76,38 @@ else:
 	raise NameError("Input box type not recognised. Please use any of ['orthorhombic', 'octahedral', 'triclinic']" \
 	+"the fifth line of protocol.dat in the shape of (e.g.):\nbox type = orthorhombic")
 
+BSS.IO.saveMolecules("inputs/tmp", lig_p, ["RST7", "PRM7"])
 
-
-lig_p_solvated = BSS.Solvent.solvate(solvent_query, molecule=lig_p_copy,
+lig_p_solvated = BSS.Solvent.solvate(solvent_query, molecule=lig_p,
                                box=box, angles=angles)
 
 #################
-### combine ligand copy with protein
+### combine ligand copy with protein and solvate as above.
+protein = BSS.IO.readMolecules(["inputs/protein/protein.rst7", "inputs/protein/protein.prm7"])[0]
+system = protein + lig_p_copy
+system_solvated = BSS.Solvent.solvate(solvent_query, molecule=lig_p,
+                               box=box, angles=angles, work_dir="tmp")
 
-#################
-### solvate complex
+
+# free input
+# X steps energy minimise with BSS.Protocol.Minimize
+# X ps NVT equilibration with restraints on all non solvent atoms
+# X ps NVT equilibration with restraints on backbone atoms and ligand
+# X ps NVT equilibration unrestrained
+# X ps NPT equilibration restraints on non solvent atoms
+# X ps NPT equilibration unrestrained
+
+# bound input
+# X steps energy minimise with BSS.Protocol.Minimize
+# X ps NVT equilibration with restraints on all non solvent atoms
+# X ps NVT equilibration with restraints on backbone atoms and ligand
+# X ps NVT equilibration unrestrained
+# X ps NPT equilibration restraints on non solvent atoms
+# X ps NPT equilibration unrestrained
 
 
+# Save last snapshot of free equilibration
+# Save last snapshot of bound equilibration
 
 
 
