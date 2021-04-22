@@ -1,7 +1,7 @@
 ligand forcefield = GAFF2/AM1-BCC
 protein forcefield = ff14SB
 solvent = TIP3P
-box edges = 15*angstrom
+box edges = 10*angstrom
 box type = orthorhombic
 protocol = default 
 sampling = 2*ns
