@@ -1,16 +1,30 @@
 import BioSimSpace as BSS
 import sys
-#sys.argv[1] is ligand0
-#sys.argv[2] is ligand1
-# Load equilibrated free input for ligand0. Complain if input not found
-# Load equilibrated free input for ligand1. Complain if input not found
-# Extract ligand1 from frame.
-# Align on ligand0
+
+
+
+print ("%s %s %s" % (sys.argv[0],sys.argv[1],sys.argv[2]))
+
+# Load equilibrated free inputs for both ligands. Complain if input not found
+ligs_path = "inputs/ligands/"
+ligand_1 = BSS.IO.readMolecules([f"{ligs_path}{sys.argv[1]}.rst7", f"{ligs_path}{sys.argv[1]}.prm7"])
+ligand_2 = BSS.IO.readMolecules([f"{ligs_path}{sys.argv[2]}.rst7", f"{ligs_path}{sys.argv[2]}.prm7"])
+
+# Extract ligand2 from frame.
+ligand_2 = ligand_2.getMolecule(0)
+
+# Align on ligand1
+mapping = BSS.Align.matchAtoms(ligand_1, ligand_2, sanitize=True)
+
 # Generate merge molecule.
 # Write output files for perturbation using engine specified in 'protocol.dat' (so prm7/rst7 and pert if SOMD)
 
 # Repeat same procedure for equilibrated bound input
-print ("%s %s %s" % (sys.argv[0],sys.argv[1],sys.argv[2]))
+
+
+
+
+
 
 
 

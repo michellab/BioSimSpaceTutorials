@@ -31,7 +31,7 @@ stream = open("protocol.dat","r")
 lines = stream.readlines()
 ff_query = lines[0].rstrip()
 
-do tests on protocol, parameterise with correct FF.
+# do tests on protocol, parameterise with correct FF.
 if not "ligand" in ff_query:
 	raise NameError("Please supply a ligand force field on the first line of protocol.dat. The line should look like (e.g.):\n"+\
 		"ligand forcefield = GAFF2")
@@ -47,12 +47,12 @@ else:
 	else:
 		raise NameError(f"Force field not supported: {ff_query}. Please use either of [GAFF1, GAFF2], or" \
 							+" edit this script to use other force fields available in BSS.Parameters.forceFields().")
-at this point BSS should have thrown an error if parameterisation failed, so no checks needed.
+# at this point BSS should have thrown an error if parameterisation failed, so no checks needed.
 
 
 ############### TMP LOAD pre-param ligand#####
-#BSS.IO.saveMolecules("inputs/tmp", lig_p, ["PRM7", "RST7"])
-lig_p = BSS.IO.readMolecules(["inputs/tmp.prm7", "inputs/tmp.rst7"])[0]
+BSS.IO.saveMolecules(f"{tmp_dir}/{lig_name}", lig_p, ["PRM7", "RST7"])
+lig_p = BSS.IO.readMolecules([f"{tmp_dir}/{lig_name}.prm7", f"{tmp_dir}/{lig_name}.rst7"])[0]
 
 
 #################
@@ -137,15 +137,11 @@ else:
 ### Minimise and equilibrate our systems to make the ligand relax inside the pocket.
 
 # first save and reload the systems to bypass some amber issues with BSS waters.
-BSS.IO.saveMolecules("inputs/lig_tmp", lig_p_solvated, ["PRM7", "RST7"])
-if equil_protein:
-	BSS.IO.saveMolecules("inputs/sys_tmp", system_solvated, ["PRM7", "RST7"])
+BSS.IO.saveMolecules(f"{tmp_dir}/{lig_name}_lig_s", lig_p_solvated, ["PRM7", "RST7"])
+BSS.IO.saveMolecules(f"{tmp_dir}/{lig_name}_sys_s", system_solvated, ["PRM7", "RST7"])
 
-
-lig_p_solvated = BSS.IO.readMolecules(["inputs/lig_tmp.prm7", "inputs/lig_tmp.rst7"])
-
-
-system_solvated = BSS.IO.readMolecules(["inputs/sys_tmp.prm7", "inputs/sys_tmp.rst7"])
+lig_p_solvated = BSS.IO.readMolecules([f"{tmp_dir}/{lig_name}_lig_s.prm7", f"{tmp_dir}/{lig_name}_lig_s.rst7"])
+system_solvated = BSS.IO.readMolecules([f"{tmp_dir}/{lig_name}_sys_s.prm7", f"{tmp_dir}/{lig_name}_sys_s.rst7"])
 
 
 def runProcess(system, protocol):
@@ -264,12 +260,12 @@ protocol = BSS.Protocol.Equilibration(
 				pressure=1*BSS.Units.Pressure.atm,
 				temperature=300*BSS.Units.Temperature.kelvin,
 				)
-lig_equil_fin = runProcess(equil4, protocol)
+sys_equil_fin = runProcess(equil4, protocol)
 
 # finally, save last snapshot of both equilibrated objects.
 print("Saving solvated/equilibrated system(s).")
-BSS.IO.saveMolecules(f"inputs/ligands/{lig_name}_equil_solv", lig_p_solvated, ["PRM7", "RST7"])
-BSS.IO.saveMolecules(f"inputs/protein/sys_equil_solv", system_solvated, ["PRM7", "RST7"])
+BSS.IO.saveMolecules(f"inputs/ligands/{lig_name}_lig_equil_solv", lig_equil_fin, ["PRM7", "RST7"])
+BSS.IO.saveMolecules(f"inputs/protein/{lig_name}_sys_equil_solv", sys_equil_fin, ["PRM7", "RST7"])
 
 
 
