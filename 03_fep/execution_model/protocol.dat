@@ -5,4 +5,4 @@ box edges = 10*angstrom
 box type = orthorhombic
 protocol = default 
 sampling = 2*ns
-engine = SOMD
+engine = GROMACS

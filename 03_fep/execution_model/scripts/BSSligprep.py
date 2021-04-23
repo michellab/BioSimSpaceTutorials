@@ -5,7 +5,7 @@ import csv
 
 ### Settings.
 minim_steps = 250
-runtime_nvt = 50
+runtime_nvt = 2
 runtime_npt = 300
 
 ### preamble. tmp_dir should at some point be derived using os.environ.get("")
@@ -150,6 +150,8 @@ def runProcess(system, protocol):
 	Returns the processed system.
 	"""
 	# Create the process passing a working directory.
+	for mol in system.getMolecules():
+		print(mol)
 	process = BSS.Process.Amber(system, protocol, work_dir=tmp_dir+"/equil")
 
 	# Start the process.
