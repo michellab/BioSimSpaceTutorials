@@ -2,17 +2,33 @@ import BioSimSpace as BSS
 from BioSimSpace import _Exceptions
 import sys
 import csv
+print(BSS.__version__)
 
+### Settings.
+minim_steps = 250
+runtime_nvt = 50
+runtime_npt = 300
 
-### preamble.
-print (f"{sys.argv[0]} {sys.argv[1]}")
-idx = int( sys.argv[1] )
+### preamble. tmp_dir should at some point be derived using os.environ.get("")
+tmp_dir = "./tmp/"
+
 
 #################
-### Open 'ligands.dat', find sys.argv[1] 'th entry 
+### Open 'ligands.dat', find sys.argv[1] 'th entry
+print (f"{sys.argv[0]} {sys.argv[1]}")
+idx = int( sys.argv[1] ) 
 stream = open("ligands.dat","r")
 lines = stream.readlines()
 lig_name = lines[idx].rstrip()
+
+# we want to equilibrate the protein only once (i.e. not for every time this script is called).
+# Do protein equilibration only for ligand with index 0 (i.e. first ligand being processed).
+if idx == 0:
+	print("Treating Protein for this run.")
+	equil_protein = True
+else:
+	print("Omitting Protein for this run.")
+	equil_protein = False
 
 #################
 ### Load matching input with BSS.read.IO.
@@ -25,22 +41,22 @@ lines = stream.readlines()
 ff_query = lines[0].rstrip()
 
 # do tests on protocol, parameterise with correct FF.
-if not "ligand" in ff_query:
-	raise NameError("Please supply a ligand force field on the first line of protocol.dat. The line should look like (e.g.):\n"+\
-		"ligand forcefield = GAFF2")
-else:
-	if "GAFF1" in ff_query:
-		print(f"Parameterising {lig_name} using GAFF1 force field.")
-		lig_p = BSS.Parameters.gaff(lig).getMolecule()
+# if not "ligand" in ff_query:
+# 	raise NameError("Please supply a ligand force field on the first line of protocol.dat. The line should look like (e.g.):\n"+\
+# 		"ligand forcefield = GAFF2")
+# else:
+# 	if "GAFF1" in ff_query:
+# 		print(f"Parameterising {lig_name} using GAFF1 force field.")
+# 		lig_p = BSS.Parameters.gaff(lig).getMolecule()
 
-	elif "GAFF2" in ff_query:
-		print(f"Parameterising {lig_name} using GAFF2 force field.")
-		lig_p = BSS.Parameters.gaff2(lig).getMolecule()
+# 	elif "GAFF2" in ff_query:
+# 		print(f"Parameterising {lig_name} using GAFF2 force field.")
+# 		lig_p = BSS.Parameters.gaff2(lig).getMolecule()
 
-	else:
-		raise NameError(f"Force field not supported: {ff_query}. Please use either of [GAFF1, GAFF2], or" \
-							+" edit this script to use other force fields available in BSS.Parameters.forceFields().")
-at this point BSS should have thrown an error if parameterisation failed, so no checks needed.
+# 	else:
+# 		raise NameError(f"Force field not supported: {ff_query}. Please use either of [GAFF1, GAFF2], or" \
+# 							+" edit this script to use other force fields available in BSS.Parameters.forceFields().")
+# at this point BSS should have thrown an error if parameterisation failed, so no checks needed.
 
 
 ############### TMP LOAD pre-param ligand#####
@@ -84,12 +100,14 @@ box_min, box_max = lig_p.getAxisAlignedBoundingBox()
 box_size = [y - x for x, y in zip(box_min,box_max)]
 box_sizes = [x + int(box_axis_length) * box_axis_unit for x in box_size]
 
-# do the same for ligand +protein system.
-protein = BSS.IO.readMolecules(["inputs/protein/protein.rst7", "inputs/protein/protein.prm7"])[0]
-system = lig_p + protein
-box_min_s, box_max_s = system.getAxisAlignedBoundingBox()
-box_size_s = [y - x for x, y in zip(box_min_s,box_max_s)]
-box_sizes_s = [x + int(box_axis_length) * box_axis_unit for x in box_size_s]
+if equil_protein:
+
+	# do the same for ligand +protein system.
+	protein = BSS.IO.readMolecules(["inputs/protein/protein.rst7", "inputs/protein/protein.prm7"])[0]
+	system = lig_p + protein
+	box_min_s, box_max_s = system.getAxisAlignedBoundingBox()
+	box_size_s = [y - x for x, y in zip(box_min_s,box_max_s)]
+	box_sizes_s = [x + int(box_axis_length) * box_axis_unit for x in box_size_s]
 
 
 # get the box type settings.
@@ -99,11 +117,12 @@ if boxtype_query.lower() == "orthorhombic":
 	box, angles = BSS.Box.cubic(max(box_sizes))
 	lig_p_solvated = BSS.Solvent.solvate(solvent_query, molecule=lig_p,
                                box=box, angles=angles)
+	if equil_protein:
 
-	print("Solvating ligand + protein.")
-	box, angles = BSS.Box.cubic(max(box_sizes_s))
-	system_solvated = BSS.Solvent.solvate(solvent_query, molecule=system,
-	                               box=box, angles=angles)
+		print("Solvating ligand + protein.")
+		box, angles = BSS.Box.cubic(max(box_sizes_s))
+		system_solvated = BSS.Solvent.solvate(solvent_query, molecule=system,
+		                               box=box, angles=angles)
 
 
 
@@ -113,10 +132,12 @@ elif boxtype_query.lower() == "triclinic" or boxtype_query.lower() == "octahedra
 	lig_p_solvated = BSS.Solvent.solvate(solvent_query, molecule=lig_p,
                            box=box, angles=angles)
 
-	print("Solvating ligand + protein.")
-	box, angles = BSS.Box.truncatedOctahedron(max(box_sizes_s))
-	system_solvated = BSS.Solvent.solvate(solvent_query, molecule=system,
-	                               box=box, angles=angles)
+	if equil_protein:
+
+		print("Solvating ligand + protein.")
+		box, angles = BSS.Box.truncatedOctahedron(max(box_sizes_s))
+		system_solvated = BSS.Solvent.solvate(solvent_query, molecule=system,
+		                               box=box, angles=angles)
 
 else:
 	raise NameError("Input box type not recognised. Please use any of ['orthorhombic', 'octahedral', 'triclinic']" \
@@ -125,41 +146,116 @@ else:
 #################
 ### Minimise and equilibrate our systems to make the ligand relax inside the pocket.
 
-# first save and reload the systems to bypass some amber checks that block the next few steps.
+# first save and reload the systems to bypass some amber issues with BSS waters.
 BSS.IO.saveMolecules("inputs/lig_tmp", lig_p_solvated, ["PRM7", "RST7"])
+if equil_protein:
+	BSS.IO.saveMolecules("inputs/sys_tmp", system_solvated, ["PRM7", "RST7"])
+
+
 lig_p_solvated = BSS.IO.readMolecules(["inputs/lig_tmp.prm7", "inputs/lig_tmp.rst7"])
 
-def MinimEquil(system, minim_steps=250, runtime_nvt=50, runtime_npt=300):
+if equil_protein:
+	system_solvated = BSS.IO.readMolecules(["inputs/sys_tmp.prm7", "inputs/sys_tmp.rst7"])
+
+
+# Ben indicated that the regular /tmp was slow, so they will set TMPDIR in batch scripts
+# to indicate where BioSimSpace should place its intermediate files. It will do this by
+# default (nothing) needed at your end, but it might be good to keep intermediate files
+# so that they can be inspected.
+#tmp_dir = os.environ.get("TMPDIR")
+
+def runProcess(system, protocol):
 	"""
-	Given a solvated system (BSS object), run a minimisation and restrained equilibration workflow.
-	Returns the equilibrated system.
+	Given a solvated system (BSS object) and BSS protocol, run a process workflow.
+	Returns the processed system.
 	"""
-	#####
+	# Create the process passing a working directory.
+	process = BSS.Process.Amber(system, protocol, work_dir=tmp_dir+"/equil")
+
+	# Start the process.
+	process.start()
+
+	# Wait for the process to exit.
+	process.wait()
+
+	# Check for errors.
+	if process.isError():
+	    print(process.stdout())
+	    print(process.stderr())
+	    raise RunTimeError("The process exited with an error!")
+
+	# If it worked, try to get the system. No need to block, since it's already finished.
+	system = process.getSystem()
+
+	return system
+
+
+############# first minimise/equilibrate the solvated ligand.
+print("\n#### Working on solvated ligand.")
+print(f"Minimising in {minim_steps} steps..")
+protocol = BSS.Protocol.Minimisation(steps=minim_steps)
+minimised = runProcess(lig_p_solvated, protocol)
+
+print(f"NVT equilibration for {runtime_nvt} ps while restraining all non-solvent atoms..")
+protocol = BSS.Protocol.Equilibration(
+				runtime=runtime_nvt*BSS.Units.Time.picosecond, 
+				temperature_start=0*BSS.Units.Temperature.kelvin, 
+				temperature_end=300*BSS.Units.Temperature.kelvin,
+				restraint="all"
+				)
+equil1 = runProcess(minimised, protocol)
+
+print(f"NVT equilibration for {runtime_nvt} ps without restraints..")
+protocol = BSS.Protocol.Equilibration(
+				runtime=runtime_nvt*BSS.Units.Time.picosecond, 
+				temperature_start=0*BSS.Units.Temperature.kelvin, 
+				temperature_end=300*BSS.Units.Temperature.kelvin,
+				)
+
+equil2 = runProcess(equil1, protocol)
+
+print(f"NPT equilibration for {runtime_npt} ps while restraining non-solvent heavy atoms..")
+protocol = BSS.Protocol.Equilibration(
+				runtime=runtime_npt*BSS.Units.Time.picosecond, 
+				pressure=1*BSS.Units.Pressure.atm,
+				temperature=300*BSS.Units.Temperature.kelvin,
+				restraint="heavy"
+				)
+equil3 = runProcess(equil2, protocol)
+
+print(f"NPT equilibration for {runtime_npt} ps without restraints..")
+protocol = BSS.Protocol.Equilibration(
+				runtime=runtime_npt*BSS.Units.Time.picosecond, 
+				pressure=1*BSS.Units.Pressure.atm,
+				temperature=300*BSS.Units.Temperature.kelvin,
+				)
+lig_equil_fin = runProcess(equil3, protocol)
+
+if equil_protein:
+	############# repeat for ligand + protein system. Include extra restrain="backbone" step.
+	print("\n#### Working on solvated ligand+protein.")
 	print(f"Minimising in {minim_steps} steps..")
 	protocol = BSS.Protocol.Minimisation(steps=minim_steps)
-	minimised = BSS.Process.Amber(system, protocol).start().getSystem(block=True)
+	minimised = runProcess(system_solvated, protocol)
 
-	#####
 	print(f"NVT equilibration for {runtime_nvt} ps while restraining all non-solvent atoms..")
 	protocol = BSS.Protocol.Equilibration(
 					runtime=runtime_nvt*BSS.Units.Time.picosecond, 
 					temperature_start=0*BSS.Units.Temperature.kelvin, 
 					temperature_end=300*BSS.Units.Temperature.kelvin,
-					restraint="all")
+					restraint="all"
+					)
+	equil1 = runProcess(minimised, protocol)
 
-	equil1 = BSS.Process.Amber(minimised, protocol).start().getSystem(block=True)
-
-	#####
-	print(f"NVT equilibration for {runtime_nvt} ps while restraining backbone atoms and ligand..")
+	print(f"NVT equilibration for {runtime_nvt} ps while restraining all backbone atoms..")
 	protocol = BSS.Protocol.Equilibration(
 					runtime=runtime_nvt*BSS.Units.Time.picosecond, 
 					temperature_start=0*BSS.Units.Temperature.kelvin, 
 					temperature_end=300*BSS.Units.Temperature.kelvin,
-					restraint="backbone")
+					restraint="backbone"
+					)
+	equil2 = runProcess(equil1, protocol)
 
-	equil2 = BSS.Process.Amber(equil1, protocol).start().getSystem(block=True)
-
-	#####
 	print(f"NVT equilibration for {runtime_nvt} ps without restraints..")
 	protocol = BSS.Protocol.Equilibration(
 					runtime=runtime_nvt*BSS.Units.Time.picosecond, 
@@ -167,29 +263,34 @@ def MinimEquil(system, minim_steps=250, runtime_nvt=50, runtime_npt=300):
 					temperature_end=300*BSS.Units.Temperature.kelvin,
 					)
 
-	equil3 = BSS.Process.Amber(equil2, protocol).start().getSystem(block=True)
+	equil3 = runProcess(equil2, protocol)
 
-	#####
 	print(f"NPT equilibration for {runtime_npt} ps while restraining non-solvent heavy atoms..")
 	protocol = BSS.Protocol.Equilibration(
 					runtime=runtime_npt*BSS.Units.Time.picosecond, 
 					pressure=1*BSS.Units.Pressure.atm,
 					temperature=300*BSS.Units.Temperature.kelvin,
-					restraint="heavy")
-	equil4 = BSS.Process.Amber(equil3, protocol).start().getSystem(block=True)
+					restraint="heavy"
+					)
+	equil4 = runProcess(equil3, protocol)
 
-	#####
 	print(f"NPT equilibration for {runtime_npt} ps without restraints..")
 	protocol = BSS.Protocol.Equilibration(
 					runtime=runtime_npt*BSS.Units.Time.picosecond, 
 					pressure=1*BSS.Units.Pressure.atm,
 					temperature=300*BSS.Units.Temperature.kelvin,
 					)
-	equil_fin = BSS.Process.Amber(equil4, protocol).start().getSystem(block=True)
+	lig_equil_fin = runProcess(equil4, protocol)
 
-	return equil_fin
+# finally, save last snapshot of both equilibrated objects.
+print("Saving solvated/equilibrated system(s).")
+BSS.IO.saveMolecules(f"inputs/ligands/{lig_name}_equil_solv", lig_p_solvated, ["PRM7", "RST7"])
+if equil_protein:
+	BSS.IO.saveMolecules(f"inputs/protein/sys_equil_solv", system_solvated, ["PRM7", "RST7"])
 
-lig_s_equil = MinimEquil(lig_p_solvated, minim_steps=250, runtime_nvt=50, runtime_npt=300)
+
+
+# below needs to be validated. are we doing the correct steps?
 
 # free input
 # X steps energy minimise with BSS.Protocol.Minimize
@@ -206,29 +307,6 @@ lig_s_equil = MinimEquil(lig_p_solvated, minim_steps=250, runtime_nvt=50, runtim
 # X ps NVT equilibration unrestrained
 # X ps NPT equilibration restraints on non solvent atoms				# "heavy"
 # X ps NPT equilibration unrestrained
-
-
-# Save last snapshot of free equilibration
-# Save last snapshot of bound equilibration
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
