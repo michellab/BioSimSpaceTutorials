@@ -13,37 +13,34 @@ import sys
 print ("%s %s %s" % (sys.argv[0],sys.argv[1],sys.argv[2]))
 
 
-# tmp raw paste, will process below code. 
-# We can loop over each transformation and do the standard BSS setup protocol.
-for pert in transformations_named_2x:
-    
-    # get the molecule objects from our dictionary.
-    lig_1 = ligands_p[pert[0]]     # should read in equil. solvated lig somehow?
-    lig_2 = ligands_p[pert[1]]
+
+# # get the molecule objects from our dictionary.
+# lig_1 = ligands_p[pert[0]]     # 
+# lig_2 = ligands_p[pert[1]]
 
 
-    # derive the perturbation name (to name our simulation folder).
-    pert_name = pert[0]+"~"+pert[1]
+# # derive the perturbation name (to name our simulation folder).
+# pert_name = pert[0]+"~"+pert[1]
 
-    # generate a mapping between the two molecules.
-    mapping = BSS.Align.matchAtoms(lig_1, lig_2)
+# # generate a mapping between the two molecules.
+# mapping = BSS.Align.matchAtoms(lig_1, lig_2)
 
-    # align ligand A to ligand B.
-    lig_1_a = BSS.Align.rmsdAlign(lig_1, lig_2, mapping)
+# # align ligand A to ligand B.
+# lig_1_a = BSS.Align.rmsdAlign(lig_1, lig_2, mapping)
 
-    # merge the aligned molecules into a single object.
-    merged = BSS.Align.merge(lig_1_a, lig_2, mapping)
+# # merge the aligned molecules into a single object.
+# merged = BSS.Align.merge(lig_1_a, lig_2, mapping)
 
-    # insert the merged molecules into the protein and solvate the system.
-    system = protein + merged
+# # insert the merged molecules into the protein and solvate the system.
+# system = protein + merged
 
-    # no GROMACS install on current system; uncomment in tutorial.
-    system = BSS.Solvent.tip3p(molecule=system, box=3*[10*BSS.Units.Length.nanometer])
+# # no GROMACS install on current system; uncomment in tutorial.
+# system = BSS.Solvent.tip3p(molecule=system, box=3*[10*BSS.Units.Length.nanometer])
 
-    # set up a SOMD folder with standard settings.
-    BSS.FreeEnergy.Binding(
-                        system, 
-                        protocol, 
-                        engine="SOMD",
-                        work_dir="outputs/SOMD/"+pert_name
-    )
+# # set up a SOMD folder with standard settings.
+# BSS.FreeEnergy.Binding(
+#                     system, 
+#                     protocol, 
+#                     engine="SOMD",
+#                     work_dir="outputs/SOMD/"+pert_name
+# )

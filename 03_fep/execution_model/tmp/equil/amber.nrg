@@ -1,24 +1,24 @@
 
- NSTEP =     2900   TIME(PS) =       5.800  TEMP(K) =    32.74  PRESS =     0.0
- Etot   =     -4238.0359  EKtot   =        70.4640  EPtot      =     -4308.4999
- BOND   =         1.4237  ANGLE   =         7.0055  DIHED      =        20.4839
- 1-4 NB =         7.9891  1-4 EEL =      -435.9695  VDWAALS    =       686.9595
- EELEC  =     -4596.3922  EHBOND  =         0.0000  RESTRAINT  =         0.0000
- Ewald error estimate:   0.1191E-04
- NMR restraints: Bond =    0.000   Angle =     0.000   Torsion =     0.000
-===============================================================================
+ NSTEP =    32100   TIME(PS) =      64.200  TEMP(K) =   293.16  PRESS =  -142.9
+ Etot   =     -2875.3740  EKtot   =       630.9249  EPtot      =     -3506.2990
+ BOND   =         9.2408  ANGLE   =        16.6612  DIHED      =        22.5600
+ 1-4 NB =        11.0536  1-4 EEL =      -439.4661  VDWAALS    =       471.5644
+ EELEC  =     -3597.9129  EHBOND  =         0.0000  RESTRAINT  =         0.0000
+ EKCMT  =       305.1301  VIRIAL  =       338.7590  VOLUME     =     10901.0507
+                                                    Density    =         0.9996
+ Ewald error estimate:   0.1117E-03
  ------------------------------------------------------------------------------
 | Current Timing Info
 | -------------------
-| Total steps :     25000 | Completed :      2900 | Remaining :     22100
+| Total steps :    150000 | Completed :     32100 | Remaining :    117900
 |
 | Average timings for last     100 steps:
-|     Elapsed(s) =       0.44 Per Step(ms) =       4.38
-|         ns/day =      39.44   seconds/ns =    2190.40
+|     Elapsed(s) =       0.50 Per Step(ms) =       4.98
+|         ns/day =      34.73   seconds/ns =    2487.91
 |
 | Average timings for all steps:
-|     Elapsed(s) =      12.84 Per Step(ms) =       4.43
-|         ns/day =      39.02   seconds/ns =    2214.40
+|     Elapsed(s) =     161.39 Per Step(ms) =       5.03
+|         ns/day =      34.37   seconds/ns =    2513.80
 |
-| Estimated time remaining:       1.6 minutes.
+| Estimated time remaining:       9.9 minutes.
  ------------------------------------------------------------------------------
