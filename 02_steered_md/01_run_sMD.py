@@ -3,13 +3,36 @@ import os
 from argparse import ArgumentParser
 from shutil import copyfile
 
-def create_CV(reference, system):
+def parse_range(residue_range):
+    """Parse residue range into a list
+    
+    Parameters
+    ----------
+    residue_range : str
+        residue range, e.g. 179-184
+        
+    Returns
+    -------
+    residues : [int]
+        a list of all residues in the range
+    """
+    start = int(residue_range.split('-')[0])
+    end = int(residue_range.split('-')[1])
+    
+    residues = [i for i in range(start, end+1)]
+    
+    return residues
+
+def create_CV(reference, residues, system):
     """Create a collective variable to use in sMD
 
     Parameters
     ----------
     reference : BioSimSpace._SireWrappers._molecule.Molecule
         reference structure for RMSD calculation
+        
+    residues : [int]
+        a list of residues that will be used to calculate RMSD
 
     system : BioSimSpace._SireWrappers._system.System
         steered system
@@ -21,7 +44,7 @@ def create_CV(reference, system):
     """
     rmsd_indices = []
     for residue in reference.getResidues():
-        if 178<=residue.index()<=184:
+        if residue.index() in residues:
             for atom in residue.getAtoms():
                 if atom.element()!='Hydrogen (H, 1)':
                     rmsd_indices.append(atom.index())
@@ -62,7 +85,7 @@ def setup_sMD_protocol(steering_runtime, total_runtime, force_constant, cv):
 
     return protocol
 
-def run_sMD(topology, coordinates, reference, steering_runtime, total_runtime, force_constant):
+def run_sMD(topology, coordinates, reference, residues, steering_runtime, total_runtime, force_constant):
     """Run steered MD with PLUMED and BioSimSpace.
 
     Parameters
@@ -75,6 +98,9 @@ def run_sMD(topology, coordinates, reference, steering_runtime, total_runtime, f
 
     reference : str
         steering target PDB structure
+    
+    residues : [int]
+        a list of residues that will be used to calculate RMSD
 
     steering_runtime : BioSimSpace.Units.Time
         steering time
@@ -92,7 +118,7 @@ def run_sMD(topology, coordinates, reference, steering_runtime, total_runtime, f
     system = BSS.IO.readMolecules([topology, coordinates])
     reference = BSS.IO.readMolecules(reference).getMolecule(0)
 
-    rmsd_cv = create_CV(reference, system)
+    rmsd_cv = create_CV(reference, residues, system)
 
     protocol = setup_sMD_protocol(steering_runtime, total_runtime, force_constant, rmsd_cv)
 
@@ -102,7 +128,7 @@ def run_sMD(topology, coordinates, reference, steering_runtime, total_runtime, f
     process.start()
     process.wait()
 
-    files = ['COLVAR', 'stdout', 'amber.out', 'amber.nc']
+    files = ['amber.nc', 'COLVAR', 'stdout', 'amber.out']
     for file in files:
         copyfile(f'{process.workDir()}/{file}', file)
 
@@ -113,12 +139,13 @@ def __main__():
     parser.add_argument('--topology', type=str, required=True, help='AMBER topology file')
     parser.add_argument('--coordinates', type=str, required=True, help='equilibrated system coordinates')
     parser.add_argument('--reference', type=str, required=True, help='target molecule PDB')
+    parser.add_argument('--residues', type=str, required=True, help='residues that will be used to calculate RMSD, given as a range, e.g. 179-185')
     parser.add_argument('--steering_runtime', type=float, required=True, help='steering time in ns')
     parser.add_argument('--total_runtime', type=float, required=True, help='total simulation runtime')
     parser.add_argument('--force', type=int, required=True, help='steering force_constant')
     args = parser.parse_args()
 
-    run_sMD(args.topology, args.coordinates, args.reference, args.steering_runtime*BSS.Units.Time.nanosecond, args.total_runtime*BSS.Units.Time.nanosecond, args.force)
+    run_sMD(args.topology, args.coordinates, args.reference, parse_range(args.residues), args.steering_runtime*BSS.Units.Time.nanosecond, args.total_runtime*BSS.Units.Time.nanosecond, args.force)
 
     return None
 
