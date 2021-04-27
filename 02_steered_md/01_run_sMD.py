@@ -123,7 +123,6 @@ def run_sMD(topology, coordinates, reference, residues, steering_runtime, total_
     protocol = setup_sMD_protocol(steering_runtime, total_runtime, force_constant, rmsd_cv)
 
     process = BSS.Process.Amber(system, protocol, exe=f'{os.environ["AMBERHOME"]}/bin/pmemd.cuda')
-    copyfile(topology, f'{process.workDir()}/amber.prm7')
 
     process.start()
     process.wait()

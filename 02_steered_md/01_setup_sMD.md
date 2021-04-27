@@ -164,13 +164,6 @@ process.getConfig()
 
 The lines `plumed=1` and `plumedfile="plumed.in"` are what specify that PLUMED will be used. The process can now be started to run steered MD.
 
-
-**Note:** when BioSimSpace writes the new topology file for an AMBER process, some unidentified small change causes PTP1B to stat unfolding on the timescale of a few ns. This is circumvented by simply copying over the original topology (this should not be necessary for other systems).
-
-```python
-copyfile('data/system.prm7', f'{process.workDir()}/amber.prm7')
-```
-
 #### Running sMD
 
 There are a few ways to run the simulation once it has been set up, which will depend on what is available to you.
