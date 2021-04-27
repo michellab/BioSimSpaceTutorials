@@ -1,0 +1,27 @@
+The "phosphoaa10.lib" file contains preliminary parameters for phosphorylated
+amino acids:
+
+PTR:   phosphotyrosine with a 2- net charge  (using PDB nomenclature)
+SEP:   phosphoserine with a 2- net charge  (using PDB nomenclature)
+TPO:   phosphothreonine with a 2- net charge  (using PDB nomenclature)
+Y1P:   phosphotyrosine with a 1- net charge  (nonstandard nomenclature)
+S1P:   phosphoserine with a 1- net charge  (nonstandard nomenclature)
+T1P:   phosphothreonine with a 1- net charge  (nonstandard nomenclature)
+
+To use these residues, first load the leaprc.phos file into leap, after the Amber-FF, e.g.:
+
+> source leaprc.ff10
+> source leaprc.phosaa10
+
+The charge model comes from:
+
+N. Homeyer, A.H.C. Horn, A H. Lanig, A H. Sticht
+"AMBER force-field parameters for phosphorylated amino acids in different protonation states: phosphoserine, phosphothreonine, phosphotyrosine, and phosphohistidine"
+J. Mol. Model. 12:281-289, 2006
+
+For more information on the vdW parameterisation, consult:
+
+T. Steinbrecher, J. Latzer, D.A. Case, 
+"Revised AMBER parameters for bioorganic phosphates", 
+JCTC, in preparation
+
