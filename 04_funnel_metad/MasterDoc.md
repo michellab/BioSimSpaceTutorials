@@ -13,7 +13,7 @@ By the end of this tutorial you should know:
 
 Let's get started.
 
-## Part 1
+## Part 1 - The Theory
 
 Metadynamics is an enhanced sampling method that biases a simulation along a chosen set of reaction coordinates, or as MetaD practitioners call them, collective variables (CVs). This bias is deposited at defined time intervals and takes the shape of a Gaussian potential. Investigation of drug binding should involve at least one CV, distance from the drug molecule to the protein, where the distance between them can be biased causing the drug to unbind. However, that single distance is degenerate, meaning many different configurations of the drug in 3D space will not be described by that single distance. It also involves the exploration of a very large volume, hindering convergence. 
 
@@ -36,3 +36,11 @@ There aren't any perfect answers to any of these questions.
 Of course, the funnel needs to point out, with the narrow end in the solvent, away from any protein residues. BSS funnel assignment code addresses that question pretty well, most of the vectors it picks for defining the p0 and p1 points are good enough. It's still a good idea to check, by having a look using BSS' visualisation functionality.
 
 As for picking the parameters for the sigmoid function - the funnel will need to be smaller than you think. There is usually only one binding site and the funnel should only enclose it, excluding other protein features, with a small 'wall_width'. This really helps with convergence by preventing the drug molecule from exploring irrelevant regions in the free energy surface (FES). Other parameters don't matter that much and the default numbers will suffice in most situations. 
+
+## Part 2 - Setting up the system, visualising the funnel and preparing the fun-metaD simulations
+
+For this part, open the `bss-fun-metad-tutorial.ipynb` notebook.
+
+## Part 3 - Analysis
+
+Open the `bss-fun-metad-analysis.ipynb` notebook.
