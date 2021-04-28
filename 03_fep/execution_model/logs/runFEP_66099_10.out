@@ -1,0 +1,8 @@
+Wed Apr 28 09:34:11 UTC 2021
+idx is  3
+lambda is: 0.5000
+stage is: free
+engine is: SOMD
+USING SOMD
+cd outputs/SOMD/ejm_31~ejm_45/free/lambda_0.5000/
+/export/users/jscheen//biosimspace.app/bin/somd-freenrg -C ./somd.cfg -l 0.5000 -c ./somd.rst7 -t ./somd.prm7 -m ./somd.pert -p CUDA 1> somd.log 2> somd.err

@@ -2,15 +2,13 @@
 
 ## tmp for local testing
 SLURM_JOB_NAME=("ligprep")
-SLURM_ARRAY_TASK_ID=0
-BSSHOME="/home/jscheen"
 
-# change biosimspace.app back to sire.app?
-### /
 TMPDIR="./tmp/"
 
+export OMP_NUM_THREADS=1 # avoid oversubscribing CPUs when using SOMD
+source /export/users/marie/gromacs-2020.4/install/bin/GMXRC # for solvating
+
 echo $SLURM_JOB_NAME
-echo $SLURM_ARRAY_TASK_ID
 date
 $BSSHOME/biosimspace.app/bin/ipython scripts/BSSligprep.py $SLURM_ARRAY_TASK_ID
 

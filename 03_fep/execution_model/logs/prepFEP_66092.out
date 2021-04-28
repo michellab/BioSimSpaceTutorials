@@ -1,0 +1,26 @@
+prepFEP
+Wed Apr 28 09:23:14 UTC 2021
+[22;0t]0;IPython: bss_tut/execution_model
+==============================================================
+Sending anonymous Sire usage statistics to http://siremol.org.
+For more information, see http://siremol.org/analytics
+To disable, set the environment variable 'SIRE_DONT_PHONEHOME' to 1
+To see the information sent, set the environment variable 
+SIRE_VERBOSE_PHONEHOME equal to 1. To silence this message, set
+the environment variable SIRE_SILENT_PHONEHOME to 1.
+==============================================================
+
+/export/users/jscheen/projects/bss_tut/execution_model/scripts/BSSprepFEP.py ejm_45 ejm_31
+Loading ligands ejm_45 and ejm_31.
+Mapping and aligning..
+<BioSimSpace.Molecule: nAtoms=39, nResidues=1> <BioSimSpace.Molecule: nAtoms=32, nResidues=1>
+Merging..
+Loading bound ligands ejm_45 and ejm_31.
+Mapping and aligning..
+Merging..
+Solvating merged ligands.
+Solvating merged ligands + protein.
+Setting up SOMD directory environment in outputs/SOMD/ejm_45~ejm_31.
+Bound..
+Free..
+Wed Apr 28 09:35:48 UTC 2021

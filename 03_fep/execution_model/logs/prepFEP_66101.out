@@ -1,0 +1,6 @@
+prepFEP
+Wed Apr 28 09:23:14 UTC 2021
+gsl: svd.c:712: ERROR: Jacobi iterations did not reach desired tolerance
+Default GSL error handler invoked.
+/tmp/slurmd/job66101/slurm_script: line 5: 20366 Aborted                 (core dumped) $BSSHOME/biosimspace.app/bin/ipython scripts/BSSprepFEP.py $1 $2
+Wed Apr 28 09:28:49 UTC 2021

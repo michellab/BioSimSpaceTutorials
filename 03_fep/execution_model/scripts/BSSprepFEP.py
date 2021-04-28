@@ -17,7 +17,8 @@ ligand_2 = ligand_2.getMolecule(0)
 
 # Align ligand1 on ligand2
 print("Mapping and aligning..")
-mapping = BSS.Align.matchAtoms(ligand_1, ligand_2, sanitize=True)
+print(ligand_1, ligand_2)
+mapping = BSS.Align.matchAtoms(ligand_1, ligand_2, sanitize=True, complete_rings_only=True)
 ligand_1_a = BSS.Align.rmsdAlign(ligand_1, ligand_2, mapping)
 
 # Generate merged molecule.
@@ -28,7 +29,7 @@ merged_ligs = BSS.Align.merge(ligand_1_a, ligand_2, mapping)
 ## now repeat above steps, but for the protein + ligand systems.
 # Load equilibrated bound inputs for both ligands. Complain if input not found
 print(f"Loading bound ligands {sys.argv[1]} and {sys.argv[2]}.")
-ligs_path = "inputs/ligands/"
+ligs_path = "inputs/protein/"
 system_1 = BSS.IO.readMolecules([f"{ligs_path}{sys.argv[1]}_sys_equil_solv.rst7", f"{ligs_path}{sys.argv[1]}_sys_equil_solv.prm7"])
 system_2 = BSS.IO.readMolecules([f"{ligs_path}{sys.argv[2]}_sys_equil_solv.rst7", f"{ligs_path}{sys.argv[2]}_sys_equil_solv.prm7"])
 

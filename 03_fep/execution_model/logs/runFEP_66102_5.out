@@ -1,0 +1,9 @@
+Wed Apr 28 09:28:54 UTC 2021
+idx is  5
+lambda is: 0.8333
+stage is: bound
+engine is: SOMD
+USING SOMD
+cd outputs/SOMD/ejm_54~ejm_49/bound/lambda_0.8333/
+/tmp/slurmd/job66109/slurm_script: line 36: cd: outputs/SOMD/ejm_54~ejm_49/bound/lambda_0.8333/: No such file or directory
+/export/users/jscheen//biosimspace.app/bin/somd-freenrg -C ./somd.cfg -l 0.8333 -c ./somd.rst7 -t ./somd.prm7 -m ./somd.pert -p CUDA 1> somd.log 2> somd.err

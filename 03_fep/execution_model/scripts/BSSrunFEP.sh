@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-echo $SLURM_JOB_NAME
-echo $SLURM_ARRAY_TASK_ID
 date
-#$BSSHOME/sire.app/bin/python scripts/BSSrunFEP.py $1 $2 $3 $SLURM_ARRAY_TASK_ID
+
+export OMP_NUM_THREADS=1 # avoid oversubscribing CPUs when using SOMD
+export OPENMM_PLUGIN_DIR=/export/users/julien/sire.app/lib/plugins/
 
 lig0=$1
 lig1=$2
@@ -11,17 +11,10 @@ engine=$4
 
 IFS=',' read -r -a lambdas <<< "$lambdastring"
 
-echo "${lambdas[@]}"
 nwin=${#lambdas[@]}
 
-SLURM_ARRAY_TASK_ID=$5
 
-echo $SLURM_ARRAY_TASK_ID
-echo $nwin
-
-
-if [ $SLURM_ARRAY_TASK_ID -ge $nwin ]
-then
+if [ "$SLURM_ARRAY_TASK_ID" -ge "$nwin" ]; then
     stage="free"
     idx=$(( $SLURM_ARRAY_TASK_ID - $nwin ))
 else
@@ -29,23 +22,27 @@ else
     idx=$SLURM_ARRAY_TASK_ID 
 fi
 
+
 echo "idx is " $idx
 lambda=${lambdas[$idx]}
-echo "lambda is " $lambda
+echo "lambda is: "$lambda
+echo "stage is: "$stage
+echo "engine is: "$engine
 
-if [ $engine = "SOMD" ]
-then
+
+if [[ $engine == *"SOMD"* ]]; then
     echo "USING SOMD"
-    #cd run/$lig0~$lig1/$stage/$lambda/
-    echo "cd run/$lig0~$lig1/$stage/$lambda/"
-    #$BSSHOME/sire.app/bin/somd-freenrg -C sim.cfg -l $lambda 1> somd.log 2> somd.err
-    echo "$BSSHOME/sire.app/bin/somd-freenrg -C sim.cfg -l $lambda 1> somd.log 2> somd.err"
-elif [ $engine = "GROMACS" ]
-then
+    echo "cd outputs/SOMD/$lig0~$lig1/$stage/lambda_$lambda/"
+    cd outputs/SOMD/$lig0~$lig1/$stage/lambda_$lambda/
+    
+    echo "$BSSHOME/biosimspace.app/bin/somd-freenrg -C ./somd.cfg -l $lambda -c ./somd.rst7 -t ./somd.prm7 -m ./somd.pert -p CUDA 1> somd.log 2> somd.err"
+    $BSSHOME/biosimspace.app/bin/somd-freenrg -C ./somd.cfg -l $lambda -c ./somd.rst7 -t ./somd.prm7 -m ./somd.pert -p CUDA 1> somd.log 2> somd.err
+elif [[ $engine == *"GROMACS"* ]]; then
     echo "USING GROMACS"
+    # here run a gromacs exe on a lambda folder as above.
 else
     echo "The FEP engine $engine is not supported"
 fi
 
-sleep 5
+wait
 exit 0
