@@ -23,9 +23,7 @@ Fun-metaD gets around both of these problems, restricting the exploration by usi
 
 The restraints that limit in the pp.ext CV follow a sigmoid function:
 
-\begin{equation*}
- S = h \Bigl(\frac{1}{1+e^{b(i-x)}}\Bigr) + f
-\end{equation*}
+![Figure1](figures/figure2.png)
 
 where, S is the maximal distance from the axis, at pp.proj = i, h is the 'wall_width', f is the 'wall_buffer', b is the 'beta_cent' (the steepness at the inflection point), x is the 's_cent' (the inflection point as a value of pp.proj). The exploration along the pp.proj is limited by the 'lower_wall' and 'upper_wall' parameters. The funnel's radius at the narrow end is equal to 'wall_buffer'. 'P0' and 'Px' are the points that define the funnel's vector. From now on I'll refer to them as p0 and p1, respectively.
 
