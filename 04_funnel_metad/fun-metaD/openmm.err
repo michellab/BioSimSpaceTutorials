@@ -1,6 +1,0 @@
-Traceback (most recent call last):
-  File "/home/dom/Projects/git_pages/BioSimSpaceTutorials/04_funnel_metad/fun-metaD/openmm.py", line 95, in <module>
-    meta = Metadynamics(system, [proj, ext], 300.0*kelvin, 10.0, 1.5*kilojoules_per_mole, 1000, biasDir = '.', saveFrequency = 500)
-  File "/home/dom/Projects/git_pages/BioSimSpaceTutorials/04_funnel_metad/fun-metaD/metadynamics.py", line 113, in __init__
-    raise ValueError('saveFrequency must be a multiple of frequency')
-ValueError: saveFrequency must be a multiple of frequency

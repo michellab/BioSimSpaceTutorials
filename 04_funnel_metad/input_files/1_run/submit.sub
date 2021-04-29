@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# The #BSUB lines are interpreted by LSF
+# -------------------------------------
+# LSF job name and queue
+#BSUB -J bss_funmetad_1
+#BSUB -q phase12_slough
+# Output log files
+#BSUB -o output.%J
+#BSUB -e errors.%J
+# Numbers of CPUs
+#BSUB -n 1
+# Resources
+#BSUB -R "rusage[mem=1] span[ptile=8] select[hname!=slhgridap073]"
+# GPU resources
+#BSUB -gpu "num=1:j_exclusive=yes:mode=exclusive_process"
+
+source /home/e620070/.new_bashrc
+
+conda activate bss
+
+python run_bss.py
