@@ -133,7 +133,6 @@ Just as with GROMACS, we simply need to create a process in AMBER:
 
 ```python
 process = BSS.Process.Amber(system, protocol)
-IncompatibleError: Unsupported protocol: 'Steering'
 ```
 
 Check the configuration of the process:
@@ -159,10 +158,12 @@ process.getConfig()
  '  temp0=300.00,',
  '  ntp=1,',
  '  pres0=1.01325,',
+ '  plumed=1,',
+ '  plumedfile="plumed.dat,',
  ' /']
 ```
 
-The lines `plumed=1` and `plumedfile="plumed.in"` are what specify that PLUMED will be used. The process can now be started to run steered MD.
+The lines `plumed=1` and `plumedfile="plumed.dat"` are what specify that PLUMED will be used. The process can now be started to run steered MD.
 
 #### Running sMD
 
@@ -179,14 +180,12 @@ This will start the simulation in the background. It is recommended to set your 
 However, you may want to run this on a cluster rather than your own workstation. To use the same files that we set up just now, zip them up and copy them over. In python:
 
 ```python
-process.workDir()
-'/tmp/tmps7klsay_'
+process.getInput()
 ```
 
 In your terminal:
 
 ```bash
-zip amber_input.zip /tmp/tmps7klsay_/*
 scp amber_input user@somer.cluster:/path/to/simulation/dir
 ```
 
