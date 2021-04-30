@@ -17,6 +17,8 @@ ligand_1 = ligand_1.getMolecule(0)
 ligand_2 = ligand_2.getMolecule(0)
 
 # Extract ions.
+print("NB: THIS MIGHT BE FAILING AS THE IONS ARE RETURNED AS ATOMS BUT THEY SHOULD BE RETURNED AS MOLECULES!!")
+print("lester suggests to convert to molecule and then continuing, but I have to get going now..")
 ions_free += ligand_2.search("not mols with atomidx 2")
 
 # Align ligand1 on ligand2
