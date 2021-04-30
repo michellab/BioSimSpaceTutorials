@@ -1,0 +1,61 @@
+ligprep
+Thu Apr 29 16:42:39 UTC 2021
+[22;0t]0;IPython: bss_tut/execution_model
+==============================================================
+Sending anonymous Sire usage statistics to http://siremol.org.
+For more information, see http://siremol.org/analytics
+To disable, set the environment variable 'SIRE_DONT_PHONEHOME' to 1
+To see the information sent, set the environment variable 
+SIRE_VERBOSE_PHONEHOME equal to 1. To silence this message, set
+the environment variable SIRE_SILENT_PHONEHOME to 1.
+==============================================================
+
+/export/users/jscheen/projects/bss_tut/execution_model/scripts/BSSligprep.py 2
+Parameterising ejm_54 using GAFF2 force field.
+Solvating ligand.
+Solvating ligand + protein.
+
+#### Working on solvated ligand.
+Minimising in 250 steps..
+Sander NVT equilibration for 5 ps while restraining all non-solvent atoms..
+PMEMD NVT equilibration for 50 ps without restraints..
+PMEMD NPT equilibration for 200 ps while restraining non-solvent heavy atoms..
+PMEMD NPT equilibration for 200 ps without restraints..
+
+#### Working on solvated ligand+protein.
+Minimising in 250 steps..
+Sander NVT equilibration for 5 ps while restraining all non-solvent atoms..
+PMEMD NVT equilibration for 50 ps while restraining all backbone atoms..
+PMEMD NVT equilibration for 50 ps without restraints..
+PMEMD NPT equilibration for 200 ps while restraining non-solvent heavy atoms..
+PMEMD NPT equilibration for 200 ps without restraints..
+Saving solvated/equilibrated systems.
+
+ Ligand:
+<BioSimSpace.System: nMolecules=1069>
+
+ Ligand + protein:
+<BioSimSpace.System: nMolecules=16794>
+First 20 molecules in ligand + protein system:
+<BioSimSpace.Molecule: nAtoms=4671, nResidues=290>
+<BioSimSpace.Molecule: nAtoms=37, nResidues=1>
+<BioSimSpace.Molecule: nAtoms=1, nResidues=1>
+<BioSimSpace.Molecule: nAtoms=1, nResidues=1>
+<BioSimSpace.Molecule: nAtoms=3, nResidues=1>
+<BioSimSpace.Molecule: nAtoms=3, nResidues=1>
+<BioSimSpace.Molecule: nAtoms=3, nResidues=1>
+<BioSimSpace.Molecule: nAtoms=3, nResidues=1>
+<BioSimSpace.Molecule: nAtoms=3, nResidues=1>
+<BioSimSpace.Molecule: nAtoms=3, nResidues=1>
+<BioSimSpace.Molecule: nAtoms=3, nResidues=1>
+<BioSimSpace.Molecule: nAtoms=3, nResidues=1>
+<BioSimSpace.Molecule: nAtoms=3, nResidues=1>
+<BioSimSpace.Molecule: nAtoms=3, nResidues=1>
+<BioSimSpace.Molecule: nAtoms=3, nResidues=1>
+<BioSimSpace.Molecule: nAtoms=3, nResidues=1>
+<BioSimSpace.Molecule: nAtoms=3, nResidues=1>
+<BioSimSpace.Molecule: nAtoms=3, nResidues=1>
+<BioSimSpace.Molecule: nAtoms=3, nResidues=1>
+<BioSimSpace.Molecule: nAtoms=3, nResidues=1>
+Done.
+Thu Apr 29 17:18:30 UTC 2021

@@ -11,7 +11,7 @@
 # = = =
 # Stage 0 set cluster specific parameters
 CPUQUEUE="serial"
-GPUQUEUE="GTX1080"
+GPUQUEUE="GTX980"
 export BSSHOME="/export/users/jscheen/"
 
 # Max run time for various categories of jobs. Should work for most use cases. 
@@ -29,18 +29,15 @@ source /export/users/jscheen/gromacs-2020.4/install/bin/GMXRC # for solvating
 
 # = = = 
 # Jobs executed on the cluster
-# make freenrg file with header
-echo "Engine folders in this directory will contain a file called freeenergies.csv which will be filled with free energies during simulation. The column names are:" > ./outputs/freeenergies_header.csv
-echo "lig0~lig1,bindingnrg_bound,bindingnrgerr_bound,bindingnrg_free,bindingnrgerr_free" >> ./outputs/freeenergies_header.csv
 
 # Stage 1 - A GPU job array executed for each ligand listed in ligands.dat
 num=$(< "ligands.dat" wc -l)
 tasks=$(( $num -1 ))
 echo "@@@ Parameterising dataset @@@"
 echo $tasks
-ID1=$(sbatch --parsable --array [0-$tasks] --partition=$GPUQUEUE --ntasks=1 --gres=gpu:1 --time=$PARAMTIME --job-name=ligprep --output=logs/ligprep_%A_%a.out scripts/BSSligprep.sh)
-echo "sbatch --parsable --array [0-$tasks] --partition=$GPUQUEUE --ntasks=1 --gres=gpu:1 --time=$PARAMTIME --job-name=ligprep --output=logs/ligprep_%A_%a.out scripts/BSSligprep.sh"
-echo $ID1
+#ID1=$(sbatch --parsable --array [0-$tasks] --partition=$GPUQUEUE --ntasks=1 --gres=gpu:1 --time=$PARAMTIME --job-name=ligprep --output=logs/ligprep_%A_%a.out scripts/BSSligprep.sh)
+#echo "sbatch --parsable --array [0-$tasks] --partition=$GPUQUEUE --ntasks=1 --gres=gpu:1 --time=$PARAMTIME --job-name=ligprep --output=logs/ligprep_%A_%a.out scripts/BSSligprep.sh"
+#echo $ID1
 
 # Stage 2 - A series of jobs are executed once all ligands have been prepared
 mapfile PERTS < network.dat
@@ -51,7 +48,7 @@ do
     echo "@@@ Processing ${ligpair[0]} ${ligpair[1]} $win @@@" 
 
     # Stage 2a. Generate FEP inputs with a single job over a single CPU
-    ID2=$(sbatch --parsable --dependency=afterany:${ID1}  --partition=$CPUQUEUE --ntasks=1 --time=$PREPTIME --job-name=prepFEP --output=logs/prepFEP_%A.out scripts/BSSprepFEP.sh ${ligpair[0]} ${ligpair[1]})
+    ID2=$(sbatch --parsable --partition=$CPUQUEUE --ntasks=1 --time=$PREPTIME --job-name=prepFEP --output=logs/prepFEP_%A.out scripts/BSSprepFEP.sh ${ligpair[0]} ${ligpair[1]})
     echo "sbatch --parsable --dependency=afterany:${ID1}  --partition=$CPUQUEUE --ntasks=1 --time=$PREPTIME --job-name=prepFEP --output=logs/prepFEP_%A.out scripts/BSSprepFEP.sh ${ligpair[0]} ${ligpair[1]}"
     echo $ID2
 
@@ -62,8 +59,8 @@ do
     echo $ID3
 
     # Stage 2c. Single job to process output of free and bound legs 
-    ID4=$(sbatch --parsable --dependency=afterany:${ID3} --partition=$CPUQUEUE --ntasks=1 --time=$ANALYSISTIME --job-name=analyseFEP --output=logs/analyseFEP_%A.out scripts/BSSanalyseFEP.sh ${ligpair[0]} ${ligpair[1]})
-    echo "sbatch --parsable --dependency=afterany:${ID3} --partition=$CPUQUEUE --ntasks=1 --time=$ANALYSISTIME --job-name=analyseFEP --output=logs/analyseFEP_%A.out scripts/BSSanalyseFEP.sh ${ligpair[0]} ${ligpair[1]}"
+    ID4=$(sbatch --parsable --dependency=afterany:${ID3} --partition=$CPUQUEUE --ntasks=1 --time=$ANALYSISTIME --job-name=analyseFEP --output=logs/analyseFEP_%A.out scripts/BSSanalyseFEP.sh ${ligpair[0]} ${ligpair[1]} ${ligpair[4]})
+    echo "sbatch --parsable --dependency=afterany:${ID3} --partition=$CPUQUEUE --ntasks=1 --time=$ANALYSISTIME --job-name=analyseFEP --output=logs/analyseFEP_%A.out scripts/BSSanalyseFEP.sh ${ligpair[0]} ${ligpair[1]} ${ligpair[4]}"
     echo $ID4
 
     # sleep 1 second to give lag between process IOs

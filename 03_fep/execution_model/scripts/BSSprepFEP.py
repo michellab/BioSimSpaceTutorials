@@ -1,11 +1,12 @@
 import BioSimSpace as BSS
+from BioSimSpace import _Exceptions
 import sys
 import csv
-
+print(BSS.__version__)
 
 print ("%s %s %s" % (sys.argv[0],sys.argv[1],sys.argv[2]))
 
-# Load equilibrated free inputs for both ligands. Complain if input not found
+# Load equilibrated free inputs for both ligands. Complain if input not found. These systems already contain equil. waters.
 print(f"Loading ligands {sys.argv[1]} and {sys.argv[2]}.")
 ligs_path = "inputs/ligands/"
 ligand_1 = BSS.IO.readMolecules([f"{ligs_path}{sys.argv[1]}_lig_equil_solv.rst7", f"{ligs_path}{sys.argv[1]}_lig_equil_solv.prm7"])
@@ -14,6 +15,15 @@ ligand_2 = BSS.IO.readMolecules([f"{ligs_path}{sys.argv[2]}_lig_equil_solv.rst7"
 # Extract ligands.
 ligand_1 = ligand_1.getMolecule(0)
 ligand_2 = ligand_2.getMolecule(0)
+
+# Extract ions.
+ions_free = None
+n_residues_free = [mol.nResidues() for mol in ligand_2]
+n_atoms_free = [mol.nAtoms() for mol in ligand_2]
+for i, (n_resi, n_at) in enumerate(zip(n_residues_free, n_atoms_free)):
+  # first see if this is an ion. Add to ions if so.
+  if n_resi == 1 and n_at == 1:
+    ions_free += ligand_2.getMolecule(i)
 
 # Align ligand1 on ligand2
 print("Mapping and aligning..")
@@ -26,86 +36,80 @@ print("Merging..")
 merged_ligs = BSS.Align.merge(ligand_1_a, ligand_2, mapping)
 
 
-## now repeat above steps, but for the protein + ligand systems.
+################ now repeat above steps, but for the protein + ligand systems.
 # Load equilibrated bound inputs for both ligands. Complain if input not found
 print(f"Loading bound ligands {sys.argv[1]} and {sys.argv[2]}.")
 ligs_path = "inputs/protein/"
 system_1 = BSS.IO.readMolecules([f"{ligs_path}{sys.argv[1]}_sys_equil_solv.rst7", f"{ligs_path}{sys.argv[1]}_sys_equil_solv.prm7"])
 system_2 = BSS.IO.readMolecules([f"{ligs_path}{sys.argv[2]}_sys_equil_solv.rst7", f"{ligs_path}{sys.argv[2]}_sys_equil_solv.prm7"])
 
-# Extract ligands.
-system_ligand_1 = system_1.getMolecule(0)
-system_ligand_2 = system_2.getMolecule(0)
+# Extract ligands and protein. Do this based on nAtoms and nResidues, as sometimes
+# the order of molecules is switched, so we can't use index alone.
+system_ligand_1 = None
+n_residues = [mol.nResidues() for mol in system_1]
+n_atoms = [mol.nAtoms() for mol in system_1]
+for i, (n_resi, n_at) in enumerate(zip(n_residues[:20], n_atoms[:20])):
+    if n_resi == 1 and n_at > 5:
+        system_ligand_1 = system_1.getMolecule(i)
+    else:
+        pass
 
-# extract protein for ligand 2.
-protein = system_2.getMolecule(1)
+# loop over molecules in system to extract the ligand and the protein. 
+system_ligand_2 = None
+protein = None
+ions_bound = None
+n_residues = [mol.nResidues() for mol in system_2]
+n_atoms = [mol.nAtoms() for mol in system_2]
+for i, (n_resi, n_at) in enumerate(zip(n_residues, n_atoms)):
+    # first see if this is an ion. Add to ions if so.
+    if n_resi == 1 and n_at == 1:
+        ions_bound += system_2.getMolecule(i)
+
+    # then grab the system's ligand and the protein. ignore the waters.
+    if n_resi == 1 and n_at > 5:
+        system_ligand_2 = system_2.getMolecule(i)
+    elif n_resi > 1:
+        protein = system_2.getMolecule(i)
+    else:
+        pass
+
+if system_ligand_1 and system_ligand_2 and protein:
+    print("Using molecules ligand_1, ligand_2, protein:")
+    print(system_ligand_1, system_ligand_2, protein)
+else:
+    raise _Exceptions.AlignmentError("Could not extract ligands or protein from input systems. Check that your ligands/proteins are properly prepared by BSSligprep.sh!")
 
 # Align ligand1 on ligand2
-print("Mapping and aligning..")
-mapping = BSS.Align.matchAtoms(system_ligand_1, system_ligand_2, sanitize=True)
+print("Mapping..")
+mapping = BSS.Align.matchAtoms(system_ligand_1, system_ligand_2, sanitize=True, complete_rings_only=True)
+
+print("Aligning..")
 system_ligand_1_a = BSS.Align.rmsdAlign(system_ligand_1, system_ligand_2, mapping)
 
 # Generate merged molecule.
 print("Merging..")
 system_merged_ligs = BSS.Align.merge(system_ligand_1_a, system_ligand_2, mapping)
 
-# then add the protein back onto the merged object.
-merged_system = protein + system_merged_ligs 
 
 
-#################################### solvate merged molecule (same approach as BSSligprep.py).
-########################
-def solvateSystem(system):
-    """
-    Given a system (merged molecule or merged molecule + protein), solvate based on settings in protocol.dat.
-    Returns solvated system.
-    """
-    # need to derive some settings from protocol.dat again. 
-    stream = open("protocol.dat","r")
-    lines = stream.readlines()
+#### Get equilibrated waters and waterbox information for both bound and free. Get all information from lambda==1
+waters_free = ligand_2.getWaterMolecules()
+waterbox_free = ligand_2.getBox()
 
-    # get the solvent force field.
-    solvent_query = lines[2].rstrip().replace(" ","").split("=")[-1]
+waters_bound = system_2.getWaterMolecules()
+waterbox_bound = system_2.getBox()
 
-    # get the box size settings.
-    boxsize_query = lines[3].rstrip().replace(" ","").split("=")[-1]
-    box_axis_length = boxsize_query.split("*")[0]
-    box_axis_unit = boxsize_query.split("*")[1]
-    if box_axis_unit.lower() == "nm" or box_axis_unit.lower() == "nanometer":
-        box_axis_unit = BSS.Units.Length.nanometer
+# now make final systems with merged, the equil. protein of lambda==1 and equil. waters of lambda==1.
+system_free = merged_ligs + ions_free + waters_free
+system_bound = system_merged_ligs + protein + ions + waters_bound
 
-    elif box_axis_unit.lower() == "a" or box_axis_unit.lower() == "angstrom":
-        box_axis_unit = BSS.Units.Length.angstrom
-    else:
-        raise NameError("Input unit not recognised. Please use any of ['spc', 'spce', 'tip3p', 'tip4p', 'tip5p'] in " \
-        +"the fourth line of protocol.dat in the shape of (e.g.):\nbox edges = 10*angstrom")
-
-    box_min, box_max = system.getAxisAlignedBoundingBox()
-    box_size = [y - x for x, y in zip(box_min,box_max)]
-    box_sizes = [x + int(box_axis_length) * box_axis_unit for x in box_size]
-
-    boxtype_query = lines[4].rstrip().replace(" ","").split("=")[-1]
-    if boxtype_query.lower() == "orthorhombic":
-        box, angles = BSS.Box.cubic(max(box_sizes))
-        system_solvated = BSS.Solvent.solvate(solvent_query, molecule=system,
-                                   box=box, angles=angles)
+# restore box information.
+system_free.setBox(waterbox_free)
+system_bound.setBox(waterbox_bound)
 
 
-    elif boxtype_query.lower() == "triclinic" or boxtype_query.lower() == "octahedral":
-        box, angles = BSS.Box.truncatedOctahedron(max(box_sizes))
-        system_solvated = BSS.Solvent.solvate(solvent_query, molecule=system,
-                               box=box, angles=angles)
 
-    else:
-        raise NameError("Input box type not recognised. Please use any of ['orthorhombic', 'octahedral', 'triclinic']" \
-        +"in the fifth line of protocol.dat in the shape of (e.g.):\nbox type = orthorhombic")
 
-    return system_solvated
-
-print("Solvating merged ligands.")
-merged_ligs_solvated = solvateSystem(merged_ligs)
-print("Solvating merged ligands + protein.")
-merged_system_solvated = solvateSystem(merged_system)
 
 ########################### now set up the SOMD or GROMACS MD directories. 
 #first, figure out which engine and what runtime the user has specified in protocol.
@@ -139,8 +143,8 @@ elif runtime_unit_query == "ps":
 
 ### get the number of lambda windows for this pert.
 num_lambda = None
-with open("lambdas_per_pert.dat", "r") as lambdas_file:
-    reader = csv.reader(lambdas_file)
+with open("network.dat", "r") as lambdas_file:
+    reader = csv.reader(lambdas_file, delimiter=" ")
     for row in reader:
 
         if (row[0] == sys.argv[1] and row[1] == sys.argv[2]) or \
@@ -159,16 +163,17 @@ print(f"Setting up {engine_query} directory environment in outputs/{engine_query
 # set up a SOMD bound+free folder with standard settings.
 print("Bound..")
 BSS.FreeEnergy.Binding(
-                    merged_system_solvated, 
+                    system_bound, 
                     freenrg_protocol, 
                     engine=f"{engine_query}",
                     work_dir=f"outputs/{engine_query}/{sys.argv[1]}~{sys.argv[2]}"
 )
 
-# set up a SOMD free + vacuum folder. Note that the free folder is overwritten, which is what we want.
+# set up a SOMD free + vacuum folder. Note that the free folder is overwritten, which is what we want because
+# we've equilibrated the ligand and ligand+protein separately.
 print("Free..")
 BSS.FreeEnergy.Solvation(
-                    merged_system_solvated, 
+                    system_free, 
                     freenrg_protocol, 
                     engine=f"{engine_query}",
                     work_dir=f"outputs/{engine_query}/{sys.argv[1]}~{sys.argv[2]}"

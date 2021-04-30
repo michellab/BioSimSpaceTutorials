@@ -1,0 +1,37 @@
+analyseFEP
+Thu Apr 29 17:40:50 UTC 2021
+[22;0t]0;IPython: bss_tut/execution_model
+==============================================================
+Sending anonymous Sire usage statistics to http://siremol.org.
+For more information, see http://siremol.org/analytics
+To disable, set the environment variable 'SIRE_DONT_PHONEHOME' to 1
+To see the information sent, set the environment variable 
+SIRE_VERBOSE_PHONEHOME equal to 1. To silence this message, set
+the environment variable SIRE_SILENT_PHONEHOME to 1.
+==============================================================
+
+/export/users/jscheen/projects/bss_tut/execution_model/scripts/BSSanalyseFEP.py ejm_49 ejm_54
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/projects/bss_tut/execution_model/scripts/BSSanalyseFEP.py[0m in [0;36m<module>[0;34m[0m
+[1;32m     17[0m [0;34m[0m[0m
+[1;32m     18[0m [0;32mtry[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 19[0;31m     [0mpmf_0[0m[0;34m,[0m [0mpmf_1[0m[0;34m,[0m [0mfreenrg[0m[0;34m,[0m [0moverlap_matrix_bound[0m[0;34m,[0m [0moverlap_matrix_free[0m [0;34m=[0m [0mBSS[0m[0;34m.[0m[0mFreeEnergy[0m[0;34m.[0m[0manalyse[0m[0;34m([0m[0mpath_to_dir[0m[0;34m,[0m [0;34m"binding"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     20[0m     [0mfreenrg_val[0m [0;34m=[0m [0mround[0m[0;34m([0m[0mfreenrg[0m[0;34m[[0m[0;36m0[0m[0;34m][0m[0;34m.[0m[0mmagnitude[0m[0;34m([0m[0;34m)[0m[0;34m,[0m [0;36m4[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     21[0m     [0mfreenrg_err[0m [0;34m=[0m [0mround[0m[0;34m([0m[0mfreenrg[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m.[0m[0mmagnitude[0m[0;34m([0m[0;34m)[0m[0;34m,[0m [0;36m4[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/biosimspace.app/lib/python3.7/site-packages/BioSimSpace-2020.1.0+393.g1033cd4-py3.7.egg/BioSimSpace/FreeEnergy/_free_energy.py[0m in [0;36manalyse[0;34m(work_dir, simulation_type)[0m
+[1;32m    913[0m     """
+[1;32m    914[0m [0;34m[0m[0m
+[0;32m--> 915[0;31m     [0;32mreturn[0m [0mFreeEnergy[0m[0;34m.[0m[0manalyse[0m[0;34m([0m[0mwork_dir[0m[0;34m,[0m [0msimulation_type[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    916[0m [0;34m[0m[0m
+[1;32m    917[0m [0;32mdef[0m [0mgetData[0m[0;34m([0m[0mname[0m[0;34m=[0m[0;34m"data"[0m[0;34m,[0m [0mfile_link[0m[0;34m=[0m[0;32mFalse[0m[0;34m,[0m [0mwork_dir[0m[0;34m=[0m[0;32mNone[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/biosimspace.app/lib/python3.7/site-packages/BioSimSpace-2020.1.0+393.g1033cd4-py3.7.egg/BioSimSpace/FreeEnergy/_free_energy.py[0m in [0;36manalyse[0;34m(work_dir, simulation_type)[0m
+[1;32m    307[0m             [0;32mraise[0m [0mTypeError[0m[0;34m([0m[0;34m"'work_dir' must be of type 'str'."[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    308[0m         [0;32mif[0m [0;32mnot[0m [0m_os[0m[0;34m.[0m[0mpath[0m[0;34m.[0m[0misdir[0m[0;34m([0m[0mwork_dir[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 309[0;31m             [0;32mraise[0m [0mValueError[0m[0;34m([0m[0;34m"'work_dir' doesn't exist!"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    310[0m [0;34m[0m[0m
+[1;32m    311[0m         [0;32mif[0m [0msimulation_type[0m [0;32mis[0m [0;32mnot[0m [0;32mNone[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: 'work_dir' doesn't exist!

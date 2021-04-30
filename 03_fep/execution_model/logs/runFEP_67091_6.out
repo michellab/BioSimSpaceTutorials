@@ -1,0 +1,2585 @@
+Fri Apr 30 07:41:52 BST 2021
+idx is  6
+lambda is: 1.0000
+stage is: bound
+engine is: SOMD
+USING SOMD
+cd outputs/SOMD/ejm_45~ejm_31/bound/lambda_1.0000/
+/export/users/julien/sire.app/bin/somd-freenrg -C ./somd.cfg -l 1.0000 -c ./somd.rst7 -t ./somd.prm7 -m ./somd.pert -p CUDA 1> somd.log 2> somd.err
+
+Loading configuration information from file ./somd.cfg
+
+Running a somd-freenrg calculation using files ./somd.prm7, ./somd.rst7 and ./somd.pert.
+Using parameters:
+===============
+andersen == True
+barostat == True
+buffered coordinates frequency == 0
+center solute == True
+constraint == hbonds-notperturbed
+crdfile == ./somd.rst7
+cutoff distance == 10 angstrom
+cutoff type == cutoffperiodic
+energy frequency == 100
+equilibrate == False
+hydrogen mass repartitioning factor == 1.0
+lambda array == (0.0, 0.16667, 0.33333, 0.5, 0.66667, 0.83333, 1.0)
+lambda_val == 1.0
+minimal coordinate saving == False
+minimise == True
+morphfile == ./somd.pert
+ncycles == 500
+ncycles_per_snap == 5
+nmoves == 100
+platform == CUDA
+precision == mixed
+pressure == 1 atm
+reaction field dielectric == 82.0
+save coordinates == True
+temperature == 300 t
+thermostat == True
+timestep == 0.002 ps
+topfile == ./somd.prm7
+===============
+### Running Single Topology Molecular Dynamics Free Energy on node08 ###
+###================Setting up calculation=====================###
+New run. Loading input and creating restart
+lambda is 1.0
+
+==============================================================
+Sending anonymous Sire usage statistics to http://siremol.org.
+For more information, see http://siremol.org/analytics
+To disable, set the environment variable 'SIRE_DONT_PHONEHOME' to 1
+To see the information sent, set the environment variable 
+SIRE_VERBOSE_PHONEHOME equal to 1. To silence this message, set
+the environment variable SIRE_SILENT_PHONEHOME to 1.
+==============================================================
+
+Create the System...
+Selecting dummy groups
+Creating force fields... 
+Setting up the simulation with random seed 408051
+Setting up moves...
+Created a MD move that uses OpenMM for all molecules on 0 
+Generated random seed number 408051 
+Saving restart
+Setting up sim file. 
+There are 62190 atoms in the group 
+###===========================================================###
+
+###=======================Minimisation========================###
+Running minimisation.
+Energy before the minimisation: 78644 kcal mol-1
+Tolerance for minimisation: 1
+Maximum number of minimisation iterations: 1000
+Energy after the minimization: -230140 kcal mol-1
+Energy minimization done.
+###===========================================================###
+
+###====================somd-freenrg run=======================###
+Starting somd-freenrg run...
+100 moves 500 cycles, 100 ps simulation time
+
+Cycle =  1 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  2 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  3 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  4 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  5 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  6 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  7 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  8 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  9 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  10 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  11 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  12 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  13 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  14 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  15 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  16 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  17 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  18 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  19 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  20 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  21 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  22 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  23 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  24 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  25 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  26 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  27 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  28 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  29 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  30 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  31 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  32 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  33 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  34 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  35 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  36 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  37 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  38 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  39 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  40 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  41 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  42 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  43 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  44 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  45 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  46 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  47 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  48 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  49 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  50 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  51 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  52 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  53 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  54 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  55 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  56 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  57 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  58 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  59 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  60 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  61 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  62 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  63 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  64 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  65 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  66 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  67 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  68 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  69 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  70 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  71 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  72 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  73 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  74 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  75 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  76 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  77 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  78 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  79 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  80 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  81 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  82 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  83 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  84 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  85 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  86 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  87 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  88 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  89 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  90 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  91 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  92 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  93 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  94 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  95 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  96 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  97 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  98 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  99 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  100 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  101 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  102 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  103 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  104 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  105 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  106 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  107 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  108 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  109 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  110 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  111 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  112 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  113 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  114 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  115 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  116 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  117 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  118 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  119 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  120 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  121 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  122 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  123 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  124 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  125 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  126 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  127 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  128 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  129 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  130 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  131 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  132 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  133 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  134 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  135 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  136 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  137 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  138 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  139 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  140 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  141 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  142 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  143 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  144 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  145 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  146 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  147 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  148 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  149 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  150 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  151 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  152 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  153 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  154 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  155 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  156 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  157 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  158 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  159 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  160 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  161 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  162 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  163 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  164 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  165 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  166 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  167 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  168 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  169 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  170 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  171 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  172 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  173 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  174 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  175 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  176 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  177 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  178 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  179 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  180 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  181 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  182 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  183 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  184 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  185 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  186 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  187 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  188 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  189 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  190 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  191 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  192 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  193 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  194 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  195 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  196 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  197 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  198 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  199 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  200 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  201 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  202 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  203 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  204 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  205 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  206 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  207 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  208 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  209 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  210 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  211 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  212 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  213 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  214 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  215 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  216 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  217 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  218 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  219 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  220 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  221 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  222 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  223 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  224 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  225 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  226 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  227 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  228 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  229 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  230 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  231 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  232 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  233 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  234 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  235 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  236 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  237 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  238 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  239 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  240 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  241 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  242 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  243 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  244 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  245 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  246 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  247 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  248 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  249 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  250 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  251 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  252 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  253 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  254 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  255 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  256 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  257 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  258 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  259 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  260 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  261 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  262 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  263 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  264 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  265 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  266 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  267 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  268 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  269 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  270 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  271 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  272 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  273 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  274 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  275 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  276 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  277 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  278 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  279 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  280 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  281 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  282 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  283 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  284 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  285 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  286 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  287 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  288 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  289 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  290 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  291 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  292 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  293 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  294 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  295 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  296 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  297 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  298 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  299 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  300 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  301 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  302 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  303 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  304 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  305 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  306 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  307 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  308 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  309 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  310 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  311 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  312 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  313 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  314 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  315 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  316 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  317 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  318 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  319 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  320 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  321 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  322 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  323 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  324 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  325 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  326 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  327 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  328 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  329 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  330 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  331 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  332 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  333 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  334 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  335 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  336 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  337 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  338 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  339 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  340 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  341 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  342 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  343 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  344 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  345 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  346 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  347 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  348 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  349 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  350 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  351 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  352 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  353 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  354 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  355 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  356 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  357 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  358 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  359 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  360 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  361 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  362 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  363 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  364 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  365 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  366 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  367 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  368 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  369 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  370 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  371 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  372 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  373 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  374 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  375 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  376 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  377 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  378 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  379 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  380 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  381 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  382 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  383 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  384 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  385 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  386 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  387 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  388 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  389 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  390 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  391 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  392 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  393 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  394 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  395 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  396 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  397 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  398 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  399 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  400 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  401 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  402 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  403 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  404 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  405 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  406 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  407 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  408 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  409 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  410 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  411 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  412 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  413 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  414 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  415 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  416 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  417 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  418 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  419 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  420 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  421 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  422 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  423 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  424 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  425 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  426 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  427 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  428 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  429 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  430 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  431 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  432 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  433 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  434 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  435 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  436 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  437 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  438 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  439 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  440 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  441 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  442 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  443 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  444 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  445 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  446 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  447 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  448 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  449 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  450 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  451 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  452 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  453 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  454 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  455 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  456 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  457 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  458 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  459 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  460 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  461 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  462 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  463 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  464 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  465 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  466 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  467 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  468 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  469 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  470 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  471 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  472 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  473 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  474 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  475 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  476 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  477 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  478 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  479 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  480 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  481 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  482 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  483 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  484 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  485 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  486 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  487 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  488 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  489 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  490 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  491 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  492 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  493 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  494 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  495 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  496 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  497 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  498 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  499 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  500 
+
+Backing up previous restart
+Saving new restart
+Simulation took 11585 s 
+###===========================================================###
+
+Starting /export/users/julien/sire.app/bin/somd-freenrg: number of threads equals 1
