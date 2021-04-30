@@ -7,7 +7,7 @@ Authors:
 
 TODO:
 - fix somd.cfg
-- use pre-equilibrated waterbox for FEP prep
+- use pre-equilibrated waterbox for FEP prep -> this is done but still requires testing
 - make LSF submission script (03/05)
 - integrate newest freenrgworkflows version
 - wrap up documentation
