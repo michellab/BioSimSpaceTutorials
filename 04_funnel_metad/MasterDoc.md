@@ -8,8 +8,8 @@ BioSimSpace has made this easier, automatically defining the funnel using abstra
 
 By the end of this tutorial you should know:
 1. The basics of what fun-metaD does
-2. How to visualise the suggested funnel restraints using BSS in a Jupyter Notebook
-3. How to setup fun-metaD simulations, with either Gromacs/Amber and PLUMED or OpenMM.
+2. How to setup fun-metaD simulations and how to visualise the funnel restraints.
+3. How to analyse the results of the fun-metaD simulation.
 
 Let's get started.
 
