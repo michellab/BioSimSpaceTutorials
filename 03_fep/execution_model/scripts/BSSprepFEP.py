@@ -17,13 +17,7 @@ ligand_1 = ligand_1.getMolecule(0)
 ligand_2 = ligand_2.getMolecule(0)
 
 # Extract ions.
-ions_free = None
-n_residues_free = [mol.nResidues() for mol in ligand_2]
-n_atoms_free = [mol.nAtoms() for mol in ligand_2]
-for i, (n_resi, n_at) in enumerate(zip(n_residues_free, n_atoms_free)):
-  # first see if this is an ion. Add to ions if so.
-  if n_resi == 1 and n_at == 1:
-    ions_free += ligand_2.getMolecule(i)
+ions_free += ligand_2.search("not mols with atomidx 2")
 
 # Align ligand1 on ligand2
 print("Mapping and aligning..")
@@ -57,21 +51,20 @@ for i, (n_resi, n_at) in enumerate(zip(n_residues[:20], n_atoms[:20])):
 # loop over molecules in system to extract the ligand and the protein. 
 system_ligand_2 = None
 protein = None
-ions_bound = None
+
 n_residues = [mol.nResidues() for mol in system_2]
 n_atoms = [mol.nAtoms() for mol in system_2]
 for i, (n_resi, n_at) in enumerate(zip(n_residues, n_atoms)):
-    # first see if this is an ion. Add to ions if so.
-    if n_resi == 1 and n_at == 1:
-        ions_bound += system_2.getMolecule(i)
-
-    # then grab the system's ligand and the protein. ignore the waters.
+    # grab the system's ligand and the protein. ignore the waters.
     if n_resi == 1 and n_at > 5:
         system_ligand_2 = system_2.getMolecule(i)
     elif n_resi > 1:
         protein = system_2.getMolecule(i)
     else:
         pass
+
+# extract ions.
+ions_bound = system_2.search("not mols with atomidx 2")
 
 if system_ligand_1 and system_ligand_2 and protein:
     print("Using molecules ligand_1, ligand_2, protein:")
@@ -101,11 +94,13 @@ waterbox_bound = system_2.getBox()
 
 # now make final systems with merged, the equil. protein of lambda==1 and equil. waters of lambda==1.
 system_free = merged_ligs + ions_free + waters_free
-system_bound = system_merged_ligs + protein + ions + waters_bound
+system_bound = system_merged_ligs + protein + ions_bound + waters_bound
 
 # restore box information.
 system_free.setBox(waterbox_free)
 system_bound.setBox(waterbox_bound)
+
+
 
 
 
