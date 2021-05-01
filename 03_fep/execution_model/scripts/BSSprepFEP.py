@@ -19,17 +19,17 @@ ligand_2 = ligand_2.getMolecule(0)
 # Extract ions.
 print("NB: THIS MIGHT BE FAILING AS THE IONS ARE RETURNED AS ATOMS BUT THEY SHOULD BE RETURNED AS MOLECULES!!")
 print("lester suggests to convert to molecule and then continuing, but I have to get going now..")
-ions_free += ligand_2.search("not mols with atomidx 2")
+ions_free += ligand_1.search("not mols with atomidx 2")
 
 # Align ligand1 on ligand2
 print("Mapping and aligning..")
 print(ligand_1, ligand_2)
-mapping = BSS.Align.matchAtoms(ligand_1, ligand_2, sanitize=True, complete_rings_only=True)
-ligand_1_a = BSS.Align.rmsdAlign(ligand_1, ligand_2, mapping)
+mapping = BSS.Align.matchAtoms(ligand_2, ligand_1, sanitize=True, complete_rings_only=True)
+ligand_2_a = BSS.Align.rmsdAlign(ligand_2, ligand_1, mapping)
 
 # Generate merged molecule.
 print("Merging..")
-merged_ligs = BSS.Align.merge(ligand_1_a, ligand_2, mapping)
+merged_ligs = BSS.Align.merge(ligand_2_a, ligand_1, mapping)
 
 
 ################ now repeat above steps, but for the protein + ligand systems.
@@ -76,25 +76,25 @@ else:
 
 # Align ligand1 on ligand2
 print("Mapping..")
-mapping = BSS.Align.matchAtoms(system_ligand_1, system_ligand_2, sanitize=True, complete_rings_only=True)
+mapping = BSS.Align.matchAtoms(system_ligand_2, system_ligand_1, sanitize=True, complete_rings_only=True)
 
 print("Aligning..")
-system_ligand_1_a = BSS.Align.rmsdAlign(system_ligand_1, system_ligand_2, mapping)
+system_ligand_2_a = BSS.Align.rmsdAlign(system_ligand_2, system_ligand_1, mapping)
 
 # Generate merged molecule.
 print("Merging..")
-system_merged_ligs = BSS.Align.merge(system_ligand_1_a, system_ligand_2, mapping)
+system_merged_ligs = BSS.Align.merge(system_ligand_2_a, system_ligand_1, mapping)
 
 
 
-#### Get equilibrated waters and waterbox information for both bound and free. Get all information from lambda==1
-waters_free = ligand_2.getWaterMolecules()
-waterbox_free = ligand_2.getBox()
+#### Get equilibrated waters and waterbox information for both bound and free. Get all information from lambda==0
+waters_free = ligand_1.getWaterMolecules()
+waterbox_free = ligand_1.getBox()
 
-waters_bound = system_2.getWaterMolecules()
-waterbox_bound = system_2.getBox()
+waters_bound = system_1.getWaterMolecules()
+waterbox_bound = system_1.getBox()
 
-# now make final systems with merged, the equil. protein of lambda==1 and equil. waters of lambda==1.
+# now make final systems with merged, the equil. protein of lambda==0 and equil. waters of lambda==0.
 system_free = merged_ligs + ions_free + waters_free
 system_bound = system_merged_ligs + protein + ions_bound + waters_bound
 
