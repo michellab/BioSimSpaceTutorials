@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 date
 
-export OMP_NUM_THREADS=1 # avoid oversubscribing CPUs when using SOMD
-export OPENMM_PLUGIN_DIR=/export/users/julien/sire.app/lib/plugins/
-
 lig0=$1
 lig1=$2
 lambdastring=$3
@@ -47,8 +44,8 @@ if [[ $engine == *"SOMD"* ]]; then
     echo "minimal coordinate saving = False" >> somd.cfg    
 
     # run SOMD simulation.    
-    echo "/export/users/julien/sire.app/bin/somd-freenrg -C ./somd.cfg -l $lambda -c ./somd.rst7 -t ./somd.prm7 -m ./somd.pert -p CUDA 1> somd.log 2> somd.err"
-    /export/users/julien/sire.app/bin/somd-freenrg -C ./somd.cfg -l $lambda -c ./somd.rst7 -t ./somd.prm7 -m ./somd.pert -p CUDA 1> somd.log 2> somd.err
+    echo "$BSSHOME/bin/somd-freenrg -C ./somd.cfg -l $lambda -c ./somd.rst7 -t ./somd.prm7 -m ./somd.pert -p CUDA 1> somd.log 2> somd.err"
+    $BSSHOME/bin/somd-freenrg -C ./somd.cfg -l $lambda -c ./somd.rst7 -t ./somd.prm7 -m ./somd.pert -p CUDA 1> somd.log 2> somd.err
 
 elif [[ $engine == *"GROMACS"* ]]; then
     echo "USING GROMACS"

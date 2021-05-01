@@ -8,7 +8,7 @@ print ("%s %s %s" % (sys.argv[0],sys.argv[1],sys.argv[2]))
 
 # Load equilibrated free inputs for both ligands. Complain if input not found. These systems already contain equil. waters.
 print(f"Loading ligands {sys.argv[1]} and {sys.argv[2]}.")
-ligs_path = "inputs/ligands/"
+ligs_path = "prep/ligands/"
 ligand_1 = BSS.IO.readMolecules([f"{ligs_path}{sys.argv[1]}_lig_equil_solv.rst7", f"{ligs_path}{sys.argv[1]}_lig_equil_solv.prm7"])
 ligand_2 = BSS.IO.readMolecules([f"{ligs_path}{sys.argv[2]}_lig_equil_solv.rst7", f"{ligs_path}{sys.argv[2]}_lig_equil_solv.prm7"])
 
@@ -35,7 +35,7 @@ merged_ligs = BSS.Align.merge(ligand_1_a, ligand_2, mapping)
 ################ now repeat above steps, but for the protein + ligand systems.
 # Load equilibrated bound inputs for both ligands. Complain if input not found
 print(f"Loading bound ligands {sys.argv[1]} and {sys.argv[2]}.")
-ligs_path = "inputs/protein/"
+ligs_path = "prep/protein/"
 system_1 = BSS.IO.readMolecules([f"{ligs_path}{sys.argv[1]}_sys_equil_solv.rst7", f"{ligs_path}{sys.argv[1]}_sys_equil_solv.prm7"])
 system_2 = BSS.IO.readMolecules([f"{ligs_path}{sys.argv[2]}_sys_equil_solv.rst7", f"{ligs_path}{sys.argv[2]}_sys_equil_solv.prm7"])
 
