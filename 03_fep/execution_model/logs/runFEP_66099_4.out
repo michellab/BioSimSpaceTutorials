@@ -1,8 +1,0 @@
-Wed Apr 28 09:34:11 UTC 2021
-idx is  4
-lambda is: 0.6667
-stage is: bound
-engine is: SOMD
-USING SOMD
-cd outputs/SOMD/ejm_31~ejm_45/bound/lambda_0.6667/
-/export/users/jscheen//biosimspace.app/bin/somd-freenrg -C ./somd.cfg -l 0.6667 -c ./somd.rst7 -t ./somd.prm7 -m ./somd.pert -p CUDA 1> somd.log 2> somd.err

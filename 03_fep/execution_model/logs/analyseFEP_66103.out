@@ -1,4 +1,0 @@
-analyseFEP
-Wed Apr 28 09:28:56 UTC 2021
-/tmp/slurmd/job66103/slurm_script: line 33: [: =: unary operator expected
-The FEP engine  is not supported
