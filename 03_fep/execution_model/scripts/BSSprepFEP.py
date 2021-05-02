@@ -1,6 +1,6 @@
 import BioSimSpace as BSS
 from BioSimSpace import _Exceptions
-import sys
+import os,sys
 import csv
 print(BSS.__version__)
 
@@ -9,19 +9,19 @@ print ("%s %s %s" % (sys.argv[0],sys.argv[1],sys.argv[2]))
 # Load equilibrated free inputs for both ligands. Complain if input not found. These systems already contain equil. waters.
 print(f"Loading ligands {sys.argv[1]} and {sys.argv[2]}.")
 ligs_path = "prep/ligands/"
-ligand_1 = BSS.IO.readMolecules([f"{ligs_path}{sys.argv[1]}_lig_equil_solv.rst7", f"{ligs_path}{sys.argv[1]}_lig_equil_solv.prm7"])
-ligand_2 = BSS.IO.readMolecules([f"{ligs_path}{sys.argv[2]}_lig_equil_solv.rst7", f"{ligs_path}{sys.argv[2]}_lig_equil_solv.prm7"])
+ligand_1_sys = BSS.IO.readMolecules([f"{ligs_path}{sys.argv[1]}_lig_equil_solv.rst7", f"{ligs_path}{sys.argv[1]}_lig_equil_solv.prm7"])
+ligand_2_sys = BSS.IO.readMolecules([f"{ligs_path}{sys.argv[2]}_lig_equil_solv.rst7", f"{ligs_path}{sys.argv[2]}_lig_equil_solv.prm7"])
 
 # Extract ligands.
-ligand_1 = ligand_1.getMolecule(0)
-ligand_2 = ligand_2.getMolecule(0)
+ligand_1 = ligand_1_sys.getMolecule(0)
+ligand_2 = ligand_2_sys.getMolecule(0)
 
 # Extract ions.
-print("NB: THIS MIGHT BE FAILING AS THE IONS ARE RETURNED AS ATOMS BUT THEY SHOULD BE RETURNED AS MOLECULES!!")
-print("lester suggests to convert to molecule and then continuing, but I have to get going now..")
-ions_free += ligand_1.search("not mols with atomidx 2")
+#print("NB: THIS MIGHT BE FAILING AS THE IONS ARE RETURNED AS ATOMS BUT THEY SHOULD BE RETURNED AS MOLECULES!!")
+#print("lester suggests to convert to molecule and then continuing, but I have to get going now..")
+#ions_free += ligand_1.search("not mols with atomidx 2")
 
-# Align ligand1 on ligand2
+# Align ligand2 on ligand1
 print("Mapping and aligning..")
 print(ligand_1, ligand_2)
 mapping = BSS.Align.matchAtoms(ligand_2, ligand_1, sanitize=True, complete_rings_only=True)
@@ -31,6 +31,15 @@ ligand_2_a = BSS.Align.rmsdAlign(ligand_2, ligand_1, mapping)
 print("Merging..")
 merged_ligs = BSS.Align.merge(ligand_2_a, ligand_1, mapping)
 
+#### Get equilibrated waters and waterbox information for both bound and free. Get all information from lambda==0
+# Following is work around because setBox() doesn't validate correctly boxes with lengths and angles
+
+ligand_1_sys.removeMolecules(ligand_1)
+ligand_1_sys.addMolecules(merged_ligs)
+system_free = ligand_1_sys
+
+
+#sys.exit(-1)
 
 ################ now repeat above steps, but for the protein + ligand systems.
 # Load equilibrated bound inputs for both ligands. Complain if input not found
@@ -41,18 +50,21 @@ system_2 = BSS.IO.readMolecules([f"{ligs_path}{sys.argv[2]}_sys_equil_solv.rst7"
 
 # Extract ligands and protein. Do this based on nAtoms and nResidues, as sometimes
 # the order of molecules is switched, so we can't use index alone.
+# JM - bugfix in BSS making the below redundant ?
 system_ligand_1 = None
+protein = None
 n_residues = [mol.nResidues() for mol in system_1]
 n_atoms = [mol.nAtoms() for mol in system_1]
 for i, (n_resi, n_at) in enumerate(zip(n_residues[:20], n_atoms[:20])):
     if n_resi == 1 and n_at > 5:
         system_ligand_1 = system_1.getMolecule(i)
+    elif n_resi > 1:
+        protein = system_1.getMolecule(i)
     else:
         pass
 
-# loop over molecules in system to extract the ligand and the protein. 
+# loop over molecules in system to extract the ligand  
 system_ligand_2 = None
-protein = None
 
 n_residues = [mol.nResidues() for mol in system_2]
 n_atoms = [mol.nAtoms() for mol in system_2]
@@ -60,13 +72,11 @@ for i, (n_resi, n_at) in enumerate(zip(n_residues, n_atoms)):
     # grab the system's ligand and the protein. ignore the waters.
     if n_resi == 1 and n_at > 5:
         system_ligand_2 = system_2.getMolecule(i)
-    elif n_resi > 1:
-        protein = system_2.getMolecule(i)
     else:
         pass
 
 # extract ions.
-ions_bound = system_2.search("not mols with atomidx 2")
+#ions_bound = system_2.search("not mols with atomidx 2")
 
 if system_ligand_1 and system_ligand_2 and protein:
     print("Using molecules ligand_1, ligand_2, protein:")
@@ -74,7 +84,7 @@ if system_ligand_1 and system_ligand_2 and protein:
 else:
     raise _Exceptions.AlignmentError("Could not extract ligands or protein from input systems. Check that your ligands/proteins are properly prepared by BSSligprep.sh!")
 
-# Align ligand1 on ligand2
+# Align ligand2 on ligand1
 print("Mapping..")
 mapping = BSS.Align.matchAtoms(system_ligand_2, system_ligand_1, sanitize=True, complete_rings_only=True)
 
@@ -88,25 +98,16 @@ system_merged_ligs = BSS.Align.merge(system_ligand_2_a, system_ligand_1, mapping
 
 
 #### Get equilibrated waters and waterbox information for both bound and free. Get all information from lambda==0
-waters_free = ligand_1.getWaterMolecules()
-waterbox_free = ligand_1.getBox()
-
-waters_bound = system_1.getWaterMolecules()
-waterbox_bound = system_1.getBox()
-
+#waters_bound = system_1.getWaterMolecules()
+#waterbox_bound = system_1.getBox()
 # now make final systems with merged, the equil. protein of lambda==0 and equil. waters of lambda==0.
-system_free = merged_ligs + ions_free + waters_free
-system_bound = system_merged_ligs + protein + ions_bound + waters_bound
-
+#system_bound = system_merged_ligs + protein + ions_bound + waters_bound
 # restore box information.
-system_free.setBox(waterbox_free)
-system_bound.setBox(waterbox_bound)
+#system_bound.setBox(waterbox_bound)
 
-
-
-
-
-
+system_1.removeMolecules(system_ligand_1)
+system_1.addMolecules(system_merged_ligs)
+system_bound = system_1
 
 ########################### now set up the SOMD or GROMACS MD directories. 
 #first, figure out which engine and what runtime the user has specified in protocol.
@@ -157,32 +158,71 @@ freenrg_protocol = BSS.Protocol.FreeEnergy(num_lam=num_lambda, runtime=runtime_q
 ############# Set up the directory environment.
 # testing is already done by BSS.
 print(f"Setting up {engine_query} directory environment in outputs/{engine_query}/{sys.argv[1]}~{sys.argv[2]}.")
-# set up a SOMD bound+free folder with standard settings.
+# set up a bound+free folder with standard settings.
+# Use solvation to prep the bound leg
+# Is it necessary to duplicate pert/prm7/rst7 inputs for each lambda folder ? 
+
+
 print("Bound..")
-BSS.FreeEnergy.Binding(
+workdir=f"outputs/{engine_query}/{sys.argv[1]}~{sys.argv[2]}"
+BSS.FreeEnergy.Solvation(
                     system_bound, 
                     freenrg_protocol, 
                     engine=f"{engine_query}",
-                    work_dir=f"outputs/{engine_query}/{sys.argv[1]}~{sys.argv[2]}"
+                    work_dir=workdir
 )
 
-# set up a SOMD free + vacuum folder. Note that the free folder is overwritten, which is what we want because
+cmd = "mv %s/free %s/bound" % (workdir,workdir)
+os.system(cmd)
+
+# set up a free + vacuum folder. Note that the free folder is overwritten, which is what we want because
 # we've equilibrated the ligand and ligand+protein separately.
 print("Free..")
 BSS.FreeEnergy.Solvation(
                     system_free, 
                     freenrg_protocol, 
                     engine=f"{engine_query}",
-                    work_dir=f"outputs/{engine_query}/{sys.argv[1]}~{sys.argv[2]}"
+                    work_dir=workdir
 )
 
+cmd = "rm -rf %s/vacuum" % (workdir)
+os.system(cmd)
 
 
+# Until we figure out what is going on overwrite BSS generated cfg files with parameter set that works 
+if engine_query == 'SOMD':
+    cfg_template = """platform = CUDA
+nmoves = 5000
+ncycles = 10
+buffered coordinates frequency = 1250
+save coordinates = True
+timestep = 2 * femtosecond
+constraint = hbonds-notperturbed
+hydrogen mass repartitioning factor = 1.0
+cutoff type = cutoffperiodic
+cutoff distance = 10*angstrom
+barostat = True
+thermostat = True
+energy frequency = 250
+precision = mixed
+minimise = True
+equilibrate = False
+center solute = True
+reaction field dielectric = 82.0
+minimal coordinate saving = False
+"""
+    lams = freenrg_protocol.getLambdaValues()
 
+    lamarraystring = "lambda array = %.4f" % lams[0]
+    for lam in lams[1:]:
+        lamarraystring += ", %.4f" % lam
+    #print (lamarraystring)
 
-
-
-
+    cfg_template += lamarraystring + "\n"
+    import glob
+    config_files = glob.glob(f"{workdir}/*/lambda*/somd.cfg")
+    for cfg in config_files:
+        f = open(cfg, 'w'); f.write(cfg_template); f.close()
 
 
 
