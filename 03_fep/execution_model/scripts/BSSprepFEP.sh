@@ -2,7 +2,7 @@
 echo $SLURM_JOB_NAME
 date
 
-$BSSHOME/bin/ipython scripts/BSSprepFEP.py $1 $2
+$BSSHOME/bin/python scripts/BSSprepFEP.py $1 $2
 date
 sleep 5
 exit 0

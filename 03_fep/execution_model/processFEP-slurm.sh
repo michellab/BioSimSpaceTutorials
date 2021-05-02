@@ -11,7 +11,7 @@
 # = = =
 # Stage 0 set cluster specific parameters
 CPUQUEUE="serial"
-GPUQUEUE="GTX980"
+GPUQUEUE="GTX1080"
 export BSSHOME="/export/users/julien/miniconda3/"
 export TMPDIR="./tmp/"
 export OPENMM_PLUGIN_DIR="$BSSHOME/lib/plugins/"
@@ -34,7 +34,7 @@ ANALYSISTIME="00:30:00"
 num=$(< "ligands.dat" wc -l)
 tasks=$(( $num -1 ))
 echo "@@@ Parameterising dataset @@@"
-echo $tasks
+#echo $tasks
 ID1=$(sbatch --parsable --array [0-$tasks] --partition=$GPUQUEUE --ntasks=1 --gres=gpu:1 --time=$PARAMTIME --job-name=ligprep --output=logs/ligprep_%A_%a.out scripts/BSSligprep.sh)
 echo "sbatch --parsable --array [0-$tasks] --partition=$GPUQUEUE --ntasks=1 --gres=gpu:1 --time=$PARAMTIME --job-name=ligprep --output=logs/ligprep_%A_%a.out scripts/BSSligprep.sh"
 #echo $ID1

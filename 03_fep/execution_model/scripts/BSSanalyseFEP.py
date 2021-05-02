@@ -14,7 +14,9 @@ results_file_path = "./outputs/summary.csv"
 
 engine = sys.argv[3]
 path_to_dir = f"./outputs/{engine}/{sys.argv[1]}~{sys.argv[2]}"
-
+print (path_to_dir)
+#path_to_dir = "./outputs/%s/%s~%s" % (engine, sys.argv[1], sys.argv[2])
+#print (path_to_dir)
 try:
     pmf_0, pmf_1, freenrg, overlap_matrix_bound, overlap_matrix_free = BSS.FreeEnergy.analyse(path_to_dir, "binding")
     freenrg_val = round(freenrg[0].magnitude(), 4)
