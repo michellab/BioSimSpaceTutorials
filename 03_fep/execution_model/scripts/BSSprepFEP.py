@@ -192,7 +192,7 @@ os.system(cmd)
 # Until we figure out what is going on overwrite BSS generated cfg files with parameter set that works 
 if engine_query == 'SOMD':
     cfg_template = """platform = CUDA
-nmoves = 5000
+nmoves = 50000
 ncycles = 10
 buffered coordinates frequency = 1250
 save coordinates = True
@@ -209,7 +209,7 @@ minimise = True
 equilibrate = False
 center solute = True
 reaction field dielectric = 82.0
-minimal coordinate saving = False
+minimal coordinate saving = True
 """
     lams = freenrg_protocol.getLambdaValues()
 

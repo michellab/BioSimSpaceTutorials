@@ -5,18 +5,24 @@ import csv
 import os
 import numpy as np 
 
-print ("%s %s %s" % (sys.argv[0], sys.argv[1], sys.argv[2]))
+print ("%s %s %s %s" % (sys.argv[0], sys.argv[1], sys.argv[2], sys.argv[3]))
 results_file_path = "./outputs/summary.csv"
 
 
 # simply load the FEP directory of the corresponding ligand using BSS.
 # this function computes the binding free energy as well.
 
-engine = sys.argv[3]
+#print (sys.argv)
+engine = sys.argv[3].rstrip()
+#print ("@%s@" % sys.argv[1])
+#print ("@%s@" % sys.argv[2])
+#print ("@%s@" % engine)
+
 path_to_dir = f"./outputs/{engine}/{sys.argv[1]}~{sys.argv[2]}"
 print (path_to_dir)
 #path_to_dir = "./outputs/%s/%s~%s" % (engine, sys.argv[1], sys.argv[2])
 #print (path_to_dir)
+
 try:
     pmf_0, pmf_1, freenrg, overlap_matrix_bound, overlap_matrix_free = BSS.FreeEnergy.analyse(path_to_dir, "binding")
     freenrg_val = round(freenrg[0].magnitude(), 4)
