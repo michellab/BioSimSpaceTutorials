@@ -11,7 +11,7 @@
 # = = =
 # Stage 0 set cluster specific parameters
 CPUQUEUE="serial"
-GPUQUEUE="GTX1080"
+GPUQUEUE="GTX980"
 export BSSHOME="/export/users/julien/miniconda3/"
 export TMPDIR="./tmp/"
 export OPENMM_PLUGIN_DIR="$BSSHOME/lib/plugins/"

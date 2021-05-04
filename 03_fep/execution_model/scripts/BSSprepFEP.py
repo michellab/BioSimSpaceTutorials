@@ -16,11 +16,6 @@ ligand_2_sys = BSS.IO.readMolecules([f"{ligs_path}{sys.argv[2]}_lig_equil_solv.r
 ligand_1 = ligand_1_sys.getMolecule(0)
 ligand_2 = ligand_2_sys.getMolecule(0)
 
-# Extract ions.
-#print("NB: THIS MIGHT BE FAILING AS THE IONS ARE RETURNED AS ATOMS BUT THEY SHOULD BE RETURNED AS MOLECULES!!")
-#print("lester suggests to convert to molecule and then continuing, but I have to get going now..")
-#ions_free += ligand_1.search("not mols with atomidx 2")
-
 # Align ligand2 on ligand1
 print("Mapping and aligning..")
 print(ligand_1, ligand_2)
