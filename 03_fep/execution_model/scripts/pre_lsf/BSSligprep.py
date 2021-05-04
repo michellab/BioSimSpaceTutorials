@@ -17,7 +17,8 @@ tmp_dir = os.environ["TMPDIR"]
 amber_home = os.environ["AMBERHOME"]
 pmemd_path = amber_home + "/bin/pmemd.cuda" 
 
-################
+
+#################
 ### Open 'ligands.dat', find sys.argv[1] 'th entry
 print (f"{sys.argv[0]} {sys.argv[1]}")
 idx = int( sys.argv[1] ) 
@@ -181,6 +182,9 @@ def runProcess(system, protocol, pmemd=False):
 
 ############# first minimise/equilibrate the solvated ligand.
 print("\n#### Working on solvated ligand.")
+print(f"Minimising in {minim_steps} steps..")
+protocol = BSS.Protocol.Minimisation(steps=minim_steps)
+minimised = runProcess(lig_p_solvated, protocol)
 
 print(f"PMEMD NVT equilibration for {runtime_short_nvt} ps while restraining all non-solvent atoms..")
 protocol = BSS.Protocol.Equilibration(
@@ -283,6 +287,3 @@ for mol in sys_equil_fin.getMolecules()[:20]:
     print(mol)
 print("Done.")
 
-import BioSimSpace as BSS
-from BioSimSpace import _Exceptions
-import sys
