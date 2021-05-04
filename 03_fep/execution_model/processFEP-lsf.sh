@@ -40,7 +40,7 @@ num=$(< "ligands.dat" wc -l)
 tasks=$(( $num ))
 echo "@@@ Parameterising dataset @@@"
 #echo $tasks
-ID1=$(nk_jobid bsub -J "ligprep[1-$tasks]" -q $GPUQUEUE -gpu "num=1:mode=exclusive_process" -n 1 -W $PARAMTIME -o logs/ligprep_%J_%I.out < "scripts/BSSligprep.sh")
+ID1=$(nk_jobid bsub -J "ligprep[1-$tasks]" -q $GPUQUEUE -gpu "num=1:mode=exclusive_process" -n 1 -W $PARAMTIME -o logs/ligprep_%J_%I.out < sh "scripts/BSSligprep.sh")
 
 echo "bsub -J "ligprep[1-$tasks]" -q $GPUQUEUE -n 1 -W $PARAMTIME -o logs/ligprep_%J_%I.out scripts/BSSligprep.sh"
 echo $ID1
@@ -54,20 +54,20 @@ do
     echo "@@@ Processing ${ligpair[0]} ${ligpair[1]} $win @@@" 
     
     # Stage 2a. Generate FEP inputs with a single job over a single CPU
-    ID2=$(nk_jobid bsub -J prepFEP -w "done($ID1)" -ti -q $CPUQUEUE -n 1 -W $PREPTIME -o logs/prepFEP_%J.out < "scripts/BSSprepFEP.sh ${ligpair[0]} ${ligpair[1]}")
+    ID2=$(nk_jobid bsub -J prepFEP -w "done($ID1)" -ti -q $CPUQUEUE -n 1 -W $PREPTIME -o logs/prepFEP_%J.out < sh "scripts/BSSprepFEP.sh ${ligpair[0]} ${ligpair[1]}")
 
     echo "bsub -J prepFEP -w done($ID1) -ti -q $CPUQUEUE -n 1 -W $PREPTIME -o logs/prepFEP_%J.out scripts/BSSprepFEP.sh ${ligpair[0]} ${ligpair[1]}"
     echo $ID2
 
     # Stage 2b. Job array with 2*nwindows to run over free and bound legs over GPUs
     tasks=$(( 2*${ligpair[2]} - 1 ))
-    ID3=$(nk_jobid bsub -J "runFEP[1-$tasks]" -w "done($ID2)" -ti -q $GPUQUEUE -gpu "num=1:mode=exclusive_process" -n 1 -W $RUNTIME -o logs/runFEP_%J.out < "scripts/BSSrunFEP.sh ${ligpair[0]} ${ligpair[1]} ${ligpair[3]} ${ligpair[4]}")
+    ID3=$(nk_jobid bsub -J "runFEP[1-$tasks]" -w "done($ID2)" -ti -q $GPUQUEUE -gpu "num=1:mode=exclusive_process" -n 1 -W $RUNTIME -o logs/runFEP_%J.out < sh "scripts/BSSrunFEP.sh ${ligpair[0]} ${ligpair[1]} ${ligpair[3]} ${ligpair[4]}")
 
     echo " bsub -J runFEP[1-$tasks] -w done($ID2) -ti -q $GPUQUEUE -gpu num=1:mode=exclusive_process -n 1 -W $RUNTIME -o logs/runFEP_%J.out scripts/BSSrunFEP.sh ${ligpair[0]} ${ligpair[1]} ${ligpair[3]} ${ligpair[4]}"
     echo $ID3
 
     # Stage 2c. Single job to process output of free and bound legs
-    ID4=$(nk_jobid bsub -J analyseFEP -w "done($ID3)" -ti -q $CPUQUEUE -n 1 -W $ANALYSISTIME -o logs/analyseFEP_%J.out < "scripts/BSSanalyseFEP.sh ${ligpair[0]} ${ligpair[1]} ${ligpair[4]}")
+    ID4=$(nk_jobid bsub -J analyseFEP -w "done($ID3)" -ti -q $CPUQUEUE -n 1 -W $ANALYSISTIME -o logs/analyseFEP_%J.out < sh "scripts/BSSanalyseFEP.sh ${ligpair[0]} ${ligpair[1]} ${ligpair[4]}")
 
     echo "bsub -J analyseFEP -w done($ID3) -ti -q $CPUQUEUE -n 1 -W $ANALYSISTIME -o logs/analyseFEP_%J.out scripts/BSSanalyseFEP.sh ${ligpair[0]} ${ligpair[1]} ${ligpair[4]}"
     echo $ID4
