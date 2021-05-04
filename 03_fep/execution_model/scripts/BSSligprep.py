@@ -7,8 +7,8 @@ import csv
 ### Settings.
 minim_steps = 250
 runtime_short_nvt = 5 # ps
-runtime_nvt = 5 # ps RESET to 50 after TESTING ! 
-runtime_npt = 20 # ps RESET to 200 after TESTING ! 
+runtime_nvt = 50 # ps RESET to 50 after TESTING ! 
+runtime_npt = 200 # ps RESET to 200 after TESTING ! 
 
 ### preamble. tmp_dir should at some point be derived using os.environ.get("")
 
@@ -181,6 +181,10 @@ def runProcess(system, protocol, pmemd=False):
 
 ############# first minimise/equilibrate the solvated ligand.
 print("\n#### Working on solvated ligand.")
+
+print(f"Minimising in {minim_steps} steps..")
+protocol = BSS.Protocol.Minimisation(steps=minim_steps)
+minimised = runProcess(lig_p_solvated, protocol)
 
 print(f"PMEMD NVT equilibration for {runtime_short_nvt} ps while restraining all non-solvent atoms..")
 protocol = BSS.Protocol.Equilibration(

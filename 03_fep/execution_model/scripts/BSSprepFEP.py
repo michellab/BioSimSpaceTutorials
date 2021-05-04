@@ -19,12 +19,12 @@ ligand_2 = ligand_2_sys.getMolecule(0)
 # Align ligand2 on ligand1
 print("Mapping and aligning..")
 print(ligand_1, ligand_2)
-mapping = BSS.Align.matchAtoms(ligand_2, ligand_1, sanitize=True, complete_rings_only=True)
-ligand_2_a = BSS.Align.rmsdAlign(ligand_2, ligand_1, mapping)
+mapping = BSS.Align.matchAtoms(ligand_1, ligand_2, sanitize=True, complete_rings_only=True)
+ligand_1_a = BSS.Align.rmsdAlign(ligand_1, ligand_2, mapping)
 
 # Generate merged molecule.
 print("Merging..")
-merged_ligs = BSS.Align.merge(ligand_2_a, ligand_1, mapping)
+merged_ligs = BSS.Align.merge(ligand_1_a, ligand_2, mapping)
 
 #### Get equilibrated waters and waterbox information for both bound and free. Get all information from lambda==0
 # Following is work around because setBox() doesn't validate correctly boxes with lengths and angles
@@ -34,7 +34,6 @@ ligand_1_sys.addMolecules(merged_ligs)
 system_free = ligand_1_sys
 
 
-#sys.exit(-1)
 
 ################ now repeat above steps, but for the protein + ligand systems.
 # Load equilibrated bound inputs for both ligands. Complain if input not found
@@ -81,14 +80,14 @@ else:
 
 # Align ligand2 on ligand1
 print("Mapping..")
-mapping = BSS.Align.matchAtoms(system_ligand_2, system_ligand_1, sanitize=True, complete_rings_only=True)
+mapping = BSS.Align.matchAtoms(system_ligand_1, system_ligand_2, sanitize=True, complete_rings_only=True)
 
 print("Aligning..")
-system_ligand_2_a = BSS.Align.rmsdAlign(system_ligand_2, system_ligand_1, mapping)
+system_ligand_1_a = BSS.Align.rmsdAlign(system_ligand_1, system_ligand_2, mapping)
 
 # Generate merged molecule.
 print("Merging..")
-system_merged_ligs = BSS.Align.merge(system_ligand_2_a, system_ligand_1, mapping)
+system_merged_ligs = BSS.Align.merge(system_ligand_1_a, system_ligand_2, mapping)
 
 
 
