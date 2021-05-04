@@ -121,7 +121,7 @@ Because a single FEP simulation typically takes 5-10 hours to run on a single GP
 
 Given a protein input file and a series of ligand input files, we will be using a Jupyter Notebook that uses LOMAP to generate a perturbation network for us. This notebook will also write all files necessary to further prepare our FEP simulations. Because preparing ligands and proteins for FEP can already require some heavy computation, this will be the first process that will run on a cluster. Then, after running and processing the FEP outputs, we can download the results back to our local workstation. There, the analysis notebook uses FreeEnergyAnalysis to process FEP predictions and generate plots.
 
-![image-20210430133129126](./inputs/tut_imgs/fep_pipeline.png)
+![image-20210504100831357](./inputs/tut_imgs/fep_pipeline.png)
 
 *Figure 3: Schematic of the FEP pipeline in this report. Whereas blue boxes represent notebooks run on a local machine, orange boxes represent python scripts run sequentially on a computing cluster.*
 
