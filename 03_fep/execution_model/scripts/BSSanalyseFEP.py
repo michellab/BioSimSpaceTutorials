@@ -3,11 +3,39 @@ from BioSimSpace import _Exceptions
 import sys
 import csv
 import os
-import numpy as np 
+import numpy as np
+
+from matplotlib import colors
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 print ("%s %s %s %s" % (sys.argv[0], sys.argv[1], sys.argv[2], sys.argv[3]))
 results_file_path = "./outputs/summary.csv"
 
+def plotOverlapMatrix(overlap_matrix, savepath):
+	"""
+	Given a SOMD-style overlap numpy matrix, plot heatmap in best practices style.
+
+	--args
+	overlap matrix (array): numpy 2D array of (n,n)
+
+	--returns
+        None; saves plot instead.
+	"""
+
+
+	ovlp_mtx = overlap_matrix
+
+	cmap = colors.ListedColormap(['#FBE8EB','#88CCEE','#78C592', '#117733'])
+	bounds=[0.0, 0.025, 0.1, 0.3,0.8]
+	norm = colors.BoundaryNorm(bounds, cmap.N, clip=False)
+	cbar_kws=dict(ticks=[.025, .1, .3,0.8], label='Phase space overlap')
+	ax = sns.heatmap(ovlp_mtx,annot=False, fmt='.2f', linewidths=.3,
+	                 annot_kws={"size": 14},square=True,robust=True,cmap=cmap,
+	                 norm=norm,cbar_kws=cbar_kws)
+	ax.xaxis.tick_top()
+
+	plt.savefig(savepath, dpi=200)
 
 # simply load the FEP directory of the corresponding ligand using BSS.
 # this function computes the binding free energy as well.
@@ -22,13 +50,14 @@ path_to_dir = f"./outputs/{engine}/{sys.argv[1]}~{sys.argv[2]}"
 print (path_to_dir)
 #path_to_dir = "./outputs/%s/%s~%s" % (engine, sys.argv[1], sys.argv[2])
 #print (path_to_dir)
-
+freenrg_val = "NaN"
+freenrg_err = "NaN"
 try:
     pmf_0, pmf_1, freenrg, overlap_matrix_bound, overlap_matrix_free = BSS.FreeEnergy.analyse(path_to_dir, "binding")
     freenrg_val = round(freenrg[0].magnitude(), 4)
     freenrg_err = round(freenrg[1].magnitude(), 4)
 except _Exceptions.AnalysisError:
-    freenrg_val = freenrg_err = "Fail"
+    freenrg_val = freenrg_err = "NaN"
     overlap_matrix_bound = overlap_matrix_free = None
 
 
@@ -69,11 +98,11 @@ with open(results_file_path, "a") as freenrg_writefile:
 # them in ./logs/
 if overlap_matrix_bound:
     np.save(f"logs/overlap_bound_{sys.argv[1]}~{sys.argv[2]}", np.matrix(overlap_matrix_bound))
+    plotOverlapMatrix(np.matrix(overlap_matrix_bound), f"logs/overlap_bound_{sys.argv[1]}~{sys.argv[2]}.png")
 else:
     print("Failed to write overlap matrix for bound leg.")
 if overlap_matrix_free:
     np.save(f"logs/overlap_free_{sys.argv[1]}~{sys.argv[2]}", np.matrix(overlap_matrix_free))
+    plotOverlapMatrix(np.matrix(overlap_matrix_free), f"logs/overlap_free_{sys.argv[1]}~{sys.argv[2]}.png")
 else:
     print("Failed to write overlap matrix for free leg.")
-
-
