@@ -118,9 +118,7 @@ Because a single FEP simulation typically takes 5-10 hours to run on a single GP
 
 Given a protein input file and a series of ligand input files, we will be using a Jupyter Notebook that uses LOMAP to generate a perturbation network for us. This notebook will also write all files necessary to further prepare our FEP simulations. Because preparing ligands and proteins for FEP can already require some heavy computation, this will be the first process that will run on a cluster. Then, after running and processing the FEP outputs, we can download the results back to our local workstation. There, the analysis notebook uses FreeEnergyAnalysis to process FEP predictions and generate plots.
 
-![image-20210504100831357](./inputs/tut_imgs/fep_pipeline.png)
-
-*Figure 3: Schematic of the FEP pipeline in this report. Whereas blue boxes represent notebooks run on a local machine, orange boxes represent python scripts run sequentially on a computing cluster.*
+![image-20210505085133042](./inputs/tut_imgs/fep_pipeline.png)*Figure 3: Schematic of the FEP pipeline in this report. Whereas blue boxes represent notebooks run on a local machine, orange boxes represent python scripts run sequentially on a computing cluster.*
 
 # 1. Generating a perturbation network to run FEP on a congeneric series of ligands
 
@@ -143,7 +141,7 @@ If everything has been set up correctly, running:
 
 ![image-20210430144209198](./inputs/tut_imgs/submit_command.png)
 
-will start the whole FEP job submission. First, all systems will be prepared, then run and then analysed (see figure 3). When all jobs are finished (or when the first perturbation has finished), FEP predictions will be written to ```./outputs/SOMD/summary.csv``` (in case of SOMD engine). Logfiles for seeing process outputs can be found in ```./logs/```.
+will start the whole FEP job submission. First, all systems will be prepared, then run and then analysed (see figure 3). When all jobs are finished (or when the first perturbation has finished), FEP predictions will be written to ```./outputs/SOMD/summary.csv``` (in case of SOMD engine). Logfiles for seeing process outputs can be found in ```./logs/```. Additionally, perturbations that were simulated successfully will have an *overlap matrix* figure saved to ```./logs/```; these can be checked to see if convergence was reached per simulation leg (see [Best Practices for Alchemical Free Energy Calculations](https://www.livecomsjournal.org/article/18378-best-practices-for-alchemical-free-energy-calculations-article-v1-0) ).
 
 For our final analysis, we will only need ```./outputs/SOMD/summary.csv```. Thus, we need to download this file back onto our local workstation. We can do this with SCP again, by running (from our workstation, i.e. not logged into the cluster):
 
@@ -151,9 +149,9 @@ For our final analysis, we will only need ```./outputs/SOMD/summary.csv```. Thus
 
 # 3. Analysing FEP results 
 
-For this step, open the jupyter notebook **analyse_fep.ipynb**. Running cells in this notebook will generate typical FEP figures (barplots and scatterplots); if you have missing or failed perturbations, the script should be able to work out an optimal prediction (although at some point with enough missing FEP predictions, ligands will of course be missing). If you happen to have experimental affinity values, you can validate how accurate your FEP predictions are 
+For this step, open the jupyter notebook **analyse_fep.ipynb**. Running cells in this notebook will generate typical FEP figures (barplots and scatterplots); if you have missing or failed perturbations, the script should be able to work out an optimal prediction (although at some point with enough missing FEP predictions, ligands will of course be missing). If you happen to have experimental affinity values, you can validate how accurate your FEP predictions are.
 
 An example result from this notebook is the classic barplot:
 
-<img src="./inputs/tut_imgs/fep_barplot.png" alt="image-20210430162134986" style="zoom:67%;" />
+![image-20210505085226743](./inputs/tut_imgs/fep_barplot.png)
 
