@@ -60,7 +60,7 @@ do
     echo $ID2
 
     # Stage 2b. Job array with 2*nwindows to run over free and bound legs over GPUs
-    tasks=$(( 2*${ligpair[2]} - 1 ))
+    tasks=$(( 2*${ligpair[2]} )) # not -1 (as with the slurm script) accounts for LSF arrays starting at 1.
     ID3=$(nk_jobid bsub -J "runFEP[1-$tasks]" -w "done($ID2)" -ti -q $GPUQUEUE -gpu "num=1:mode=exclusive_process" -n 1 -W $RUNTIME -o logs/runFEP_%J.out scripts/BSSrunFEP.sh ${ligpair[0]} ${ligpair[1]} ${ligpair[3]} ${ligpair[4]})
 
     echo " bsub -J runFEP[1-$tasks] -w done($ID2) -ti -q $GPUQUEUE -gpu num=1:mode=exclusive_process -n 1 -W $RUNTIME -o logs/runFEP_%J.out scripts/BSSrunFEP.sh ${ligpair[0]} ${ligpair[1]} ${ligpair[3]} ${ligpair[4]}"
@@ -75,4 +75,3 @@ do
     # sleep 1 second to give lag between process IDs
     sleep 1
 done
-

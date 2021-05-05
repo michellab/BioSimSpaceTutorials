@@ -23,10 +23,10 @@ else
    echo "No array ID found - are you sure you are running this script on a cluster?"
 fi
 
-echo "Array ID is"
+echo "Array ID is" $ARRAY_TASK_ID
 
 
-if [ "$SLURM_ARRAY_TASK_ID" -ge "$nwin" ]; then
+if [ "$ARRAY_TASK_ID" -ge "$nwin" ]; then
     stage="free"
     idx=$(( $ARRAY_TASK_ID - $nwin ))
 else
