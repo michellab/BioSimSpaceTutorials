@@ -6,12 +6,9 @@ Authors:
 - Julien Michel
 
 TODO:
-- fix somd.cfg
-- use pre-equilibrated waterbox for FEP prep -> this is done but still requires testing
-- make LSF submission script (03/05)
-- integrate newest freenrgworkflows version
+- pip install newest freenrgworkflows version
 - wrap up documentation
-- wrap up notebook markdowns
+- wrap up notebooks
 
 ## Introduction
 
