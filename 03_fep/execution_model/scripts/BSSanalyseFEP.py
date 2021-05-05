@@ -5,6 +5,9 @@ import csv
 import os
 import numpy as np
 
+import matplotlib as mpl
+mpl.use('Agg')
+import matplotlib.pyplot as plt
 from matplotlib import colors
 import matplotlib.pyplot as plt
 import seaborn as sns
