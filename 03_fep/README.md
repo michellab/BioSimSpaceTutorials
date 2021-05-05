@@ -128,7 +128,7 @@ After running all the cells in this notebook, the folder ```./execution_model/``
 
 ![image-20210430143624001](./inputs/tut_imgs/scp_bash_line.png)
 
- 
+*Note: on some system setups, no copying will be needed as your computing cluster might be on the same file system as your local workstation.*
 
 # 2. Running FEP on a computing cluster using BioSimSpace
 
