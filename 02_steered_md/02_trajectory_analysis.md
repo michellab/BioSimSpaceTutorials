@@ -1,3 +1,5 @@
+# Steered MD in BioSimSpace
+
 Author: Adele Hardie
 
 Email: adele.hardie@ed.ac.uk
@@ -9,63 +11,97 @@ Email: adele.hardie@ed.ac.uk
 * matplotlib
 * A steered MD trajectory
 
-## Analysing sMD trajectories
 The purpose of the steered MD simulation is to access conformational space that would take a very long time (or be inaccessible altogether) at equilibrium. To generate the data for the Markov State Model, we need to see how the system behaves given some starting conformation. To do this, we will be running seeded MD simulations, where a snapshot from the sMD trajectory is used as a starting point for an equilibrium MD simulation.
 
 Start by importing required libraries:
+
+
 ```python
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 import BioSimSpace as BSS
 import os
 ```
 
-#### Visualize the CV progression
-PLUMED outputs a file with the CV value that was used for steering.
+## Plot steering output
+
+PLUMED outputs a file with the CV value that was used for steering, so we can see the progression during the simulation. The file is automatically named `COLVAR` by BioSimSpace. Here it is loaded as a pandas dataframe.
+
+
 ```python
 steering_output_file = 'data/COLVAR'
+df = pd.read_csv(steering_output_file, sep=' ', skipinitialspace=1, comment='#', header=None)
 ```
-This can be read into a pandas dataframe, and the plotted. Note that the time column was originally in ps and the rmsd column was originally in nm (default PLUMED output) and have been converted to ns and &#8491;.
+
+PLUMED outputs time in picoseconds and RMSD in nanometers. For easier plotting, we change time to nanoseconds and RMSD to Angstrom.
+
+
 ```python
-df = pd.read_csv(steering_output_file, sep=' ', comment='#', skipinitialspace=1, names=['time/ns', 'rmsd', 'bias'])
-df['time/ns'] = df['time/ns']/1000
-df['rmsd'] = df['rmsd']*10
-df.set_index('time/ns', inplace=True)
+df[0] = df[0]/1000
+df[1] = df[1]*10
+df.set_index(0, inplace=True)
 ```
+
+Now the RMSD change can be plotted:
+
+
 ```python
-ax = df['rmsd'].plot(figsize=(12,5))
+ax = df[1].plot(figsize=(12,5))
 ax.set_ylabel('RMSD/$\AA$')
+ax.set_xlabel('time/ns')
 ax.set_xlim(0, 152)
 ```
+ 
 <img src="figures/COLVAR_all.png">
-We can see how the WPD loop in PTP1B conformation moves closer and closer to the closed loop crystal structure.
+    
+Here the loop RMSD went down to alomst 1 A. This indicates that the loop conformation was very similar to the crystal structure of PTP1B with the loop closed (which was used as the target) and so we can proceed with extracting snapshots to use as seeds.
 
-#### Select snapshots
-In this case we will be extracting 100 snapshots and saving them as PDB files.
+However, sMD might not work on the first try - the steering duration and force constant used is highly dependent on each individual system. Below is an example of a failed steering attempt:
+
+<img src="figures/COLVAR_failed.png">
+
+Here steering was carried out for 80 ns only, and the force constant used was 2500 kJ mol$^{-1}$. The RMSD was decreasing as expected, but only reached around 2 A. This was deemed insufficient and a longer steering protocol with a larger force constant was decided upon in the end. Ultimately this will depend on the system you are working with and what the goal of the steering is.
+
+## Extract snapshots
+
+In this case we will be extracting 100 evenly spaced snapshots to be used as starting points for the seeded MD simulations.
+
+
 ```python
-snapshot_dir = 'snapshots'
+snapshot_dir = 'data'
 if not os.path.exists(snapshot_dir):
     os.mkdir(snapshot_dir)
 ```
-numpy is used to get evenly spaced indices. The end point used is the end of the steering stage, rather than the end of the entire simulation.
+
+Get frame indices for snapshots. Note that the end point selected is not the end of the simulation, but the end of the steering part.
+
+
 ```python
 number_of_snapshots = 100
-frames = np.linspace(0, 30000, number_of_snapshots, dtype=int)
+end = 150 / 0.002
+frames = np.linspace(0, end, number_of_snapshots, dtype=int)
 ```
-In this case, the RMSD was changing roughly evenly throughout the simulation. However, just to be safe, let's check the RMSD of the chosen 100 frames only.
-```python
-ax = df['rmsd'].iloc[frames].plot(figsize=(12,5))
-ax.set_ylabel('RMSD/$\AA$')
-ax.set_xlim(0, 152)
-```
-<img src="figures/COLVAR_snapshots.png">
-The snapshots sample a large range of RMSD values.
 
-#### Save snapshots
-Each snapshot is then saved as a PDB. We can use BioSimSpace to load a specific frame of a trajectory only.
+Check that the snapshots roughly even sample the RMSD range:
+
+
+```python
+ax = df[1].iloc[frames].plot(figsize=(12,5))
+ax.set_ylabel('RMSD/$\AA$')
+ax.set_xlabel('time/ns')
+ax.set_xlim(0, 150)
+```
+
+<img src="figures/COLVAR_snapshots.png">
+
+Save each snapshot as a PDB:
+
+
 ```python
 for i, index in enumerate(frames):
-    frame = BSS.Trajectory.getFrame(trajectory='data/sMD.nc', topology = 'data/system.prm7', index=int(index))
+    frame = BSS.Trajectory.getFrame(trajectory='/home/adele/Documents/PTP1B/steering.nc', topology = '/home/adele/Documents/PTP1B/system.prm7', index=int(index))
     BSS.IO.saveMolecules(f'{snapshot_dir}/snapshot_{i+1}', frame, 'pdb')
 ```
+
 These PDB files are to be used as starting points for 100 individual 100 ns simulations, starting with resolvation, minimisation and equilibration. This is very time consuming and best done on an HPC cluster. An [example script](02_run_seededMD.py) that can be used with an array submission is provided. Note that due to the additional phospho residue parameters required it is specific to PTP1B with a peptide substrate, but the `load_system()` function can be easily modified to work with other systems, while the rest of the script is transferable.
