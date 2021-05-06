@@ -3,6 +3,8 @@ Email:&nbsp;&nbsp; lester.hedges@bristol.ac.uk
 
 # Running nodes
 
+The companion notebook for this section can be found [here](https://github.com/michellab/BioSimSpaceTutorials/blob/4844562e7d2cd0b269cead56562ec16a3dfaef7c/01_introduction/05_running_nodes.ipynb)
+
 The previous section showed you how to write a node to perform minimisation of a molecular system within an interactive Jupyter notebook. Here we introduce you to some of the other ways of running BioSimSpace nodes, showing how the same script can be used in several different ways. 
 
 ## Running nodes on the command-line

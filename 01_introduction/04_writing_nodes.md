@@ -3,6 +3,8 @@ Email:&nbsp;&nbsp; lester.hedges@bristol.ac.uk
 
 # Nodes: _Interoperable workflow components_
 
+The companion notebook for this section can be found [here](https://github.com/michellab/BioSimSpaceTutorials/blob/4844562e7d2cd0b269cead56562ec16a3dfaef7c/01_introduction/04_writing_nodes.ipynb)
+
 So far we have been working with BioSimSpace in a rather ad hoc fashion. While this intereactive exploration is a great way of learning and prototyping ideas, it is not a good way of producing a reproducible and interoperable script that can be shared with others. For example, we created processes that used specific packages such as AMBER and GROMACS. If a user didn't have these available on their system, then the script simply wouldn't work. We also used hard-coded paths to input files. This means the user would have to edit the paths each time they ran the script with different input, which would quickly become tedious.
 
 In order to solve this problem, a core concept of BioSimSpace is the interoperable workflow component, or _node_. These are robust and portable Python scripts that typically do a small, well-defined piece of work. All inputs and outputs from the node are validated and the node is written in a such a way that it is _independent_ of the underlying software packages, i.e. the same script can work with a range of different packages. In addition, nodes are aware of the environment in which they are run, so can be used interactively, from the command-line, or within a workflow engine.

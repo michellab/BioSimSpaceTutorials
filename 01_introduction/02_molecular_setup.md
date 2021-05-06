@@ -3,6 +3,8 @@ Email:&nbsp;&nbsp; lester.hedges@bristol.ac.uk
 
 # Molecular setup
 
+The companion notebook for this section can be found [here](https://github.com/michellab/BioSimSpaceTutorials/blob/4844562e7d2cd0b269cead56562ec16a3dfaef7c/01_introduction/02_molecular_setup.ipynb)
+
 ## Introduction
 
 In this section we will learn how to use BioSimSpace to set up a molecular system ready for simulation. Starting from a molecular topology in the form of a [Protein Data Bank](https://www.rcsb.org/) format file, we will learn how to parameterise molecules using different molecular [force fields](https://en.wikipedia.org/wiki/Force_field_(chemistry)), then solvate them using various [water models](https://en.wikipedia.org/wiki/Water_model).

@@ -3,6 +3,8 @@ Email:&nbsp;&nbsp; lester.hedges@bristol.ac.uk
 
 # Molecular dynamics
 
+The companion notebook for this section can be found [here](https://github.com/michellab/BioSimSpaceTutorials/blob/4844562e7d2cd0b269cead56562ec16a3dfaef7c/01_introduction/03_molecular_dynamics.ipynb)
+
 ## Introduction
 
 In this section we will learn how to use BioSimSpace to configure and run some basic molecular dynamics simulations.

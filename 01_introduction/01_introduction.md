@@ -3,6 +3,8 @@ Email:&nbsp;&nbsp; lester.hedges@bristol.ac.uk
 
 # BioSimSpace
 
+The companion notebook for this section can be found [here](https://github.com/michellab/BioSimSpaceTutorials/blob/4844562e7d2cd0b269cead56562ec16a3dfaef7c/01_introduction/01_introduction.ipynb).
+
 ## Introduction
 
 Welcome to this workshop on [BioSimSpace](https://biosimspace.org), an _interoperable_ Python framework for biomolecular simulation. In this introductory session you will learn:
