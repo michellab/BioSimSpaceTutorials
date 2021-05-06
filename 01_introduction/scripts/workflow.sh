@@ -3,6 +3,11 @@
 # Exit immediately on error.
 set -e
 
+# Remove existing output.
+rm -f parameterised.*
+rm -f solvated.*
+rm -f minimised.*
+
 echo "Parameterising..."
 python nodes/parameterise.py --pdb inputs/methanol.pdb --forcefield gaff
 
