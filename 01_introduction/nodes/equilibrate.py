@@ -84,6 +84,12 @@ node.addInput("restart_interval", BSS.Gateway.Integer
     default=500)
 )
 
+node.addInput("engine", BSS.Gateway.String(
+    help="The molecular dynamics engine.",
+    allowed=BSS.MD.engines(),
+    default="auto")
+)
+
 
 # We now need to define the output of the node. In this case we will return a set of files representing the equilibrated molecular system in AMBER format and a single file containing the trajectory frames.
 
@@ -128,7 +134,7 @@ protocol = BSS.Protocol.Equilibration(
 # In[ ]:
 
 
-process = BSS.MD.run(system, protocol)
+process = BSS.MD.run(system, protocol, engine=node.getInput("engine"))
 
 
 # We now wait for the process to finish, then check whether there were any errors before continuing. If errors were raised, then we raise an exception and print the last 10 lines of `stdout` and `stderr` to the user.

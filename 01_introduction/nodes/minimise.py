@@ -51,6 +51,12 @@ node.addInput("steps", BSS.Gateway.Integer(
     default=10000)
 )
 
+node.addInput("engine", BSS.Gateway.String(
+    help="The molecular dynamics engine.",
+    allowed=BSS.MD.engines(),
+    default="auto")
+)
+
 
 # Note that the input requirement `steps` has a default value, so it is optional.
 # 
@@ -101,12 +107,12 @@ system = BSS.IO.readMolecules(node.getInput("files"))
 protocol = BSS.Protocol.Minimisation(steps=node.getInput("steps"))
 
 
-# We now have everything that is required to run a minimisation. To do so, we use `BioSimSpace.MD` to find an appropriate molecular dynamics package on our current environment. What package is found will depend upon both the system and protocol, as well as the hardware that is available to the user.
+# We now have everything that is required to run a minimisation. To do so, we use `BioSimSpace.MD` to find an appropriate molecular dynamics package on our current environment. What package is found will depend upon both the system and protocol, as well as the hardware that is available to the user. (For example, the user can choose to find packages with GPU support.)
 
 # In[ ]:
 
 
-process = BSS.MD.run(system, protocol)
+process = BSS.MD.run(system, protocol, engine=node.getInput("engine"))
 
 
 # We now wait for the process to finish, then check whether there were any errors before continuing. If errors were raised, then we raise an exception and print the last 10 lines of `stdout` and `stderr` to the user.
@@ -127,7 +133,8 @@ if process.isError():
 # In[ ]:
 
 
-node.setOutput("minimised", BSS.IO.saveMolecules("minimised", process.getSystem(), system.fileFormat()))
+node.setOutput("minimised",
+    BSS.IO.saveMolecules("minimised", process.getSystem(), system.fileFormat()))
 
 
 # Finally, we validate that the node completed succesfully. This will check that all output requirements are satisfied. Any file outputs will be available for the user to download as a compressed archive.
