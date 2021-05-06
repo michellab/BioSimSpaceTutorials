@@ -455,18 +455,8 @@ plot1 = BSS.Notebook.plot(process.getTime(time_series=True), process.getTemperat
 plot2 = BSS.Notebook.plot(process.getTime(time_series=True), process.getTotalEnergy(time_series=True))
 ```
 
-
+![Time-series plots](https://github.com/michellab/BioSimSpaceTutorials/blob/dd5a24e58778af21612ade7febe5ba7fd98f9885/01_introduction/assets/03_time_series.png)
     
-![png](output_51_0.png)
-    
-
-
-
-    
-![png](output_51_1.png)
-    
-
-
 (Note that, by default, the axis labels axis labels are automatically generated from the types and units of the x and y data that are passed to the function.)
 
 Re-run the cell using "CTRL+Return" to see the graphs update as the simulation progesses. (Occasionally, you might see a warning that the x and y data sets are mismatched in length, this is because the data was extracted before all records were written to disk.)
@@ -493,17 +483,7 @@ We can now visualise the system:
 view.system()
 ```
 
-
-    
-
-
-
-    ThemeManager()
-
-
-
-    NGLWidget(gui_style='ngl')
-
+![Visualise the system](https://github.com/michellab/BioSimSpaceTutorials/blob/dd5a24e58778af21612ade7febe5ba7fd98f9885/01_introduction/assets/03_view_system.png)
 
 (If you see an empty view, try re-executing the cell.)
 
@@ -514,9 +494,7 @@ To only view a specific molecule:
 view.molecule(0)
 ```
 
-
-    NGLWidget(gui_style='ngl')
-
+![Visualise a molecule](https://github.com/michellab/BioSimSpaceTutorials/blob/86442df77e2ad33ae79f62e214a53af42cb320ec/01_introduction/assets/03_view_molecule.png)
 
 To view a list of molecules:
 
@@ -525,8 +503,7 @@ To view a list of molecules:
 view.molecules([0, 5, 10])
 ```
 
-
-    NGLWidget(gui_style='ngl')
+![Visualise some molecules](https://github.com/michellab/BioSimSpaceTutorials/blob/86442df77e2ad33ae79f62e214a53af42cb320ec/01_introduction/assets/03_view_molecules.png)
 
 
 If a particular view was of interest it can be reloaded as follows:
@@ -537,9 +514,7 @@ If a particular view was of interest it can be reloaded as follows:
 view.reload(0)
 ```
 
-
-    NGLWidget(gui_style='ngl')
-
+![Visualise the system](https://github.com/michellab/BioSimSpaceTutorials/blob/dd5a24e58778af21612ade7febe5ba7fd98f9885/01_introduction/assets/03_view_system.png)
 
 To save a specific view as a PDB file:
 
@@ -638,8 +613,4 @@ BSS.Notebook.plot(y=process.getTrajectory().rmsd(frame=0, atoms=indices),
                   xlabel="Frame", ylabel="RMSD")
 ```
 
-
-    
-![png](output_77_0.png)
-    
-
+![RMSD vs frame index](https://github.com/michellab/BioSimSpaceTutorials/blob/dd5a24e58778af21612ade7febe5ba7fd98f9885/01_introduction/assets/03_rmsd.png)
