@@ -9,7 +9,7 @@ So far we have been working with BioSimSpace in a rather ad hoc fashion. While t
 
 In order to solve this problem, a core concept of BioSimSpace is the interoperable workflow component, or _node_. These are robust and portable Python scripts that typically do a small, well-defined piece of work. All inputs and outputs from the node are validated and the node is written in a such a way that it is _independent_ of the underlying software packages, i.e. the same script can work with a range of different packages. In addition, nodes are aware of the environment in which they are run, so can be used interactively, from the command-line, or within a workflow engine.
 
-While it is possible to write a node directly as a Python script, we suggest that the best way of writing one is inside of a [Jupyter](http://jupyter.org) notebook, like this. As you've already seen, the interactive notebook environment provides a fantastic way of prototyping and documenting your node and will allow a user to interact with it directly on a remote cloud server, such as [notebook.biosimspace.org](https://notebook.biosimspace.org). The notebook can provide a complete record of your work, inlcuding documentation, visualisation, and graphs. When you are happy with the node, you can download it as a regular Python script (by clicking on `File/Download As/Python` in JupyterHub or `File/Export Notebook As/Export Notebook to Executable Script` in JupyterLab) and run it directly from the command-line on your workstation, laptop, or on a high-performance computing cluster. Any interactive BioSimSpace elements, such as molecular visualisations, will simply be ignored when run this way.
+While it is possible to write a node directly as a Python script, we suggest that the best way of writing one is inside of a [Jupyter](http://jupyter.org) notebook. As you've already seen, the interactive notebook environment provides a fantastic way of prototyping and documenting your node and will allow a user to interact with it directly on a remote cloud server, such as [notebook.biosimspace.org](https://notebook.biosimspace.org). The notebook can provide a complete record of your work, inlcuding documentation, visualisation, and graphs. When you are happy with the node, you can download it as a regular Python script (by clicking on `File/Download As/Python` in JupyterHub or `File/Export Notebook As/Export Notebook to Executable Script` in JupyterLab) and run it directly from the command-line on your workstation, laptop, or on a high-performance computing cluster. Any interactive BioSimSpace elements, such as molecular visualisations, will simply be ignored when run this way.
 
 
 ## An example: Minimisation
@@ -92,7 +92,7 @@ node.showControls()
 
 Once all requirements are set then we can acces the values using the `node.getInput` method. The first time this is called the `node` will automatically validate all of the input and report the user if any errors were found.
 
-We'll now create a molecular system using the input files uploaded by the user. As in the previous notebook, we don't need to specify the format of the files, since this is automatically determined by BioSimSpace. (BioSimSpace has support for a wide range of formats and can convert between many formats too.)
+We'll now create a molecular system using the input files uploaded by the user. As in the previous section, we don't need to specify the format of the files, since this is automatically determined by BioSimSpace. (BioSimSpace has support for a wide range of formats and can convert between many formats too.)
 
 
 ```python
@@ -108,7 +108,7 @@ protocol = BSS.Protocol.Minimisation(steps=node.getInput("steps"))
 
 We now have everything that is required to run a minimisation. To do so, we use the `BSS.MD` package to find an appropriate molecular dynamics package on our current environment. What package is found will depend upon both the system and protocol, as well as the hardware that is available to the user. (For example, the user can choose to find packages with GPU support.)
 
-Note that this is different to the previous notebook, where we specifically launched AMBER and GROMACS processes ourselves. This is what makes the node interoperable, i.e. it will work regardles of what MD packages are installed. (As long as we find a package that supports minimisation and supports a molecular file format to which we can convert the input system.) By adding the optional `engine` requirement we have also allowed the user to override the `auto` setting if they prefer to use a specific engine.
+Note that this is different to the previous section, where we specifically launched AMBER and GROMACS processes ourselves. This is what makes the node interoperable, i.e. it will work regardles of what MD packages are installed. (As long as we find a package that supports minimisation and supports a molecular file format to which we can convert the input system.) By adding the optional `engine` requirement we have also allowed the user to override the `auto` setting if they prefer to use a specific engine.
 
 (By default, the `run` function automatically starts the process so it will be running as once you execute the cell below.)
 
