@@ -87,7 +87,7 @@ When uploading files the name of the current file(s) will replace the `Upload` b
 node.showControls()
 ```
 
-![Notebook GUI](https://github.com/michellab/BioSimSpaceTutorials/blob/0800c84f845d7f7863bb916aaeb0d3bba3bf4137/01_introduction/assets/04_gui.png)
+![Notebook GUI](https://github.com/michellab/BioSimSpaceTutorials/blob/c06201e9464732df5fd64fa560779ef333f59651/01_introduction/assets/04_gui.png)
 
 
 Once all requirements are set then we can acces the values using the `node.getInput` method. The first time this is called the `node` will automatically validate all of the input and report the user if any errors were found.
