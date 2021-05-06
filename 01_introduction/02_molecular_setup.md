@@ -416,7 +416,7 @@ view = BSS.Notebook.View(solvated)
 view.system()
 ```
 
-![Visualisation of the solvated system.](https://raw.githubusercontent.com/michellab/assets/main/BioSimSpaceTutorials/01_introduction//assets/02_solvated.png)
+![Visualisation of the solvated system.](https://github.com/michellab/BioSimSpaceTutorials/blob/d26d5bcfe8e66fa6c9aa8bdb9788fb5eeb252ee8/01_introduction/assets/02_solvated.png)
 
 
 Finally, let's save the system to file in AMBER format.
