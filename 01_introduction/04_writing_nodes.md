@@ -52,6 +52,12 @@ node.addInput("steps", BSS.Gateway.Integer(
     maximum=1000000,
     default=10000)
 )
+
+node.addInput("engine", BSS.Gateway.String(
+    help="The molecular dynamics engine",
+    allowed=BSS.MD.engines(),
+    default="auto")
+)
 ```
 
 Note that the input requirement `steps` has a default value, so it is optional.
@@ -95,12 +101,12 @@ As learned in the previus notebook, in order to run a minimisation we need to de
 
 
 ```python
-protocol = BSS.Protocol.Minimisation(steps=node.getInput("steps"))
+protocol = BSS.Protocol.Minimisation(steps=node.getInput("steps"), engine=node.getInput("engine"))
 ```
 
-We now have everything that is required to run a minimisation. To do so, we use the `BSS.MD` package to find an appropriate molecular dynamics package on our current environment. What package is found will depend upon both the system and protocol, as well as the hardware that is available to the user.
+We now have everything that is required to run a minimisation. To do so, we use the `BSS.MD` package to find an appropriate molecular dynamics package on our current environment. What package is found will depend upon both the system and protocol, as well as the hardware that is available to the user. (For example, the user can choose to find packages with GPU support.)
 
-Note that this is different to the previous notebook, where we specifically launched AMBER and GROMACS processes ourselves. This is what makes the node interoperable, i.e. it will work regardles of what MD packages are installed. (As long as we find a package that supports minimisation and supports a molecular file format to which we can convert the input system.)
+Note that this is different to the previous notebook, where we specifically launched AMBER and GROMACS processes ourselves. This is what makes the node interoperable, i.e. it will work regardles of what MD packages are installed. (As long as we find a package that supports minimisation and supports a molecular file format to which we can convert the input system.) By adding the optional engine requirement we have also allowed the user to override the auto setting if they prefer to use a specific engine.
 
 (By default, the `run` function automatically starts the process so it will be running as once you execute the cell below.)
 
