@@ -1,12 +1,6 @@
 Author: Lester Hedges<br>
 Email:&nbsp;&nbsp; lester.hedges@bristol.ac.uk
 
-* Press Shift+Enter to execute a cell and move to the cell below.
-* Press Ctrl+Enter to execute a cell and remain in that cell.
-* Run a shell command on the underlying operating system by prefixing the command with an exclamation mark, !
-* Remember that the flow is in the order that you execute cells, which is not necessarily linear in the notebook. Keep track of the numbers in brackets to the left of the cell!
-
-
 # Molecular dynamics
 
 ## Introduction
