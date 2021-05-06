@@ -78,14 +78,7 @@ When uploading files the name of the current file(s) will replace the `Upload` b
 ```python
 node.showControls()
 ```
-
-
-    Box(children=(Box(children=(Box(children=(Label(value='files: A set of molecular input files.'), FileUpload(va…
-
-
-    Uploaded 'ala.crd' (68.23 kB)
-    Uploaded 'ala.top' (314.14 kB)
-
+![Notebook GUI](https://github.com/michellab/BioSimSpaceTutorials/blob/0800c84f845d7f7863bb916aaeb0d3bba3bf4137/01_introduction/assets/04_gui.png)
 
 Once all requirements are set then we can acces the values using the `node.getInput` method. The first time this is called the `node` will automatically validate all of the input and report the user if any errors were found.
 
@@ -135,7 +128,7 @@ node.validate()
 
 
 
-<a href='output.zip' target='_blank' download='output.zip'>output.zip</a><br>
+<a href='https://github.com/michellab/BioSimSpaceTutorials/blob/0800c84f845d7f7863bb916aaeb0d3bba3bf4137/01_introduction/assets/output.zip' target='_blank' download='output.zip'>output.zip</a><br>
 
 
 
