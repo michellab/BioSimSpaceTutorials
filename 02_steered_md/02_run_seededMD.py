@@ -67,7 +67,7 @@ def minimise(system, steps=2000, output_dir=''):
     protocol = BSS.Protocol.Minimisation(steps)
     process = BSS.Process.Amber(system, protocol)
     minimised = process.start().getSystem(block=True)
-    
+
     BSS.IO.saveMolecules(f'{output_dir}system_minimised', minimised, 'rst7')
     
     return minimised
@@ -118,26 +118,10 @@ def equilibrate(system, runtime=100*BSS.Units.Time.picosecond, output_dir=''):
     equilibrated : BioSimSpace._SireWrappers._system.System
         equilibrated system
     """
-    #first 10 ps with sander
-    protocol = BSS.Protocol.Equilibration(runtime=10*BSS.Units.Time.picosecond, temperature=300*BSS.Units.Temperature.kelvin, pressure=1*BSS.Units.Pressure.atm)
-    process = BSS.Process.Amber(system, protocol)
-    process.start()
-    process.wait()
-    
-    #rest pmemd.cuda
-    process._exe = f'{os.environ["AMBERHOME"]}/bin/pmemd.cuda'
-    #fix time
-    configuration = process.getConfig()
-    for i, conf in enumerate(configuration):
-        if 'nstlim' in conf:
-            configuration[i] = f'  nstlim={int((runtime - protocol.getRunTime())/protocol.getTimeStep())},'
-    process.setConfig(configuration)
-    #fix new starting point
-    args = process.getArgs()
-    args['-c'] = 'amber.crd'
-    process.setArgs(args)
-    
+    protocol = BSS.Protocol.Equilibration(runtime=runtime, temperature=300*BSS.Units.Temperature.kelvin, pressure=1*BSS.Units.Pressure.atm)
+    process = BSS.Process.Amber(system, protocol)        
     equilibrated = process.start().getSystem(block=True)
+    
     BSS.IO.saveMolecules(f'{output_dir}system_equilibrated.rst7', equilibrated, 'rst7')
     
     return equilibrated
