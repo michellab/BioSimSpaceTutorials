@@ -60,7 +60,7 @@ node.addInput("engine", BSS.Gateway.String(
 )
 ```
 
-Note that the input requirement `steps` has a default value, so it is optional.
+Note that the input requirements `steps` and `engine` have default values, so are optional.
 
 We now need to define the output of the node. In this case we will return a set of files representing the minimised molecular system.
 
