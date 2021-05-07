@@ -1,0 +1,31 @@
+logFile leap.log
+#
+# ----- leaprc for loading phosphorylated amino acid residues
+#
+#	load atom type hybridizations
+#
+addAtomTypes {
+	{ "OP"  "O" "sp3" }
+	{ "OQ"  "O" "sp3" }
+	{ "OR"  "O" "sp3" }
+	{ "OT"  "O" "sp3" }
+	{ "OV"  "O" "sp3" }
+	{ "OX"  "O" "sp3" }
+	{ "OZ"  "O" "sp3" }
+}
+#
+#	Load the phosphorylated amino acid parameter set.
+#
+phosaa = loadamberparams frcmod.phosaa10
+#
+#       Load the phosphorylated amino acid libraries.
+#
+#loadoff phosaa10.lib
+#
+# load individual residues
+loadoff PTR.lib
+loadoff SEP.lib
+loadoff TPO.lib
+loadoff Y1P.lib
+loadoff S1P.lib
+loadoff T1P.lib
