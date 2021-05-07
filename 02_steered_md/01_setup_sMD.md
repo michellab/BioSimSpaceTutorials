@@ -10,10 +10,15 @@ Email: adele.hardie@ed.ac.uk
 
 ## Introduction
 
-Allosteric inhibition can be a useful alternative to conventional protein target-ing when the nature of the active site makes it difficult to design binders. This requires  assessment  of  whether  an  allosteric  binder  actually  has  an  effect  onprotein function, such as whether its presence shifts protein conformational ensemble to favour the inactive state. This can be modelled as a Markov chain by Markov State Models(MSMs).  Since the system is treated as memoryless, model building only requires local equilibrium. Therefore, it can make use of shorter MD simulations, allowing them to be run in parallel.
+Allosteric inhibition can be a useful alternative to conventional protein targeting when the nature of the active site makes it difficult to design binders. One of such proteins is protein tyrosine phosphatase 1B (PTP1B), which will be used as an example system for this tutorial. The activity of PTP1B depends on the conformation of its WPD loop, which can be open (yellow) or closed (red):
+
+<img src="figures/open-close.png" width=300>
+
+PTP1B is difficult to drug due to the charged nature of its active site, and so is of interest for allosteric inhibition studies. However, with allostery, knowing that a molecule binds to the protein is  not enough. It also requires  assessment  of  whether  an  allosteric  binder  actually  has  an  effect  on protein function. This can be assessed by Markov State Models(MSMs). MSMs are transition matrixes that provide insight into the statistical ensemble of protein conformations, such as what is the probability that a protein will exist in a certain conormation. Comparing the probability of the target protein being catalytically active between models with and without an allsoteric binder indicates whether or not it has potential as an inhibitor. Furthermore, since the system is treated as memoryless, model building only requires local equilibrium. Therefore, it can make use of shorter MD simulations, allowing them to be run in parallel.
 
 In order to have a more complete view of the protein ensemble, enhanced sampling methods are used, among them steered MD (sMD) (1). It introduces a bias potential that is added to the Hamiltonian, thus biasing the simulation towards a specified value of a chosen collective variable. Once the system has reached a certain conformation, those coordinates (2) can be used as starting points for equilibrium MD simulations (4) that can subsequently be used as data for constructing an MSM (4). An example summary of this is shown below:
-<img src="figures/ensemble-md-protocol.png" width=300>
+
+<img src="figures/ensemble-md-protocol.png" width=450>
 
 PLUMED is a library that, among other things, has enhanced sampling algorithms. It works with multiple MD engines, including GROMACS and AMBER. PLUMED uses a [moving restraint](https://www.plumed.org/doc-v2.5/user-doc/html/_m_o_v_i_n_g_r_e_s_t_r_a_i_n_t.html) that is calculated as follows:
 
@@ -21,9 +26,7 @@ V(s&#8407;,t) = 1&frasl;2 &kappa;(t) ( s&#8407; - s&#8407;<sub>0</sub>(t) )<sup>
 
 where s&#8407;<sub>0</sub> and &kappa; are time dependent and specified in the PLUMED input. s&#8407;<sub>0</sub> is the target CV value and &kappa; is the force constant in kJ mol<sup>-1</sup>. The values of both of them are set at specific steps, and linearly interpolated in between.
 
-This tutorial focuses on running the prerequisite simulations using BSS.The example system used is protein tyrosine phosphatase 1B(PTP1B), which exists in two dominant conformations: WPD loop open and WPD loop closed:
-
-<img src="figures/open-close.png" width=250>
+This tutorial focuses on running the prerequisite simulations for MSMs using BioSimSpace.
 
 ## Set up steered MD
 
