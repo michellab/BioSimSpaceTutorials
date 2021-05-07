@@ -55,13 +55,13 @@ ax.set_xlim(0, 152)
  
 <img src="figures/COLVAR_all.png">
     
-Here the loop RMSD went down to alomst 1 A. This indicates that the loop conformation was very similar to the crystal structure of PTP1B with the loop closed (which was used as the target) and so we can proceed with extracting snapshots to use as seeds.
+Here the loop RMSD went down to almost 1 A. This indicates that the loop conformation was very similar to the crystal structure of PTP1B with the loop closed (which was used as the target) and so we can proceed with extracting snapshots to use as seeds.
 
 However, sMD might not work on the first try - the steering duration and force constant used is highly dependent on each individual system. Below is an example of a failed steering attempt:
 
 <img src="figures/COLVAR_failed.png">
 
-Here steering was carried out for 80 ns only, and the force constant used was 2500 kJ mol$^{-1}$. The RMSD was decreasing as expected, but only reached around 2 A. This was deemed insufficient and a longer steering protocol with a larger force constant was decided upon in the end. Ultimately this will depend on the system you are working with and what the goal of the steering is.
+Here steering was carried out for 80 ns only, and the force constant used was 2500 kJ mol<sup>-1</sup>. The RMSD was decreasing as expected, but only reached around 2 A. This was deemed insufficient and a longer steering protocol with a larger force constant was decided upon in the end. Ultimately this will depend on the system you are working with and what the goal of the steering is.
 
 ## Extract snapshots
 
