@@ -5,11 +5,6 @@ Authors:
 - Jenke Scheen - j.scheen@sms.ed.ac.uk
 - Julien Michel
 
-TODO:
-- pip install newest freenrgworkflows version
-- wrap up documentation
-- wrap up notebooks
-
 ## Introduction
 
 Computational chemists can support structure-activity relationship studies in medicinal chemistry by making computer models that can predict binding affinity of ligands to proteins. One of the most popular techniques for this is Free Energy Perturbation (FEP), which relies on simulation alchemical transformations of ligands in a congeneric series, simulating them both in a protein target and in just a waterbox. Relative free energies of binding (ΔΔG in kcal/mol) can then be computed by simply subtracting the ΔG (in protein) and the ΔG (in water). Some introductory reading:
@@ -34,7 +29,7 @@ For this tutorial we will be using TYK2, a common benchmarking set in the FEP fi
 
 ​															*Figure 1: Tyrosine kinase 2 (TYK2) structure with bound ligand (ejm_48).*
 
-Typically in FEP the goal is to predict free energies of binding for a collection of ligands (normally 10-20). Although methods exist (such as absolute FEP) that can predict these energies directly (i.e. ΔGbind), these are often complicated and computationally expensive. (relative) FEP uses a basic rule in thermodynamics that dictates that given a thermodynamic cycle, the net energy must always be 0. FEP allows users to compute the ΔΔG of binding between two ligands through this mechanism (see figure 2).
+Typically in FEP the goal is to predict free energies of binding for a collection of ligands (normally 10-20). Although methods exist (such as absolute FEP) that can predict these energies directly (i.e. ΔGbind), these are often complicated and computationally expensive. (relative) FEP uses a basic rule in thermodynamics that dictates that, given a thermodynamic cycle, the net energy must always be 0. FEP allows users to compute the ΔΔG of binding between two ligands through this mechanism (see figure 2).
 
 
 
