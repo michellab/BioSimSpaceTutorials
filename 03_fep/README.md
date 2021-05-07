@@ -92,7 +92,7 @@ protocol = BSS.Protocol.FreeEnergy()
 And then we can let BioSimSpace set up all necessary files for us by:
 
 ```python
-freenrg = BSS.FreeEnergy.Solvation(solvated, protocol, work_dir="output")
+freenrg = BSS.FreeEnergy.Binding(solvated, protocol, work_dir="output")
 ```
 
 Running the FEP calculation is simply done running:
