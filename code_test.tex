@@ -1,0 +1,181 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% LIVECOMS ARTICLE TEMPLATE FOR TRAINING ARTICLE
+%%% ADAPTED FROM ELIFE ARTICLE TEMPLATE (8/10/2017)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% PREAMBLE
+\documentclass[9pt,training]{livecoms}
+% Use the 'onehalfspacing' option for 1.5 line spacing
+% Use the 'doublespacing' option for 2.0 line spacing
+% Use the 'lineno' option for adding line numbers.
+% Use the "ASAPversion' option following article acceptance to add the DOI and relevant dates to the document footer.
+% Use the 'pubversion' option for adding the citation and publication information to the document footer, when the LiveCoMS issue is finalized.
+% The 'training' option for indicates that this is a training article.
+% Omit the bestpractices option to remove the marking as a LiveCoMS paper.
+% Please note that these options may affect formatting.
+
+\usepackage{lipsum} % Required to insert dummy text
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\DeclareSIUnit\Molar{M}
+\usepackage[italic]{mathastext}
+\graphicspath{{figures/}}
+
+%%%%%%%% USER PACKAGES
+\usepackage{markdown}
+\usepackage{minted}
+\usepackage{tcolorbox}
+\tcbuselibrary{minted, breakable, skins}
+\definecolor{bg}{rgb}{244, 233, 228}
+\usepackage{listings}
+\lstset{
+	basicstyle=\ttfamily,
+	commentstyle={},
+	breakatwhitespace=true,
+	breaklines=true,
+	language=bash
+}
+
+\newtcblisting{pythoncode}[2][]{    
+  listing engine=minted,    
+  breakable,   
+  colback=bg,    
+  listing only,    
+  minted style=VS,    
+  minted language=python,    
+  minted options={texcl=true,#1},    
+  #2,
+}  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% IMPORTANT USER CONFIGURATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\versionnumber}{1.3}  % you should update the minor version number in preprints and major version number of submissions.
+\newcommand{\githubrepository}{\url{https://github.com/myaccount/homegithubrepository}}  %this should be the main github repository for this article
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% ARTICLE SETUP
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{This is the title [Article v\versionnumber]}
+
+\author[1*]{Firstname Middlename Surname}
+\author[1,2\authfn{1}\authfn{3}]{Firstname Middlename Familyname}
+\author[2\authfn{1}\authfn{4}]{Firstname Initials Surname}
+\author[2*]{Firstname Surname}
+\affil[1]{Institution 1}
+\affil[2]{Institution 2}
+
+\corr{email1@example.com}{FMS}  % Correspondence emails.  FMS and FS are the appropriate authors initials.
+\corr{email2@example.com}{FS}
+
+\orcid{Author 1 name}{AAAA-BBBB-CCCC-DDDD}
+\orcid{Author 2 name}{EEEE-FFFF-GGGG-HHHH}
+
+\contrib[\authfn{1}]{These authors contributed equally to this work}
+\contrib[\authfn{2}]{These authors also contributed equally to this work}
+
+\presentadd[\authfn{3}]{Department, Institute, Country}
+\presentadd[\authfn{4}]{Department, Institute, Country}
+
+\blurb{This LiveCoMS document is maintained online on GitHub at \githubrepository; to provide feedback, suggestions, or help improve it, please visit the GitHub repository and participate via the issue tracker.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% PUBLICATION INFORMATION
+%%% Fill out these parameters when available
+%%% These are used when the "pubversion" option is invoked
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pubDOI{10.XXXX/YYYYYYY}
+\pubvolume{<volume>}
+\pubissue{<issue>}
+\pubyear{<year>}
+\articlenum{<number>}
+\datereceived{Day Month Year}
+\dateaccepted{Day Month Year}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% ARTICLE START
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{frontmatter}
+\maketitle
+
+\begin{abstract}
+This particular document provides a skeleton illustrating key sections for a Training article.
+Please see the sample \texttt{sample-document.tex} in \url{github.com/livecomsjournal/article_templates/templates} for additional information on and examples of using the LiveCoMS LaTeX class.
+Here we also assume familiarity with LaTeX and knowledge of how to include figures, tables, etc.; if you want examples, see the sample just referenced.
+
+In your work, in this particular slot, please provide an abstract of no more than 250 words.
+Your abstract should explain the main contributions of your article, and should not contain any material that is not included in the main text.
+Please note that your abstract, plus the authorship material following it, must not extend beyond the title page or modifications to the LaTeX class will likely be needed.
+\end{abstract}
+
+\end{frontmatter}
+
+
+
+\begin{lstlisting}
+$ command -arg1 -arg2 -arg3 -arg4 -arg5 -arg6 > output.file 2> err.file
+\end{lstlisting}
+
+\begin{pythoncode}
+\\
+import numpy as np
+    
+def incmatrix(genl1,genl2):
+    M = []
+    m = len(genl1)  # comment 
+    for i in m:
+        M.append(i)
+    
+    return M
+\end{pythoncode}
+
+
+{\scriptsize
+\begin{lstlisting}[columns=flexible]
+
+%VERSION  VERSION_STAMP = V0001.000  DATE = 06/30/15  11:44:23                  
+%FLAG TITLE                                                                     
+%FORMAT(20a4)                                                                   
+ACE                                                                             
+%FLAG POINTERS                                                                  
+%FORMAT(10I8)                                                                   
+    1912       9    1902       9      25      11      43      24       0       0
+    2619     633       9      11      24      13      21      20      10       1
+       0       0       0       0       0       0       0       1      10       0
+       0
+%FLAG ATOM_NAME                                                                 
+%FORMAT(20a4)                                                                   
+HH31CH3 HH32HH33C   O   N   H   CA  HA  CB  HB1 HB2 HB3 C   O   N   H   CH3 HH31
+HH32HH33O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  
+O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  
+H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   
+H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  
+O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  
+H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   
+H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2 
+\end{lstlisting}
+}
+\begin{lstlisting}[columns=flexible]
+
+DISTANCERESSPEC
+# DISH  DISC
+  0.1   0.153
+# i     j  k  l  type i    j  k  l  type r0     w0    rah
+  1208  0  0  0  0    309  0  0  0  0    0.22   1.0   0
+  1208  0  0  0  0    321  0  0  0  0    0.235  1.0   0
+  1208  0  0  0  0    33   0  0  0  0    0.246  1.0   0
+  120   0  0  0  0    489  0  0  0  0    0.255  1.0   0
+  1208  0  0  0  0    490  0  0  0  0    0.248  1.0   0
+END
+\end{lstlisting}
+
+\subsection{Steered Dynamics}
+
+\subsection{Free Energy Perturbation}
+
+%\appendix
+
+
+\end{document}
