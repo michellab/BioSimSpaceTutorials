@@ -1,15 +1,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% LIVECOMS ARTICLE TEMPLATE FOR TRAINING ARTICLE
+%%% LIVECOMS ARTICLE TEMPLATE FOR BEST PRACTICES GUIDE
 %%% ADAPTED FROM ELIFE ARTICLE TEMPLATE (8/10/2017)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% PREAMBLE
-\documentclass[9pt,training]{livecoms}
+\documentclass[9pt,tutorial]{livecoms}
 % Use the 'onehalfspacing' option for 1.5 line spacing
 % Use the 'doublespacing' option for 2.0 line spacing
 % Use the 'lineno' option for adding line numbers.
 % Use the "ASAPversion' option following article acceptance to add the DOI and relevant dates to the document footer.
 % Use the 'pubversion' option for adding the citation and publication information to the document footer, when the LiveCoMS issue is finalized.
-% The 'training' option for indicates that this is a training article.
+% The 'bestpractices' option for indicates that this is a best practices guide.
 % Omit the bestpractices option to remove the marking as a LiveCoMS paper.
 % Please note that these options may affect formatting.
 
@@ -20,11 +20,11 @@
 \usepackage[italic]{mathastext}
 \graphicspath{{figures/}}
 
-%%%%%%%% USER PACKAGES
-\usepackage{markdown}
+%%%%%%%%%% USER INPUT PACKAGES & FUNCTIONS
 \usepackage{minted}
 \usepackage{tcolorbox}
-\tcbuselibrary{minted}
+\tcbuselibrary{minted, breakable, skins}
+\definecolor{bg}{rgb}{244, 233, 228}
 \usepackage{listings}
 \lstset{
 	basicstyle=\ttfamily,
@@ -33,6 +33,18 @@
 	breaklines=true,
 	language=bash
 }
+\usepackage{pythonhighlight}
+\newtcblisting{pythoncode}[2][]{    
+  listing engine=minted,    
+  breakable,   
+  colback=bg,    
+  listing only,    
+  minted style=VS,    
+  minted language=python,    
+  minted options={texcl=true,#1},    
+  #2,
+}  
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% IMPORTANT USER CONFIGURATION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -89,7 +101,7 @@
 \maketitle
 
 \begin{abstract}
-This particular document provides a skeleton illustrating key sections for a Training article.
+This particular document provides a skeleton illustrating key sections for a Tutorial document.
 Please see the sample \texttt{sample-document.tex} in \url{github.com/livecomsjournal/article_templates/templates} for additional information on and examples of using the LiveCoMS LaTeX class.
 Here we also assume familiarity with LaTeX and knowledge of how to include figures, tables, etc.; if you want examples, see the sample just referenced.
 
@@ -105,6 +117,7 @@ Please note that your abstract, plus the authorship material following it, must 
 
 \section{Introduction}
 
+
 Here you would explain what problem you are tackling and briefly motivate your work.
 
 In this particular template, we have removed most of the usage examples which occur in \texttt{sample-document.tex} to provide a minimal template you can modify; however, we retain a couple of examples illustrating more unusual features of our templates/article class, such as the checklists, and information on algorithms and pseudocode.
@@ -115,187 +128,28 @@ Additionally, for well-formatted manuscripts, we recommend that you let LaTeX ha
 
 \subsection{Scope}
 
-Training articles are largely self-contained and introduce readers to the theory and/or typical procedures for a particular aspect of molecular simulation.
+Tutorials should endeavor to cover the specific task at hand, and also highlight how the steps might need to be modified (or additional care might need to be taken at particular points) to handle more general cases.
 
-\begin{lstlisting}
-$ command -arg1 -arg2 -arg3 -arg4 -arg5 -arg6 > output.file 2> err.file
-\end{lstlisting}
-monokai
-
-\begin{tcblisting}{size=fbox,
-minted language=python}
-import numpy as np
-    
-def incmatrix(genl1,genl2):
-    m = len(genl1)
-    n = len(genl2)
-    M = None #to become the incidence matrix
-    VT = np.zeros((n*m,1), int)  #dummy variable
-
-    return M
-
-\end{tcblisting}
-
-Training articles need not refer to specific software commands and procedures but may do so to further the pedagogical goals of the paper.
-
-As needed, training articles are likely to display more details of calculations than typically are shown in research articles, for example, noting any mathematical principles or “tricks” used to derive key results.
-
-The scope of the training article should be clearly defined.
+The scope of the tutorial, as well as the expected proficiencies / outcomes for researchers who complete the tutorial, should be clearly defined.
 This will often happen in a specific section or subsection in the article itself.
 
 \section{Prerequisites}
 
-Training articles should clearly state the target audience and knowledge prerequisites.
-Key prerequisites should be noted in the article abstract to permit readers to rapidly ascertain an articles suitability.
+Here you would identify prerequisites/background knowledge that are assumed by your work, as well as any software/license requirements.
 
 \subsection{Background knowledge}
-
-Although the authors may imagine a particular career-level (e.g., undergraduate or graduate), given the diversity of disciplinary curricula, it is more important to specify precisely any knowledge prerequisites (e.g., vector calculus, basic thermodynamics).
+Tutorials should clearly define what concepts or abilities researchers will need to complete the tutorial (e.g., some proficiency in Python; experience with Jupyter notebooks; knowledge of classical MD; etc).
 
 \subsection{Software/system requirements}
-
-If a particular software or programming environment plays a central role in the article, that should be specified.
+Tutorials should clearly define what system and/or software requirements the researcher will need to complete the tutorial (e.g., VMD version 1.9 or newer, AMBER, etc.). Tutorials requiring specific software packages must provide instructions and files for the referenced version of the software.
 
 \section{Content and links}
 
-A training article may on additional files and materials; clearly indicate where and how these are available, with links, and how they are being archived for the long-term and maintained so they stay current.
+A tutorial will normally draw on additional files and materials; clearly indicate where and how these are available, with links, and how they are being archived for the long-term and maintained so they stay current.
 You will likely want to reference your GitHub repository as a central point to access all of this information, and then the GitHub repository may link out to other content as needed.
 
-%%%%%%%% TUTORIAL SECTIONS
-
-\subsection{Introduction to BioSimSpace}
-
-\markdownInput{01_introduction/01_introduction.md}
-
-
-\subsection{Funnel Meta-Molecular Dynamics}
-\newenvironment{cols}[1][]{}{}
-
-\newenvironment{col}[1]{\begin{minipage}{#1}\ignorespaces}{%
-\end{minipage}
-\ifhmode\unskip\fi
-\aftergroup\useignorespacesandallpars}
-
-\def\useignorespacesandallpars#1\ignorespaces\fi{%
-#1\fi\ignorespacesandallpars}
-
-\makeatletter
-\def\ignorespacesandallpars{%
-  \@ifnextchar\par
-    {\expandafter\ignorespacesandallpars\@gobble}%
-    {}%
-}
-\makeatother
-Let's import the BioSimSpace Python package and see what we can do. For
-convenience, we'll rename the package to BSS to save us typing:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\ImportTok{import}\NormalTok{ BioSimSpace }\ImportTok{as}\NormalTok{ BSS}
-\end{Highlighting}
-\end{Shaded}
-
-To see what file formats are supported by BioSimSpace, execute the cell
-below.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{BSS.IO.fileFormats()}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-['Gro87', 'GroTop', 'MOL2', 'PDB', 'PRM7', 'PSF', 'RST', 'RST7']
-\end{verbatim}
-
-Note that these refer to specific file \emph{formats}, rather than file
-\emph{extensions}. BioSimSpace doesn't care about file extensions, it's
-the \emph{contents} of the file that's important.
-
-If you aren't familiar with a particular format, you can get more
-information as follows, e.g.:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{BSS.IO.formatInfo(}\StringTok{"GroTop"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-'Gromacs Topology format files.'
-\end{verbatim}
-
-The \texttt{BSS.IO.readMolecules} function is used to read molecular
-information from file. We've provided some example input files for you
-in the \texttt{inputs} directory. Let's take a look at some of these.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\OperatorTok{!}\NormalTok{ls inputs}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-1jr5.crd  1jr5.top  ala.crd  kigaki.gro  methanol.pdb
-1jr5.pdb  2JJC.pdb  ala.top  kigaki.top
-\end{verbatim}
-
-The \texttt{ala.crd} and \texttt{ala.top} files define a solvated
-alanine dipeptide system in AMBER format. Execute the cell below to see
-part of the topology file:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\OperatorTok{!}\NormalTok{head }\OperatorTok{{-}}\NormalTok{n }\DecValTok{20}\NormalTok{ inputs}\OperatorTok{/}\NormalTok{ala.top}
-\end{Highlighting}
-\end{Shaded}
-
-{\footnotesize
-\begin{lstlisting}[columns=flexible]
-
-%VERSION  VERSION_STAMP = V0001.000  DATE = 06/30/15  11:44:23                  
-%FLAG TITLE                                                                     
-%FORMAT(20a4)                                                                   
-ACE                                                                             
-%FLAG POINTERS                                                                  
-%FORMAT(10I8)                                                                   
-    1912       9    1902       9      25      11      43      24       0       0
-    2619     633       9      11      24      13      21      20      10       1
-       0       0       0       0       0       0       0       1      10       0
-       0
-%FLAG ATOM_NAME                                                                 
-%FORMAT(20a4)                                                                   
-HH31CH3 HH32HH33C   O   N   H   CA  HA  CB  HB1 HB2 HB3 C   O   N   H   CH3 HH31
-HH32HH33O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  
-O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  
-H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   
-H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  
-O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  
-H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   
-H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2 
-\end{lstlisting}
-}
-\begin{lstlisting}[columns=flexible]
-
-DISTANCERESSPEC
-# DISH  DISC
-  0.1   0.153
-# i     j  k  l  type i    j  k  l  type r0     w0    rah
-  1208  0  0  0  0    309  0  0  0  0    0.22   1.0   0
-  1208  0  0  0  0    321  0  0  0  0    0.235  1.0   0
-  1208  0  0  0  0    33   0  0  0  0    0.246  1.0   0
-  120   0  0  0  0    489  0  0  0  0    0.255  1.0   0
-  1208  0  0  0  0    490  0  0  0  0    0.248  1.0   0
-END
-\end{lstlisting}
-
-\subsection{Steered Dynamics}
-
-\subsection{Free Energy Perturbation}
-
-
 \section{Checklists}
-Training articles do not necessarily require the use of a checklist as in Best Practices documents; however, they can include these if desired.
+Tutorials do not necessarily require the use of a checklist as in Best Practices documents; however, they can include these if desired.
 Several useful checklist formats are available, with examples presented in \texttt{sample-document.tex} in \url{github.com/livecomsjournal/article_templates/templates}.
 One example is shown here.
 

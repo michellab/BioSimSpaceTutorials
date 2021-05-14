@@ -1,15 +1,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% LIVECOMS ARTICLE TEMPLATE FOR TRAINING ARTICLE
+%%% LIVECOMS ARTICLE TEMPLATE FOR BEST PRACTICES GUIDE
 %%% ADAPTED FROM ELIFE ARTICLE TEMPLATE (8/10/2017)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% PREAMBLE
-\documentclass[9pt,training]{livecoms}
+\documentclass[9pt,tutorial]{livecoms}
 % Use the 'onehalfspacing' option for 1.5 line spacing
 % Use the 'doublespacing' option for 2.0 line spacing
 % Use the 'lineno' option for adding line numbers.
 % Use the "ASAPversion' option following article acceptance to add the DOI and relevant dates to the document footer.
 % Use the 'pubversion' option for adding the citation and publication information to the document footer, when the LiveCoMS issue is finalized.
-% The 'training' option for indicates that this is a training article.
+% The 'bestpractices' option for indicates that this is a best practices guide.
 % Omit the bestpractices option to remove the marking as a LiveCoMS paper.
 % Please note that these options may affect formatting.
 
@@ -20,8 +20,7 @@
 \usepackage[italic]{mathastext}
 \graphicspath{{figures/}}
 
-%%%%%%%% USER PACKAGES
-\usepackage{markdown}
+%%%%%%%%%% USER INPUT PACKAGES & FUNCTIONS
 \usepackage{minted}
 \usepackage{tcolorbox}
 \tcbuselibrary{minted, breakable, skins}
@@ -101,7 +100,7 @@
 \maketitle
 
 \begin{abstract}
-This particular document provides a skeleton illustrating key sections for a Training article.
+This particular document provides a skeleton illustrating key sections for a Tutorial document.
 Please see the sample \texttt{sample-document.tex} in \url{github.com/livecomsjournal/article_templates/templates} for additional information on and examples of using the LiveCoMS LaTeX class.
 Here we also assume familiarity with LaTeX and knowledge of how to include figures, tables, etc.; if you want examples, see the sample just referenced.
 
@@ -114,6 +113,25 @@ Please note that your abstract, plus the authorship material following it, must 
 
 
 
+
+\section{Introduction}
+
+Here you would explain what problem you are tackling and briefly motivate your work.
+
+In this particular template, we have removed most of the usage examples which occur in \texttt{sample-document.tex} to provide a minimal template you can modify; however, we retain a couple of examples illustrating more unusual features of our templates/article class, such as the checklists, and information on algorithms and pseudocode.
+
+Keep in mind, as you prepare your manuscript, that you should plan for a representative image  which will be used to highlight your article on the journal website and publications. Usually, this would be one of your figures, but it must also be uploaded separately upon article submission. We give specific guidelines for this image on the journal website in the section on article submission (see \url{https://livecomsjournal.github.io/authors/policies/index.html#article-submission}).
+
+Additionally, for well-formatted manuscripts, we recommend that you let LaTeX handle figure/table placement for you as much as possible, so please avoid specifying strenuous float instructions like `[h!]` and `[H]` as much as possible.
+
+\subsection{Scope}
+
+Tutorials should endeavor to cover the specific task at hand, and also highlight how the steps might need to be modified (or additional care might need to be taken at particular points) to handle more general cases.
+
+The scope of the tutorial, as well as the expected proficiencies / outcomes for researchers who complete the tutorial, should be clearly defined.
+This will often happen in a specific section or subsection in the article itself.
+
+\section{Prerequisites}
 \begin{lstlisting}
 $ command -arg1 -arg2 -arg3 -arg4 -arg5 -arg6 > output.file 2> err.file
 \end{lstlisting}
@@ -157,23 +175,109 @@ H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O
 H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2 
 \end{lstlisting}
 }
-\begin{lstlisting}[columns=flexible]
+Here you would identify prerequisites/background knowledge that are assumed by your work, as well as any software/license requirements.
 
-DISTANCERESSPEC
-# DISH  DISC
-  0.1   0.153
-# i     j  k  l  type i    j  k  l  type r0     w0    rah
-  1208  0  0  0  0    309  0  0  0  0    0.22   1.0   0
-  1208  0  0  0  0    321  0  0  0  0    0.235  1.0   0
-  1208  0  0  0  0    33   0  0  0  0    0.246  1.0   0
-  120   0  0  0  0    489  0  0  0  0    0.255  1.0   0
-  1208  0  0  0  0    490  0  0  0  0    0.248  1.0   0
-END
-\end{lstlisting}
+\subsection{Background knowledge}
+Tutorials should clearly define what concepts or abilities researchers will need to complete the tutorial (e.g., some proficiency in Python; experience with Jupyter notebooks; knowledge of classical MD; etc).
 
-\subsection{Steered Dynamics}
+\subsection{Software/system requirements}
+Tutorials should clearly define what system and/or software requirements the researcher will need to complete the tutorial (e.g., VMD version 1.9 or newer, AMBER, etc.). Tutorials requiring specific software packages must provide instructions and files for the referenced version of the software.
 
-\subsection{Free Energy Perturbation}
+\section{Content and links}
+
+A tutorial will normally draw on additional files and materials; clearly indicate where and how these are available, with links, and how they are being archived for the long-term and maintained so they stay current.
+You will likely want to reference your GitHub repository as a central point to access all of this information, and then the GitHub repository may link out to other content as needed.
+
+\section{Checklists}
+Tutorials do not necessarily require the use of a checklist as in Best Practices documents; however, they can include these if desired.
+Several useful checklist formats are available, with examples presented in \texttt{sample-document.tex} in \url{github.com/livecomsjournal/article_templates/templates}.
+One example is shown here.
+
+% Here is a single-column checklist that consists of multiple sub-checklists
+\begin{Checklists}
+
+\begin{checklist}{A list}
+\textbf{Single-column checklists are also straightforward by removing the asterisk}
+\begin{itemize}
+\item First thing let's do an item which breaks across lines to see how that looks
+\item Also remember
+\item And finally
+\end{itemize}
+\end{checklist}
+
+\begin{checklist}{Another list}
+\textbf{This is some further description.}
+\begin{itemize}
+\item First thing
+\item Also remember
+\item And finally
+\end{itemize}
+\end{checklist}
+
+\end{Checklists}
+
+
+
+
+
+
+
+
+\section{Author Contributions}
+%%%%%%%%%%%%%%%%
+% This section mustt describe the actual contributions of
+% author. Since this is an electronic-only journal, there is
+% no length limit when you describe the authors' contributions,
+% so we recommend describing what they actually did rather than
+% simply categorizing them in a small number of
+% predefined roles as might be done in other journals.
+%
+% See the policies ``Policies on Authorship'' section of https://livecoms.github.io
+% for more information on deciding on authorship and author order.
+%%%%%%%%%%%%%%%%
+
+(Explain the contributions of the different authors here)
+
+% We suggest you preserve this comment:
+For a more detailed description of author contributions,
+see the GitHub issue tracking and changelog at \githubrepository.
+
+\section{Other Contributions}
+%%%%%%%%%%%%%%%
+% You should include all people who have filed issues that were
+% accepted into the paper, or that upon discussion altered what was in the paper.
+% Multiple significant contributions might mean that the contributor
+% should be moved to authorship at the discretion of the a
+%
+% See the policies ``Policies on Authorship'' section of https://livecoms.github.io for
+% more information on deciding on authorship and author order.
+%%%%%%%%%%%%%%%
+
+(Explain the contributions of any non-author contributors here)
+% We suggest you preserve this comment:
+For a more detailed description of contributions from the community and others, see the GitHub issue tracking and changelog at \githubrepository.
+
+\section{Potentially Conflicting Interests}
+%%%%%%%
+%Declare any potentially competing interests, financial or otherwise
+%%%%%%%
+
+Declare any potentially conflicting interests here, whether or not they pose an actual conflict in your view.
+
+\section{Funding Information}
+%%%%%%%
+% Authors should acknowledge funding sources here. Reference specific grants.
+%%%%%%%
+FMS acknowledges the support of NSF grant CHE-1111111.
+
+\section*{Author Information}
+\makeorcid
+
+\bibliography{livecoms-sample}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% APPENDICES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %\appendix
 
