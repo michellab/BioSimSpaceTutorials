@@ -20,12 +20,23 @@
 \usepackage[italic]{mathastext}
 \graphicspath{{figures/}}
 
+%%%%%%%%%% USER INPUT PACKAGES & FUNCTIONS
+\usepackage{listings}
+\lstset{
+	basicstyle=\ttfamily,
+	commentstyle={},
+	breakatwhitespace=true,
+	breaklines=true,
+	language=bash
+}
+\usepackage{pythonhighlight}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% IMPORTANT USER CONFIGURATION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\versionnumber}{1.3}  % you should update the minor version number in preprints and major version number of submissions.
-\newcommand{\githubrepository}{\url{https://github.com/myaccount/homegithubrepository}}  %this should be the main github repository for this article
+\newcommand{\versionnumber}{1.0}  % you should update the minor version number in preprints and major version number of submissions.
+\newcommand{\githubrepository}{\url{https://github.com/michellab/BioSimSpaceTutorials}}  %this should be the main github repository for this article
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% ARTICLE SETUP
@@ -122,6 +133,12 @@ Tutorials should clearly define what system and/or software requirements the res
 A tutorial will normally draw on additional files and materials; clearly indicate where and how these are available, with links, and how they are being archived for the long-term and maintained so they stay current.
 You will likely want to reference your GitHub repository as a central point to access all of this information, and then the GitHub repository may link out to other content as needed.
 
+\subsection{Introduction}
+\subsection{Funnel Meta-Dynamics}
+\subsection{Steered Molecular Dynamics \& Markov State Modeling}
+\subsection{Free Energy Perturbation}
+\input{LIVECOMS/04_fep/04_fep}
+
 \section{Checklists}
 Tutorials do not necessarily require the use of a checklist as in Best Practices documents; however, they can include these if desired.
 Several useful checklist formats are available, with examples presented in \texttt{sample-document.tex} in \url{github.com/livecomsjournal/article_templates/templates}.
@@ -207,7 +224,7 @@ FMS acknowledges the support of NSF grant CHE-1111111.
 \section*{Author Information}
 \makeorcid
 
-\bibliography{livecoms-sample}
+\bibliography{references}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% APPENDICES
