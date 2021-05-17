@@ -55,8 +55,8 @@ elif [[ $engine == *"GROMACS"* ]]; then
     echo "cd outputs/GROMACS/$lig0~$lig1/$stage/lambda_$lambda/"
     cd outputs/GROMACS/$lig0~$lig1/$stage/lambda_$lambda/
     # run GROMACS simulation.
-    echo "gmx mdrun -v -deffnm gromacs"
-    gmx mdrun -v -deffnm gromacs
+    echo "gmx mdrun -v -deffnm gromacs 1> gromacs.log 2> gromacs.err"
+    gmx mdrun -v -deffnm gromacs 1> gromacs.log 2> gromacs.err
 else
     echo "The FEP engine $engine is not supported"
 fi
