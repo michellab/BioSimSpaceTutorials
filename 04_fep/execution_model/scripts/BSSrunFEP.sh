@@ -31,7 +31,7 @@ if [ "$ARRAY_TASK_ID" -ge "$nwin" ]; then
     idx=$(( $ARRAY_TASK_ID - $nwin ))
 else
     stage="bound"
-    idx=$ARRAY_TASK_ID 
+    idx=$ARRAY_TASK_ID
 fi
 
 
@@ -46,13 +46,17 @@ if [[ $engine == *"SOMD"* ]]; then
     echo "USING SOMD"
     echo "cd outputs/SOMD/$lig0~$lig1/$stage/lambda_$lambda/"
     cd outputs/SOMD/$lig0~$lig1/$stage/lambda_$lambda/
-    # run SOMD simulation.    
+    # run SOMD simulation.
     echo "$BSSHOME/bin/somd-freenrg -C ./somd.cfg -l $lambda -c ./somd.rst7 -t ./somd.prm7 -m ./somd.pert 1> somd.log 2> somd.err"
     $BSSHOME/bin/somd-freenrg -C ./somd.cfg -l $lambda -c ./somd.rst7 -t ./somd.prm7 -m ./somd.pert  1> somd.log 2> somd.err
 
 elif [[ $engine == *"GROMACS"* ]]; then
     echo "USING GROMACS"
-    # here run a gromacs exe on a lambda folder as above.
+    echo "cd outputs/GROMACS/$lig0~$lig1/$stage/lambda_$lambda/"
+    cd outputs/GROMACS/$lig0~$lig1/$stage/lambda_$lambda/
+    # run GROMACS simulation.
+    echo "gmx mdrun -v -deffnm gromacs"
+    gmx mdrun -v -deffnm gromacs
 else
     echo "The FEP engine $engine is not supported"
 fi
