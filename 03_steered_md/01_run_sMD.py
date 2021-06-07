@@ -3,6 +3,8 @@ import os
 from argparse import ArgumentParser
 from shutil import copyfile
 
+plumed_amber = "/home/model/MD-SOFTWARE/amber18-gnu-cu101-plumed-SLES"
+
 def parse_range(residue_range):
     """Parse residue range into a list
     
@@ -120,9 +122,10 @@ def run_sMD(topology, coordinates, reference, residues, steering_runtime, total_
 
     rmsd_cv = create_CV(reference, residues, system)
 
+    os.environ["AMBERHOME"] = plumed_amber
     protocol = setup_sMD_protocol(steering_runtime, total_runtime, force_constant, rmsd_cv)
 
-    process = BSS.Process.Amber(system, protocol, exe=f'{os.environ["AMBERHOME"]}/bin/pmemd.cuda')
+    process = BSS.Process.Amber(system, protocol, exe=f'{plumed_amber}/bin/pmemd.cuda')
 
     process.start()
     process.wait()
