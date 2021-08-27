@@ -56,9 +56,13 @@ print (path_to_dir)
 freenrg_val = "NaN"
 freenrg_err = "NaN"
 try:
-    pmf_0, pmf_1, freenrg, overlap_matrix_bound, overlap_matrix_free = BSS.FreeEnergy.analyse(path_to_dir, "binding")
+    pmf_bound, overlap_matrix_bound = BSS.FreeEnergy.Relative.analyse(path_to_dir+"/bound")
+    pmf_free, overlap_matrix_free = BSS.FreeEnergy.Relative.analyse(path_to_dir+"/free")
+
+    freenrg = BSS.FreeEnergy.Relative.difference(pmf_bound, pmf_free)
     freenrg_val = round(freenrg[0].magnitude(), 4)
     freenrg_err = round(freenrg[1].magnitude(), 4)
+
 except _Exceptions.AnalysisError:
     freenrg_val = freenrg_err = "NaN"
     overlap_matrix_bound = overlap_matrix_free = None
