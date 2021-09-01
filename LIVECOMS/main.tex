@@ -21,10 +21,6 @@
 \graphicspath{{figures/}}
 
 %%%%%%%%%% USER INPUT PACKAGES & FUNCTIONS
-\usepackage{minted}
-\usepackage{tcolorbox}
-\tcbuselibrary{minted, breakable, skins}
-\definecolor{bg}{rgb}{244, 233, 228}
 \usepackage{listings}
 \lstset{
 	basicstyle=\ttfamily,
@@ -33,23 +29,14 @@
 	breaklines=true,
 	language=bash
 }
+\usepackage{pythonhighlight}
 
-\newtcblisting{pythoncode}[2][]{    
-  listing engine=minted,    
-  breakable,   
-  colback=bg,    
-  listing only,    
-  minted style=VS,    
-  minted language=python,    
-  minted options={texcl=true,#1},    
-  #2,
-}  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% IMPORTANT USER CONFIGURATION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\versionnumber}{1.3}  % you should update the minor version number in preprints and major version number of submissions.
-\newcommand{\githubrepository}{\url{https://github.com/myaccount/homegithubrepository}}  %this should be the main github repository for this article
+\newcommand{\versionnumber}{1.0}  % you should update the minor version number in preprints and major version number of submissions.
+\newcommand{\githubrepository}{\url{https://github.com/michellab/BioSimSpaceTutorials}}  %this should be the main github repository for this article
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% ARTICLE SETUP
@@ -132,49 +119,7 @@ The scope of the tutorial, as well as the expected proficiencies / outcomes for 
 This will often happen in a specific section or subsection in the article itself.
 
 \section{Prerequisites}
-\begin{lstlisting}
-$ command -arg1 -arg2 -arg3 -arg4 -arg5 -arg6 > output.file 2> err.file
-\end{lstlisting}
 
-\begin{pythoncode}
-\\
-import numpy as np
-    
-def incmatrix(genl1,genl2):
-    M = []
-    m = len(genl1)  # comment 
-    for i in m:
-        M.append(i)
-    
-    return M
-\end{pythoncode}
-
-
-{\scriptsize
-\begin{lstlisting}[columns=flexible]
-
-%VERSION  VERSION_STAMP = V0001.000  DATE = 06/30/15  11:44:23                  
-%FLAG TITLE                                                                     
-%FORMAT(20a4)                                                                   
-ACE                                                                             
-%FLAG POINTERS                                                                  
-%FORMAT(10I8)                                                                   
-    1912       9    1902       9      25      11      43      24       0       0
-    2619     633       9      11      24      13      21      20      10       1
-       0       0       0       0       0       0       0       1      10       0
-       0
-%FLAG ATOM_NAME                                                                 
-%FORMAT(20a4)                                                                   
-HH31CH3 HH32HH33C   O   N   H   CA  HA  CB  HB1 HB2 HB3 C   O   N   H   CH3 HH31
-HH32HH33O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  
-O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  
-H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   
-H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  
-O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  
-H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   
-H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2  O   H1  H2 
-\end{lstlisting}
-}
 Here you would identify prerequisites/background knowledge that are assumed by your work, as well as any software/license requirements.
 
 \subsection{Background knowledge}
@@ -187,6 +132,12 @@ Tutorials should clearly define what system and/or software requirements the res
 
 A tutorial will normally draw on additional files and materials; clearly indicate where and how these are available, with links, and how they are being archived for the long-term and maintained so they stay current.
 You will likely want to reference your GitHub repository as a central point to access all of this information, and then the GitHub repository may link out to other content as needed.
+
+\subsection{Introduction}
+\subsection{Funnel Meta-Dynamics}
+\subsection{Steered Molecular Dynamics \& Markov State Modeling}
+\subsection{Free Energy Perturbation}
+\input{LIVECOMS/04_fep/04_fep}
 
 \section{Checklists}
 Tutorials do not necessarily require the use of a checklist as in Best Practices documents; however, they can include these if desired.
@@ -273,7 +224,7 @@ FMS acknowledges the support of NSF grant CHE-1111111.
 \section*{Author Information}
 \makeorcid
 
-\bibliography{livecoms-sample}
+\bibliography{references}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% APPENDICES
