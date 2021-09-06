@@ -1,0 +1,8 @@
+numpy
+scipy
+networkx
+pytest
+pytest-cov
+codecov
+seaborn
+nbformat

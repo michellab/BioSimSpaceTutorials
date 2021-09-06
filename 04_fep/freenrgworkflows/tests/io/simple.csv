@@ -1,0 +1,5 @@
+# Simple test: two mols, difference of 1, zero hysteresis
+#####
+m1,m2,1,0.1
+m2,m1,-1,0.1
+#####

@@ -32,7 +32,8 @@ import pandas as pd
 
 class NetworkAnalyser(object):
 
-    def __init__(self, use_weights=True, target_compound=None, iterations=10000, verbose=False):
+    def __init__(self, use_weights=True, target_compound=None, iterations=10000, verbose=False, 
+                balance_hysteresis=True):
         self._weights = {}
         self._ddG_edges = {}
         self._compoundList = None
@@ -43,6 +44,9 @@ class NetworkAnalyser(object):
         self.iterations = iterations
         self._verbose = verbose
         self._graph = None
+
+        # if True, use relative hysteresis penalty. If False, use absolute.
+        self.balance_hysteresis = balance_hysteresis
 
     def _identify_header(self, path, n=5, th=0.9, comments=None):
         """
@@ -464,9 +468,13 @@ class NetworkAnalyser(object):
         # Compute relative hysteresis. This way high ddG edges result in the same hysteresis
         # penalty as low ddG edges, instead of high ddG edges being over-penalised.
         hys = eng1 + eng2
-        rel_hys = hys/max(abs(eng1), abs(eng2))
 
-        return max(minh, abs(rel_hys))
+        rel_hys = hys/max(abs(eng1), abs(eng2))
+        
+        if self.balance_hysteresis:
+            return max(minh, abs(rel_hys))
+        else:
+            return max(minh, abs(hys))
 
     def _get_avg_weight(self, mol1, mol2):
         """ Given two keys, return the average weight of
@@ -528,7 +536,7 @@ class NetworkAnalyser(object):
         return self._weights
 
     @property
-    def freeEnergyInKcal(self):
+    def freeEnergyInKcal(self, balance_hysteresis=True):
         """ Return the free energies as a list of dictionaries
         """
 
