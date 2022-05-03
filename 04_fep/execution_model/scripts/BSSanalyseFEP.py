@@ -60,8 +60,8 @@ try:
     pmf_free, overlap_matrix_free = BSS.FreeEnergy.Relative.analyse(path_to_dir+"/free")
 
     freenrg = BSS.FreeEnergy.Relative.difference(pmf_bound, pmf_free)
-    freenrg_val = round(freenrg[0].magnitude(), 4)
-    freenrg_err = round(freenrg[1].magnitude(), 4)
+    freenrg_val = round(freenrg[0].value(), 4)
+    freenrg_err = round(freenrg[1].value(), 4)
 
 except _Exceptions.AnalysisError:
     freenrg_val = freenrg_err = "NaN"
