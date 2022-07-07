@@ -154,5 +154,5 @@ For this step, open the jupyter notebook **analyse_fep.ipynb**. Running cells in
 
 An example result from this notebook is the classic barplot:
 
-![image-20210505085226743](./inputs/tut_imgs/fep_barplot.png)
+![image-20210505085226743](./outputs/fep_vs_exp_barplot.png)
 
