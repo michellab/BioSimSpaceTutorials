@@ -11,4 +11,4 @@ Now that all of the required seeded MD simulations have run, we can use the traj
 
 <img src="figures/msm_final.png" width=500>
 
-The model indicates that this particular way of modelling PTP1B with peptide substrate results in catalytically active conformations 2% of the time. Returning to the idea of allosteric inhibition, if a second model, built for a system including an allosteric binder of interest, showed a decrease in active conformation probability, it would suggest that this binder has inhibition potential.
+The model indicates that this particular way of modelling PTP1B with peptide substrate results in catalytically active conformations 20% of the time. Returning to the idea of allosteric inhibition, if a second model, built for a system including an allosteric binder of interest, showed a decrease in active conformation probability, it would suggest that this binder has inhibition potential.
