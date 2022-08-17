@@ -14,5 +14,5 @@ conda activate bss
 
 #run python script
 #output will be saved in current directory
-python ~/Documents/BioSimSpaceTutorials/03_steered_md/01_run_sMD.py --topology ~/Documents/BioSimSpaceTutorials/02_steered_md/data/system.prm7 --coordinates ~/Documents/BioSimSpaceTutorials/02_steered_md/data/system.rst7 --reference ~/Documents/BioSimSpaceTutorials/02_steered_md/data/reference.pdb --residues 178-184 --steering_runtime 0.2 --total_runtime 0.25 --force 3500
+python 01_run_sMD.py --topology data/system.prm7 --coordinates data/system.rst7 --reference data/reference.pdb --residues 178-184 --steering_runtime 150 --total_runtime 152 --force 3500
 
