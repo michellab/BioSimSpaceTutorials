@@ -41,26 +41,42 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% ARTICLE SETUP
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{This is the title [Article v\versionnumber]}
+\title{A Suite of Tutorials for the BioSimSpace framework for interoperable biomolecular simulation [Article v\versionnumber]}
+% Everyone in alphabetical order other than Lester
 
-\author[1*]{Firstname Middlename Surname}
-\author[1,2\authfn{1}\authfn{3}]{Firstname Middlename Familyname}
-\author[2\authfn{1}\authfn{4}]{Firstname Initials Surname}
-\author[2*]{Firstname Surname}
-\affil[1]{Institution 1}
-\affil[2]{Institution 2}
+\author[1*]{Lester O. Hedges}
+\author[]{Sofia Bariami}
+\author[2]{Adele Hardie}
+\author[3]{Dominykas Lukauskis}
+\author[2]{Antonia S.J.S. Mey}
+\author[2*]{Julien Michel}
+\author[2\authfn{1}]{Jenke Scheen}
 
-\corr{email1@example.com}{FMS}  % Correspondence emails.  FMS and FS are the appropriate authors initials.
-\corr{email2@example.com}{FS}
+%\author[1,2\authfn{1}\authfn{3}]{Firstname Middlename Familyname}
+%\author[2\authfn{1}\authfn{4}]{Firstname Initials Surname}
+%\author[2*]{Firstname Surname}
+\affil[1]{Advanced Computing Research Centre, University of Bristol, UK}
+\affil[2]{EaStCHEM School of
+Chemistry, University of Edinburgh, UK}
+\affil[3]{Department of Chemistry and Institute of Structural and Molecular Biology, University College
+London, UK}
 
-\orcid{Author 1 name}{AAAA-BBBB-CCCC-DDDD}
-\orcid{Author 2 name}{EEEE-FFFF-GGGG-HHHH}
 
-\contrib[\authfn{1}]{These authors contributed equally to this work}
-\contrib[\authfn{2}]{These authors also contributed equally to this work}
+\corr{julien.michel@ed.ac.uk}{JM}  % Correspondence emails.  FMS and FS are the appropriate authors initials.
+\corr{lester.hedges@bristol.ac.uk }{LH}
 
-\presentadd[\authfn{3}]{Department, Institute, Country}
-\presentadd[\authfn{4}]{Department, Institute, Country}
+\orcid{Lester Hedges}{EEEE-FFFF-GGGG-HHHH}
+\orcid{Adele Hardie}{EEEE-FFFF-GGGG-HHHH}
+\orcid{Dominykas Lukauskis}{EEEE-FFFF-GGGG-HHHH}
+\orcid{Antonia Mey}{0000-0001-7512-5252}
+\orcid{Julien Michel}{0000-0003-0360-1760}
+\orcid{Jenke Scheen}{EEEE-FFFF-GGGG-HHHH}
+
+%\contrib[\authfn{1}]{These authors contributed equally to this work}
+%\contrib[\authfn{2}]{These authors also contributed equally to this work}
+
+\presentadd[\authfn{1}]{Computational and Systems Biology Program, Sloan Kettering Institute, Memorial Sloan Kettering Cancer Center, New York NY, USA}
+%\presentadd[\authfn{4}]{Department, Institute, Country}
 
 \blurb{This LiveCoMS document is maintained online on GitHub at \githubrepository; to provide feedback, suggestions, or help improve it, please visit the GitHub repository and participate via the issue tracker.}
 
@@ -133,39 +149,50 @@ Tutorials should clearly define what system and/or software requirements the res
 A tutorial will normally draw on additional files and materials; clearly indicate where and how these are available, with links, and how they are being archived for the long-term and maintained so they stay current.
 You will likely want to reference your GitHub repository as a central point to access all of this information, and then the GitHub repository may link out to other content as needed.
 
-\subsection{Introduction}
-\subsection{Funnel Meta-Dynamics}
-\subsection{Steered Molecular Dynamics \& Markov State Modeling}
-\subsection{Free Energy Perturbation}
+%TODO Fix layout issues 
+\subsection{Tutorial 1: Introduction}
+\input{LIVECOMS/01_introduction/01_introduction}
+\input{LIVECOMS/01_introduction/02_molecular_setup}
+\input{LIVECOMS/01_introduction/03_molecular_dynamics}
+\input{LIVECOMS/01_introduction/04_writing_nodes}
+\input{LIVECOMS/01_introduction/05_running_nodes}
+
+\subsection{Tutorial 2: Funnel Meta-Dynamics}
+\input{LIVECOMS/02_funnel_metad/01_Introduction}
+\subsection{Tutorial 3: Steered Molecular Dynamics \& Markov State Modeling}
+\input{LIVECOMS/03_steered_md/03_steered_md}
+\subsection{Tutorial 4: Free Energy Perturbation}
+%TODO MERGE IN TUTORIALS AT https://github.com/michellab/bssccpbiosim2022
+% [From antonia Mey, Anna Herz, Finlay Clark)]
 \input{LIVECOMS/04_fep/04_fep}
 
-\section{Checklists}
-Tutorials do not necessarily require the use of a checklist as in Best Practices documents; however, they can include these if desired.
-Several useful checklist formats are available, with examples presented in \texttt{sample-document.tex} in \url{github.com/livecomsjournal/article_templates/templates}.
-One example is shown here.
-
+%\section{Checklists}
+%Tutorials do not necessarily require the use of a checklist as in Best Practices documents; however, they can include these if desired.
+%Several useful checklist formats are available, with examples presented in \texttt{sample-document.tex} in \url{github.com/livecomsjournal/article_templates/templates}.
+%One example is shown here.
+%
 % Here is a single-column checklist that consists of multiple sub-checklists
-\begin{Checklists}
+%\begin{Checklists}
+%
+%\begin{checklist}{A list}
+%\textbf{Single-column checklists are also straightforward by removing the asterisk}
+%\begin{itemize}
+%\item First thing let's do an item which breaks across lines to see how that looks
+%\item Also remember
+%\item And finally
+%\end{itemize}
+%\end{checklist}
 
-\begin{checklist}{A list}
-\textbf{Single-column checklists are also straightforward by removing the asterisk}
-\begin{itemize}
-\item First thing let's do an item which breaks across lines to see how that looks
-\item Also remember
-\item And finally
-\end{itemize}
-\end{checklist}
-
-\begin{checklist}{Another list}
-\textbf{This is some further description.}
-\begin{itemize}
-\item First thing
-\item Also remember
-\item And finally
-\end{itemize}
-\end{checklist}
-
-\end{Checklists}
+%\begin{checklist}{Another list}
+%\textbf{This is some further description.}
+%\begin{itemize}
+%\item First thing
+%\item Also remember
+%\item And finally
+%\end{itemize}
+%\end{checklist}
+%
+%\end{Checklists}
 
 
 
@@ -186,9 +213,8 @@ One example is shown here.
 % See the policies ``Policies on Authorship'' section of https://livecoms.github.io
 % for more information on deciding on authorship and author order.
 %%%%%%%%%%%%%%%%
-
-(Explain the contributions of the different authors here)
-
+LH prepared Tutorial 1, DL and LH prepared Tutorial 2, AH and LH prepared Tutorial 3, JS, LH and JM prepared Tutorial 4. 
+All authors contributed to manuscript writing. Authors are listed in alphabetical order, with the exception of the first co-author.
 % We suggest you preserve this comment:
 For a more detailed description of author contributions,
 see the GitHub issue tracking and changelog at \githubrepository.
@@ -203,8 +229,7 @@ see the GitHub issue tracking and changelog at \githubrepository.
 % See the policies ``Policies on Authorship'' section of https://livecoms.github.io for
 % more information on deciding on authorship and author order.
 %%%%%%%%%%%%%%%
-
-(Explain the contributions of any non-author contributors here)
+Gratitude is expressed to the users of BioSimSpace who have given important feedback over the past years that have influenced the production of our tutorials and documentation. 
 % We suggest you preserve this comment:
 For a more detailed description of contributions from the community and others, see the GitHub issue tracking and changelog at \githubrepository.
 
@@ -212,14 +237,13 @@ For a more detailed description of contributions from the community and others, 
 %%%%%%%
 %Declare any potentially competing interests, financial or otherwise
 %%%%%%%
-
-Declare any potentially conflicting interests here, whether or not they pose an actual conflict in your view.
+JM is a member of the Scientific Advisory Board of Cresset. 
 
 \section{Funding Information}
 %%%%%%%
 % Authors should acknowledge funding sources here. Reference specific grants.
 %%%%%%%
-FMS acknowledges the support of NSF grant CHE-1111111.
+JM acknowledges support from an EPSRC standard grant (EP/P022138/1) and from the University of Edinburgh UCB via a an EPSRC-Impact Acceleration Account (IAA PIII074).
 
 \section*{Author Information}
 \makeorcid

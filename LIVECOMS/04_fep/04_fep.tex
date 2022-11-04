@@ -32,7 +32,7 @@ This tutorial will outline the steps needed to:
 \item
   Run FEP using BioSimSpace on a computing cluster
 \item
-  Analyse FEP simulation results
+  Process FEP simulation results
 \item
   Compile all FEP results locally and perform data analyses
 \end{itemize}
@@ -90,7 +90,7 @@ ligand_2 = BSS.IO.readMolecules("ligand_2.mol2")[0]
 protein = BSS.IO.readMolecules("protein.pdb")[0]
 \end{python}
 
-\noindent Input molecules are parameterised:
+\noindent Input molecules are parameterised using Amber-style force fields:
 
 \begin{python}
 ligand_1 = BSS.Parameters.gaff2(ligand_1).getMolecule()
@@ -98,7 +98,7 @@ ligand_2 = BSS.Parameters.gaff2(ligand_2).getMolecule()
 protein = BSS.Parameters.ff14sb(protein).getMolecule()
 \end{python}
 
-\noindent Because one ligand is transforming to the other, they need to be
+\noindent We support a variety of other force fields as well. Because one ligand is transforming to the other, they need to be
 well aligned. This can be done by:
 
 \begin{python}
@@ -107,8 +107,8 @@ ligand_1 = BSS.Align.rmsdAlign(ligand_1, ligand_2,
                                      atom_mapping)
 \end{python}
 
-\noindent Now `merged' molecule (i.e. a molecule that we can
-transform in a way such that the endpoints are either input ligands) has to be made. Adding this merged structure into the protein structure can be done simply by addition; the complete system can then be solvated.
+\noindent Now a `merged' molecule (i.e. a molecule that we can
+manipulate in a way such that the endpoints are either input ligands) has to be made. Adding this merged structure into the protein structure can be done simply by addition; the complete system can then be solvated.
 
 \begin{python}
 merged = BSS.Align.merge(ligand_1, ligand_2)
@@ -126,18 +126,28 @@ protocol = BSS.Protocol.FreeEnergy()
 \noindent Note that calling no arguments sets the default FEP protocol. BioSimSpace can set up all necessary files by:
 
 \begin{python}
-freenrg = BSS.FreeEnergy.Binding(solvated, protocol, 
-                                work_dir="./output")
+freenrg_free = BSS.FreeEnergy.Relative(solvated, 
+                        protocol, work_dir="output")
+freenrg_bound = BSS.FreeEnergy.Relative(system_solvated, 
+                        protocol, work_dir="output")
 \end{python}
 
-\noindent Running the FEP calculation is done by:
+\noindent Running the free and bound FEP calculations is done by:
 
 \begin{python}
-freenrg.run() # this call will run the simulation
-free_energy = freenrg.analyse()
+freenrg_free.run() 
+freenrg_bound.run() 
+\end{python}
+\noindent After simulations have finished we can retrieve the free energies and subtract them to get the relative binding free energy:
+\begin{python}
+pmf_bound, overlap_bound = freenrg_bound.analyse()
+pmf_free,  overlap_free  = freenrg_free.analyse()
+
+free_nrg_binding = \
+BSS.FreeEnergy.Relative.difference(pmf_bound, pmf_free)
 \end{python}
 
-\noindent Note that this only makes sense on a workstation with GPUs or GPU cloud resources or a GPU cluster. 
+\noindent Note that this only makes sense on a workstation with GPUs or GPU cloud resources or a GPU cluster. If the code is run as above, each $\lambda$ window simulation is run sequentially which is not very efficient.
 
 \subsubsection{Workflow of a BioSimSpace FEP pipeline}
 
@@ -182,7 +192,7 @@ can use for instance SCP:
 $ scp -r execution_model uname@cluster.address:/path/to/folder
 \end{lstlisting}
 
-\noindent \emph{Note: if a computing cluster shares its file system with the local workstation the above step is not necessarily needed.}
+\noindent \emph{Note: if a computing cluster shares its file system with the local workstation the above step is not needed.}
 
 
 \subsubsection{Running FEP on a computing cluster using
@@ -232,9 +242,7 @@ Running cells in this notebook will generate typical FEP figures
 perturbations, the script should be able to work out an optimal
 prediction (although at some point with enough missing FEP predictions,
 ligands will of course be missing). If you happen to have experimental
-affinity values, you can validate how accurate your FEP predictions are.
-
-An example result from this notebook is a barplot:
+affinity values, you can validate how accurate your FEP predictions are. See figure \ref{fep_barplot_fig} for an example barplot generated from \textbf{analyse\_fep.ipynb}. Note that even though we depict per-ligand binding affinities as $\Delta$G, strictly speaking these are still quantities of $\Delta\Delta$G because they are still relative binding free energies compared to a reference! The $\Delta$G notation in this way is just a commonly applied tactic to indicate that the plots are per-ligand instead of pairwise.
 
 \begin{figure}[htp]
 \includegraphics[width=\linewidth]{04_fep/inputs/tut_imgs/fep_barplot.png}
