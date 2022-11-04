@@ -46,7 +46,9 @@
 
 \author[1*]{Lester O. Hedges}
 \author[]{Sofia Bariami}
+\author[]{Finlay Clarke}
 \author[2]{Adele Hardie}
+\author[2]{Anna Herz}
 \author[3]{Dominykas Lukauskis}
 \author[2]{Antonia S.J.S. Mey}
 \author[2*]{Julien Michel}
@@ -66,7 +68,10 @@ London, UK}
 \corr{lester.hedges@bristol.ac.uk }{LH}
 
 \orcid{Lester Hedges}{EEEE-FFFF-GGGG-HHHH}
+\orcid{Sofia Bariami}{EEEE-FFFF-GGGG-HHHH}
+\orcid{Finlay Clarke}{EEEE-FFFF-GGGG-HHHH}
 \orcid{Adele Hardie}{EEEE-FFFF-GGGG-HHHH}
+\orcid{Anna Herz}{EEEE-FFFF-GGGG-HHHH}
 \orcid{Dominykas Lukauskis}{EEEE-FFFF-GGGG-HHHH}
 \orcid{Antonia Mey}{0000-0001-7512-5252}
 \orcid{Julien Michel}{0000-0003-0360-1760}
@@ -103,45 +108,33 @@ London, UK}
 \maketitle
 
 \begin{abstract}
-This tutorial serves as a getting-started guide for BioSimSpace (BSS), an interoperable molecular dynamics framework, that allows simulations with different sets of molecular dynamics software packages. The tutorial will cover four main use cases for BioSimSpace. The introductory tutorial introduces the basic structure of BioSimSpace, how to use the API to access functionality, and how to write to use it for setting up and running standard molecular dynamics simulations. Furthermore, the tutorial provides three advanced use cases of BSS on how to set up and run a funnel molecular dynamics simulation, steered MD in combination with Markov State modelling, and alchemical free energy calculations. 
+This tutorial serves as a getting-started guide for BioSimSpace (BSS), an interoperable molecular dynamics framework, that allows simulations with different sets of molecular dynamics software packages. The tutorial will cover four main use cases for BioSimSpace. The introductory tutorial introduces the basic structure of BioSimSpace, how to use the API to access functionality, and how to write to use it for setting up and running standard molecular dynamics simulations. Furthermore, the tutorial provides three advanced use cases of BSS on how to set up and run a funnel molecular dynamics simulation, steered MD in combination with Markov State modeling, and alchemical free energy calculations. 
 \end{abstract}
 
 \end{frontmatter}
 
 
-
-
 \section{Introduction}
 
-Here you would explain what problem you are tackling and briefly motivate your work.
+Biosimpace~\cite{bss_paper}(\url{http://biosimspace.org}) is a software that allows the setup and running of different types of molecular dynamics (MD) simulations for different software packages. The software provides a common API in Python  for MD software packages: AMBER~\cite{}, GROMACS~\cite{}, NAMD~\cite{} and has built-in analysis of simulation through MDAnalysis~\cite{}, MDTraj~\cite{}, alchemlyb~\cite{}...%TODO add more dependencies here. 
 
-In this particular template, we have removed most of the usage examples which occur in \texttt{sample-document.tex} to provide a minimal template you can modify; however, we retain a couple of examples illustrating more unusual features of our templates/article class, such as the checklists, and information on algorithms and pseudocode.
-
-Keep in mind, as you prepare your manuscript, that you should plan for a representative image  which will be used to highlight your article on the journal website and publications. Usually, this would be one of your figures, but it must also be uploaded separately upon article submission. We give specific guidelines for this image on the journal website in the section on article submission (see \url{https://livecomsjournal.github.io/authors/policies/index.html#article-submission}).
-
-Additionally, for well-formatted manuscripts, we recommend that you let LaTeX handle figure/table placement for you as much as possible, so please avoid specifying strenuous float instructions like `[h!]` and `[H]` as much as possible.
-
-\subsection{Scope}
-
-Tutorials should endeavor to cover the specific task at hand, and also highlight how the steps might need to be modified (or additional care might need to be taken at particular points) to handle more general cases.
-
-The scope of the tutorial, as well as the expected proficiencies / outcomes for researchers who complete the tutorial, should be clearly defined.
-This will often happen in a specific section or subsection in the article itself.
-
-\section{Prerequisites}
-
-Here you would identify prerequisites/background knowledge that are assumed by your work, as well as any software/license requirements.
-
+\section{Prerequisites and Scope}
+%TODO expand this:
 \subsection{Background knowledge}
-Tutorials should clearly define what concepts or abilities researchers will need to complete the tutorial (e.g., some proficiency in Python; experience with Jupyter notebooks; knowledge of classical MD; etc).
+To get the most out of this tutorial the reader should be familiar with Python and how to use Jupyter~\cite{} notebooks. For the introductory set of tutorials a background in molecular dynamics simulations is expected and if you are unfamiliar with this topic the best practices guide on foundations in biomolecular simulations is a good starting point~\cite{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6884151/}. Tutorial 2, on funnel metadynamics expects some background understanding of funnel metadynamics; a good starting point for studying this topic can be found in xxx~\cite{metadynamics citation}. Tutorial 3, expects knowledge on steered MD and Markov state modeling. If you are unfamiliar with these topics XXX et al. provide a good introduction to steered MD~\cite{sMD_steeredMD} and for more details on how to build MSM you can refer to the pyEMMA tutorial~\cite{https://livecomsjournal.org/index.php/livecoms/article/view/v1i1e5965/925} and a general introduction to the topic by Husic et al.~\cite{sMD_Husic-msm}.
+The final and 4th tutorial covers how to use BSS to run alchemical free energy calculations. Mey et al.'s Best practices guide to alchemical free energy calculations provides a broad introduction and overview of this method~\cite{mey2020best}.
 
-\subsection{Software/system requirements}
-Tutorials should clearly define what system and/or software requirements the researcher will need to complete the tutorial (e.g., VMD version 1.9 or newer, AMBER, etc.). Tutorials requiring specific software packages must provide instructions and files for the referenced version of the software.
+\subsection{Software/system requirements and installation}
+%TODO: expand this!
+Here list all the essential and optional dependencies to run the tutorials. 
+\begin{itemize}
+    \item gromacs
+    \item amber
+\end{itemize}
 
-\section{Content and links}
+\section{BioSimSpace Tutorial, Content, and Links}
 
-A tutorial will normally draw on additional files and materials; clearly indicate where and how these are available, with links, and how they are being archived for the long-term and maintained so they stay current.
-You will likely want to reference your GitHub repository as a central point to access all of this information, and then the GitHub repository may link out to other content as needed.
+The tutorial consists of xx Jupyter notebook and can be found here: \url{https://github.com/michellab/BioSimSpaceTutorials}.
 
 %TODO Fix layout issues 
 \subsection{Tutorial 1: Introduction}
@@ -207,8 +200,8 @@ You will likely want to reference your GitHub repository as a central point to a
 % See the policies ``Policies on Authorship'' section of https://livecoms.github.io
 % for more information on deciding on authorship and author order.
 %%%%%%%%%%%%%%%%
-LH prepared Tutorial 1, DL and LH prepared Tutorial 2, AH and LH prepared Tutorial 3, JS, LH and JM prepared Tutorial 4. 
-All authors contributed to manuscript writing. Authors are listed in alphabetical order, with the exception of the first co-author.
+LH prepared Tutorial 1, DL and LH prepared Tutorial 2, AH and LH prepared Tutorial 3, JS, LH and JM prepared Tutorial 4, which was built on older tutorial material by AM and SB.
+All authors contributed to the manuscript writing. Authors are listed in alphabetical order, with the exception of the first co-author.
 % We suggest you preserve this comment:
 For a more detailed description of author contributions,
 see the GitHub issue tracking and changelog at \githubrepository.
