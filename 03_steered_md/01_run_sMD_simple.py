@@ -49,7 +49,7 @@ def create_CV(reference, residues, system):
                 if atom.element()!='Hydrogen (H, 1)':
                     rmsd_indices.append(atom.index())
 
-    rmsd_cv = BSS.Metadynamics.CollectiveVariable.RMSD(system, reference, 0, rmsd_indices)
+    rmsd_cv = BSS.Metadynamics.CollectiveVariable.RMSD(system, reference, rmsd_indices)
 
     return rmsd_cv
 
@@ -81,7 +81,8 @@ def setup_sMD_protocol(steering_runtime, total_runtime, force_constant, cv):
     restraint_3 = BSS.Metadynamics.Restraint(0*nm, force_constant)
     restraint_4 = BSS.Metadynamics.Restraint(0*nm, 0)
 
-    protocol = BSS.Protocol.Steering(cv, [start, apply_force, steering_runtime, total_runtime], [restraint_1, restraint_2, restraint_3, restraint_4], runtime=total_runtime)
+    protocol = BSS.Protocol.Steering(cv, [start, apply_force, steering_runtime, total_runtime], [restraint_1, restraint_2, restraint_3, restraint_4], runtime=total_runtime,
+                                     report_interval=2500, restart_interval=2500)
 
     return protocol
 

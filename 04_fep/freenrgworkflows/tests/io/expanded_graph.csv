@@ -1,4 +1,4 @@
-lig_1,lig_2,freenrg,error,engine
+#lig_1,lig_2,freenrg,error,engine
 ejm31,ejm50,0.4,0.1,SOMD
 ejm50,ejm31,-0.3,0.1,SOMD
 ejm31,ejm45,NaN,NaN,SOMD

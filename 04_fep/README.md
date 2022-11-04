@@ -55,7 +55,7 @@ Parameterise our input molecules:
 ```python
 ligand_1 = BSS.Parameters.gaff2(ligand_1).getMolecule()
 ligand_2 = BSS.Parameters.gaff2(ligand_2).getMolecule()
-protein = BSS.Parameters.ff14sb(protein).getMolecule()
+protein = BSS.Parameters.ff14SB(protein).getMolecule()
 ```
 
 Because we are transforming one ligand to the other, we need them to be well aligned. This can simply be done by:
@@ -80,6 +80,7 @@ system = merged + protein
 Then, we put a water box around the system.
 
 ```python
+solvated = BSS.Solvent.tip3p(molecule=merged, box=3*[10*BSS.Units.Length.nanometer])
 system_solvated = BSS.Solvent.tip3p(molecule=system, box=3*[10*BSS.Units.Length.nanometer])
 ```
 
@@ -92,19 +93,24 @@ protocol = BSS.Protocol.FreeEnergy()
 And then we can let BioSimSpace set up all necessary files for us by:
 
 ```python
-freenrg = BSS.FreeEnergy.Binding(solvated, protocol, work_dir="output")
+freenrg_free = BSS.FreeEnergy.Relative(solvated, protocol, work_dir="output")
+freenrg_bound = BSS.FreeEnergy.Relative(system_solvated, protocol, work_dir="output")
 ```
 
 Running the FEP calculation is simply done running:
 
 ```python
-freenrg.run()
+freenrg_free.run()
+freenrg_bound.run()
 ```
 
 This only makes sense on a workstation with GPUs or GPU cloud resources or a GPU cluster. Once the run has finished, we can analyse our FEP results with:
 
 ```python
-freenrg.analyse()
+pmf_bound, overlap_bound = freenrg_bound.analyse()
+pmf_free,  overlap_free  = freenrg_free.analyse()
+
+free_nrg_binding = BSS.FreeEnergy.Relative.difference(pmf_bound, pmf_free)
 ```
 
 ## Workflow of a BioSimSpace FEP pipeline
@@ -148,5 +154,5 @@ For this step, open the jupyter notebook **analyse_fep.ipynb**. Running cells in
 
 An example result from this notebook is the classic barplot:
 
-![image-20210505085226743](./inputs/tut_imgs/fep_barplot.png)
+![image-20210505085226743](./outputs/fep_vs_exp_barplot.png)
 
