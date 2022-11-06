@@ -1,0 +1,31 @@
+                      :-) GROMACS - gmx solvate, 2022 (-:
+
+Executable:   /usr/local/gromacs/bin/gmx
+Data prefix:  /usr/local/gromacs
+Working dir:  /home/anna/Documents/september_2022_workshops/bssccpbiosim2022/introduction_to_alchemistry/exercise_4
+Command line:
+  gmx solvate -cs spc216 -cp box.gro -o output.gro
+
+Reading solute configuration
+Reading solvent configuration
+
+Initialising inter-atomic distances...
+Generating solvent configuration
+Will generate new solvent configuration of 2x2x2 boxes
+Solvent box contains 3618 atoms in 1206 residues
+Removed 966 solvent atoms due to solvent-solvent overlap
+Removed 18 solvent atoms due to solute-solvent overlap
+Sorting configuration
+Found 1 molecule type:
+    SOL (   3 atoms):   878 residues
+Generated solvent containing 2634 atoms in 878 residues
+Writing generated configuration to output.gro
+
+Output configuration contains 2652 atoms in 879 residues
+Volume                 :          27 (nm^3)
+Density                :      979.33 (g/l)
+Number of solvent molecules:    878   
+
+
+GROMACS reminds you: "Dreams seldom materialize on their own." (Dian Fossey)
+

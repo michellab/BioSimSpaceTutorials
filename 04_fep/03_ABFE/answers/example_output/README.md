@@ -1,0 +1,1 @@
+Please note that these calculations were run with a previous version of SOMD in which the definition of the force constants, k, for the Boresch restraints was E = 0.5*k*(x-x_0)**2. The current definition is E = k*(x-x_0)**2. Therefore, please halve the force constants if re-running these simulations.

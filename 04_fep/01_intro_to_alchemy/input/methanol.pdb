@@ -1,0 +1,15 @@
+HEADER    LIG                                     16-10-28    1LIG
+REMARK   1 corina 3.60 0026  10.07.2014                               
+HETATM    1  C1  LIG     1       0.737  -0.015   0.000  1.00 20.00
+HETATM    2  H2  LIG     1       1.070  -0.549   0.890  1.00 20.00
+HETATM    3  O3  LIG     1      -0.690   0.068  -0.000  1.00 20.00
+HETATM    4  H4  LIG     1       1.070  -0.549  -0.890  1.00 20.00
+HETATM    5  H5  LIG     1       1.159   0.990   0.000  1.00 20.00
+HETATM    6  H6  LIG     1      -1.133  -0.792  -0.000  1.00 20.00
+CONECT    1    2    3    4    5
+CONECT    2    1
+CONECT    3    1    6
+CONECT    4    1
+CONECT    5    1
+CONECT    6    3
+END

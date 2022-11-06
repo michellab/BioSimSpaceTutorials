@@ -1,0 +1,26 @@
+                       :-) GROMACS - gmx grompp, 2022 (-:
+
+Executable:   /usr/local/gromacs/bin/gmx
+Data prefix:  /usr/local/gromacs
+Working dir:  /home/anna/Documents/september_2022_workshops/bssccpbiosim2022/introduction_to_alchemistry/exercise_4
+Command line:
+  gmx grompp -f ions.mdp -po ions.out.mdp -c solvated.gro -p solvated.top -o ions.tpr
+
+
+NOTE 1 [file ions.mdp]:
+  For a correct single-point energy evaluation with nsteps = 0, use
+  continuation = yes to avoid constraining the input coordinates.
+
+Generating 1-4 interactions: fudge = 0.5
+Number of degrees of freedom in T-Coupling group rest is 5319.00
+
+NOTE 2 [file ions.mdp]:
+  You are using a plain Coulomb cut-off, which might produce artifacts.
+  You might want to consider using PME electrostatics.
+
+
+
+There were 2 notes
+
+GROMACS reminds you: "It Doesn't Seem Right, No Computers in Sight" (Faun Fables)
+
