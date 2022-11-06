@@ -1,0 +1,11 @@
+                      :-) GROMACS - gmx editconf, 2022 (-:
+
+Executable:   /usr/local/gromacs/bin/gmx
+Data prefix:  /usr/local/gromacs
+Working dir:  /home/anna/Documents/september_2022_workshops/bssccpbiosim2022/introduction_to_alchemistry/exercise_4
+Command line:
+  gmx editconf -f input.gro -bt triclinic -box 3.000000 3.000000 3.000000 -angles 90.000000 90.000000 90.000000 -noc -o box.gro
+
+
+GROMACS reminds you: "Dreams seldom materialize on their own." (Dian Fossey)
+

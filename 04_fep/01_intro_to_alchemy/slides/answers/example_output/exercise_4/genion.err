@@ -1,0 +1,14 @@
+                       :-) GROMACS - gmx genion, 2022 (-:
+
+Executable:   /usr/local/gromacs/bin/gmx
+Data prefix:  /usr/local/gromacs
+Working dir:  /home/anna/Documents/september_2022_workshops/bssccpbiosim2022/introduction_to_alchemistry/exercise_4
+Command line:
+  gmx genion -s ions.tpr -o solvated_ions.gro -p solvated.top -neutral -np 0
+
+Reading file ions.tpr, VERSION 2022 (single precision)
+Reading file ions.tpr, VERSION 2022 (single precision)
+No ions to add, will just copy input configuration.
+
+GROMACS reminds you: "It Doesn't Seem Right, No Computers in Sight" (Faun Fables)
+

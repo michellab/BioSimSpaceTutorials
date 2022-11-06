@@ -1,0 +1,309 @@
+version 1
+ molecule LIG
+    atom
+            name CAB
+            initial_type    ca
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      3.31521  0.09880
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name CAC
+            initial_type    ca
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      3.31521  0.09880
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name CAD
+            initial_type    ca
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      3.31521  0.09880
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name CAE
+            initial_type    ca
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      3.31521  0.09880
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name CAF
+            initial_type    ca
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      3.31521  0.09880
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name CAG
+            initial_type    ca
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      3.31521  0.09880
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name CAH
+            initial_type    ca
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      3.31521  0.09880
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name CAI
+            initial_type    ca
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      3.31521  0.09880
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name CAJ
+            initial_type    ca
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      3.31521  0.09880
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name CAK
+            initial_type    ca
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      3.31521  0.09880
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name CAL
+            initial_type    cc
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      3.31521  0.09880
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name CAP
+            initial_type    ca
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      3.31521  0.09880
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name CAQ
+            initial_type    ca
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      3.31521  0.09880
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name CAR
+            initial_type    cd
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      3.31521  0.09880
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name CAS
+            initial_type    ca
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      3.31521  0.09880
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name CAT
+            initial_type    ca
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      3.31521  0.09880
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name CAU
+            initial_type    ca
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      3.31521  0.09880
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name NAM
+            initial_type    nd
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      3.38417  0.09410
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name NAN
+            initial_type    nc
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      3.38417  0.09410
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name NAO
+            initial_type    nb
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      3.38417  0.09410
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name NAV
+            initial_type    na
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      3.20581  0.20420
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name OAA
+            initial_type    oh
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      3.24287  0.09300
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name H01
+            initial_type    ha
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      2.62548  0.01610
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name H02
+            initial_type    ha
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      2.62548  0.01610
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name H03
+            initial_type    ha
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      2.62548  0.01610
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name H04
+            initial_type    ha
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      2.62548  0.01610
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name H05
+            initial_type    ha
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      2.62548  0.01610
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name H06
+            initial_type    ha
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      2.62548  0.01610
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name H07
+            initial_type    ha
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      2.62548  0.01610
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name H08
+            initial_type    ha
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      2.62548  0.01610
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name H09
+            initial_type    ha
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      2.62548  0.01610
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name H10
+            initial_type    ha
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      2.62548  0.01610
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name H11
+            initial_type    h4
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      2.53639  0.01610
+            final_LJ        0.00000  0.00000
+    endatom
+    atom
+            name H12
+            initial_type    ho
+            final_type      du
+            initial_charge  0.00000
+            final_charge    0.00000
+            initial_LJ      0.53792  0.00470
+            final_LJ        0.00000  0.00000
+    endatom
+end molecule
