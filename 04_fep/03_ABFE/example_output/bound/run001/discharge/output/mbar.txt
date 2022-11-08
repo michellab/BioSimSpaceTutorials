@@ -1,0 +1,49 @@
+# Analysing data contained in file(s) ['example_output/bound/run001/discharge/output/lambda_0.000/simfile.dat.bz2', 'example_output/bound/run001/discharge/output/lambda_0.143/simfile.dat.bz2', 'example_output/bound/run001/discharge/output/lambda_0.286/simfile.dat.bz2', 'example_output/bound/run001/discharge/output/lambda_0.429/simfile.dat.bz2', 'example_output/bound/run001/discharge/output/lambda_0.571/simfile.dat.bz2', 'example_output/bound/run001/discharge/output/lambda_0.714/simfile.dat.bz2', 'example_output/bound/run001/discharge/output/lambda_0.857/simfile.dat.bz2', 'example_output/bound/run001/discharge/output/lambda_1.000/simfile.dat.bz2']
+#Overlap matrix
+0.5852 0.2971 0.0921 0.0210 0.0039 0.0005 0.0000 0.0000
+0.2971 0.3368 0.2256 0.1006 0.0319 0.0070 0.0010 0.0001
+0.0921 0.2256 0.2956 0.2250 0.1136 0.0391 0.0082 0.0008
+0.0210 0.1006 0.2250 0.2741 0.2187 0.1172 0.0377 0.0057
+0.0039 0.0319 0.1136 0.2187 0.2710 0.2227 0.1110 0.0271
+0.0005 0.0070 0.0391 0.1172 0.2227 0.2853 0.2296 0.0986
+0.0000 0.0010 0.0082 0.0377 0.1110 0.2296 0.3258 0.2866
+0.0000 0.0001 0.0008 0.0057 0.0271 0.0986 0.2866 0.5811
+#DG from neighbouring lambda in kcal/mol
+0.0000 0.1430 2.3427 0.0492
+0.1430 0.2860 1.9629 0.0440
+0.2860 0.4290 1.7107 0.0358
+0.4290 0.5710 1.5694 0.0332
+0.5710 0.7140 1.4693 0.0336
+0.7140 0.8570 1.3039 0.0392
+0.8570 1.0000 0.9945 0.0494
+#PMF from MBAR in kcal/mol
+0.0000 0.0000 0.0000
+0.1430 2.3427 0.0492
+0.2860 4.3056 0.0846
+0.4290 6.0163 0.1056
+0.5710 7.5857 0.1210
+0.7140 9.0550 0.1344
+0.8570 10.3588 0.1486
+1.0000 11.3533 0.1665
+#TI average gradients and standard deviation in kcal/mol
+0.0000 20.4406 3.7681
+0.1430 14.2123 4.6946
+0.2860 12.3832 4.3788
+0.4290 11.0001 4.7737
+0.5710 9.9732 4.0762
+0.7140 10.5995 4.1765
+0.8570 7.6641 5.0100
+1.0000 5.9431 4.4543
+#PMF from TI in kcal/mol
+0.0000 0.0000
+0.1430 2.4777
+0.2860 4.3793
+0.4290 6.0512
+0.5710 7.5403
+0.7140 9.0112
+0.8570 10.3171
+1.0000 11.2900
+#MBAR free energy difference in kcal/mol: 
+11.353297, 0.166479 
+#TI free energy difference in kcal/mol: 
+11.289981  

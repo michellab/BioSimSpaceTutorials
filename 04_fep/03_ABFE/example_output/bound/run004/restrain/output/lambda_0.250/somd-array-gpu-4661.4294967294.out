@@ -1,0 +1,391 @@
+CUDA DEVICES: 3
+
+Loading configuration information from file ../../input/sim.cfg
+
+Running a somd-freenrg calculation using files ../../input/SYSTEM.top, ../../input/SYSTEM.crd and ../../input/MORPH.dummy.pert.
+Using parameters:
+===============
+andersen == True
+barostat == True
+boresch restraints dictionary == {'anchor_points': {'r1': 935, 'r2': 933, 'r3': 937, 'l1': 10, 'l2': 13, 'l3': 20}, 'equilibrium_values': {'r0': 8.14, 'thetaA0': 2.06, 'thetaB0': 1.89, 'phiA0': 1.68, 'phiB0': 1.52, 'phiC0': 0.2}, 'force_constants': {'kr': 10.92, 'kthetaA': 126.83, 'kthetaB': 98.43, 'kphiA': 189.35, 'kphiB': 58.81, 'kphiC': 100.72}}
+buffered coordinates frequency == 5000
+center solute == True
+constraint == allbonds
+crdfile == ../../input/SYSTEM.crd
+cutoff distance == 12 angstrom
+cutoff type == cutoffperiodic
+energy frequency == 100
+equilibrate == False
+equilibration iterations == 5000
+hydrogen mass repartitioning factor == 4.0
+lambda array == (0.0, 0.125, 0.25, 0.375, 0.5, 1.0)
+lambda_val == 0.25
+minimal coordinate saving == False
+minimise == True
+morphfile == ../../input/MORPH.dummy.pert
+ncycles == 60
+nmoves == 25000
+perturbed residue number == 1
+platform == CUDA
+precision == mixed
+reaction field dielectric == 78.3
+save coordinates == True
+timestep == 0.004 ps
+topfile == ../../input/SYSTEM.top
+turn on receptor-ligand restraints mode == True
+use boresch restraints == True
+===============
+### Running Single Topology Molecular Dynamics Free Energy on ishikawa ###
+###================Setting up calculation=====================###
+New run. Loading input and creating restart
+lambda is 0.25
+
+==============================================================
+Sending anonymous Sire usage statistics to http://siremol.org.
+For more information, see http://siremol.org/analytics
+To disable, set the environment variable 'SIRE_DONT_PHONEHOME' to 1
+To see the information sent, set the environment variable 
+SIRE_VERBOSE_PHONEHOME equal to 1. To silence this message, set
+the environment variable SIRE_SILENT_PHONEHOME to 1.
+==============================================================
+
+Create the System...
+Selecting dummy groups
+In "turn on receptor-ligand restraints mode". Lambda will be used to scale
+                  the strength of protein-ligand restraints. Ensure that a dummy pert file mapping 
+                  the original parameters for all ligand atoms to themselves has been supplied.
+Setting up Boresch restraints...
+Boresch restraints dictionary = {'anchor_points': {'r1': 935, 'r2': 933, 'r3': 937, 'l1': 10, 'l2': 13, 'l3': 20}, 'equilibrium_values': {'r0': 8.14, 'thetaA0': 2.06, 'thetaB0': 1.89, 'phiA0': 1.68, 'phiB0': 1.52, 'phiC0': 0.2}, 'force_constants': {'kr': 10.92, 'kthetaA': 126.83, 'kthetaB': 98.43, 'kphiA': 189.35, 'kphiB': 58.81, 'kphiC': 100.72}}
+Boresch anchor points:
+r1=Atom( CA : 936 )
+r2=Atom( N : 934 )
+r3=Atom( CB : 938 )
+l1=Atom( CAL : 11 )
+l2=Atom( CAR : 14 )
+l3=Atom( NAV : 21 )
+Applying Hydrogen Mass repartition to input using a factor of 4.0 
+Creating force fields... 
+Setting up moves...
+Created a MD move that uses OpenMM for all molecules on 0 
+Saving restart
+Setting up sim file. 
+There are 60695 atoms in the group 
+###===========================================================###
+
+###=======================Minimisation========================###
+Running minimisation.
+Energy before the minimisation: -183220 kcal mol-1
+Tolerance for minimisation: 1
+Maximum number of minimisation iterations: 1000
+Energy after the minimization: -231844 kcal mol-1
+Energy minimization done.
+###===========================================================###
+
+###====================somd-freenrg run=======================###
+Starting somd-freenrg run...
+25000 moves 60 cycles, 6000 ps simulation time
+
+Cycle =  1 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  2 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  3 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  4 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  5 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  6 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  7 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  8 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  9 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  10 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  11 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  12 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  13 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  14 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  15 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  16 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  17 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  18 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  19 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  20 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  21 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  22 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  23 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  24 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  25 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  26 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  27 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  28 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  29 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  30 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  31 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  32 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  33 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  34 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  35 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  36 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  37 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  38 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  39 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  40 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  41 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  42 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  43 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  44 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  45 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  46 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  47 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  48 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  49 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  50 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  51 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  52 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  53 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  54 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  55 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  56 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  57 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  58 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  59 
+
+Backing up previous restart
+Saving new restart
+
+Cycle =  60 
+
+Backing up previous restart
+Saving new restart
+Simulation took 7940 s 
+###===========================================================###
+
+Clearing buffers...
+Starting /home/finlayclark/sire_boresch_2022.app/bin/somd-freenrg: number of threads equals 20
