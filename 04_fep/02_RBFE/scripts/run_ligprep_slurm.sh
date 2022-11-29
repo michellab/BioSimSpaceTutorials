@@ -18,4 +18,4 @@ echo "Ligands file is : $lig_file"
 lig=${lig_array[$SLURM_ARRAY_TASK_ID]}
 
 echo "prep for $lig..."
-python BSSligprep.py $lig
+python $scripts_dir/ligprep.py $lig

@@ -21,4 +21,4 @@ eng=${eng_array[$SLURM_ARRAY_TASK_ID]}
 win=${win_array[$SLURM_ARRAY_TASK_ID]}
 
 echo "fepprep for $trans using $eng"
-python BSSprepFEP.py $trans
+python $scripts_dir/fepprep.py $trans

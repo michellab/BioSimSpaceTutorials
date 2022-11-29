@@ -2,11 +2,15 @@
 #
 # Run all the lig prep, FEP prep, and the production runs
 
-# TODO set the main directory filepath, make sure BSS branch and engines are sourced correctly
-export MAINDIRECTORY="XXX" # Set file path
+# TODO set the main directory filepath, make sure BSS branch and engines are sourced correctly, replace all XXX
+export MAINDIRECTORY="XXX" # Set file path ; this should be the absolute file path to the main folder
+export scripts_dir="$MAINDIRECTORY/scripts" # choose location of scripts
+export protein_file="$MAINDIRECTORY/inputs/prot_water" # this should be the prm7 and rst7 file name (without the extension) for the protein
+export ligands_folder="$MAINDIRECTORY/inputs/XXX" # location of the input files for the ligands
+
 module load cuda/11.6
 module load amber/22
-module load gromacs/20.4
+module load gromacs/22.2
 export BSS="/export/users/XXX/anaconda3/bin/activate biosimspace-dev"
 source $BSS
 
@@ -16,7 +20,7 @@ source $BSS
 # source $amber
 # source $gromacs
 
-# export all execution model files for later scripts
+# export all files for later scripts
 export lig_file="$MAINDIRECTORY/ligands.dat"
 export net_file="$MAINDIRECTORY/network.dat"
 export prot_file="$MAINDIRECTORY/protocol.dat"
@@ -51,12 +55,14 @@ chmod u+x run_production_slurm.sh
 jidlig=$(sbatch --parsable --array=0-$((${#lig_array[@]}-1)) run_ligprep_slurm.sh)
 echo "ligand prep jobid is $jidlig"
 
-# FEP prep --dependency=afterany:${jidlig}
-jidfep=$(sbatch  --parsable --array=0-$((${#trans_array[@]}-1)) run_fepprep_slurm.sh)
+# FEP prep 
+jidfep=$(sbatch --dependency=afterany:${jidlig} --parsable --array=0-$((${#trans_array[@]}-1)) run_fepprep_slurm.sh)
 echo "FEP prep jobid is $jidfep"
 
-# Production runs for the transformation --dependency=afterany:${jidfep}
+# Production runs for the transformation 
 for i in "${!trans_array[@]}"; do
-jidprod=$(sbatch  --parsable --array=0-$((${win_array[i]}-1)) run_production_slurm.sh ${trans_array[i]} ${eng_array[i]} ${win_array[i]} $repeats)
+jidprod=$(sbatch  --dependency=afterany:${jidfep} --parsable --array=0-$((${win_array[i]}-1)) run_production_slurm.sh ${trans_array[i]} ${eng_array[i]} ${win_array[i]} $repeats)
 echo "Production jobid for ${trans_array[i]}, ${eng_array[i]} is $jidprod"
+jidana=$(sbatch --dependency=afterany:${jidprod} --parsable $scripts_dir/run_analysis_slurm.sh ${trans_array[i]} ${eng_array[i]})
+echo "Analysis jobid for ${trans_array[i]} is $jidana"
 done

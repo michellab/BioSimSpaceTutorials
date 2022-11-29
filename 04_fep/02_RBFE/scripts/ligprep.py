@@ -10,12 +10,13 @@ runtime_short_nvt = 5 # ps
 runtime_nvt = 50 # ps 
 runtime_npt = 200 # ps
 
-### preamble. tmp_dir should at some point be derived using os.environ.get("")
-
 main_dir = os.environ["MAINDIRECTORY"]
 
 amber_home = os.environ["AMBERHOME"]
 pmemd_path = amber_home + "/bin/pmemd.cuda" 
+
+protein_file = os.environ["protein_file"]
+ligands_folder = os.environ["ligands_folder"]
 
 ################
 ### Open 'ligands.dat', find sys.argv[1] 'th entry
@@ -30,7 +31,7 @@ if os.path.exists(f"{main_dir}/prep/protein/{lig_name}_sys_equil_solv.prm7"):
         sys.exit(0)
 #################
 ### Load matching input with BSS.read.IO.
-lig = BSS.IO.readMolecules(f"{main_dir}/inputs/ligands/{lig_name}.sdf")[0]
+lig = BSS.IO.readMolecules(f"{ligands_folder}/{lig_name}.sdf")[0]
 
 #################
 ### parameterise ligand by deriving requested FF from protocol.dat.
@@ -90,7 +91,7 @@ box_sizes = [x + int(box_axis_length) * box_axis_unit for x in box_size]
 
 
 # do the same for ligand +protein system.
-protein = BSS.IO.readMolecules([f"{main_dir}/inputs/prot_water.rst7", f"{main_dir}/inputs/prot_water.prm7"])[0]
+protein = BSS.IO.readMolecules([f"{protein_file}.rst7", f"{protein_file}.prm7"])[0]
 system = lig_p + protein
 
 # box size
@@ -145,17 +146,22 @@ lig_p_solvated = BSS.IO.readMolecules([f"{main_dir}/tmp/{lig_name}_lig_s.prm7", 
 system_solvated = BSS.IO.readMolecules([f"{main_dir}/tmp/{lig_name}_sys_s.prm7", f"{main_dir}/tmp/{lig_name}_sys_s.rst7"])
 
 
-def runProcess(system, protocol, pmemd=False):
+def runProcess(system, protocol, engine="AMBER", pmemd=False):
         """
         Given a solvated system (BSS object) and BSS protocol, run a process workflow with either 
         Sander (CPU) or pmemd.cuda (GPU). NPT is typically done with GPU to save computing time.
         Returns the processed system.
         """
+
         # Create the process passing a working directory.
-        if not pmemd:
-            process = BSS.Process.Amber(system, protocol)
-        elif pmemd:
-            process = BSS.Process.Amber(system, protocol, exe=pmemd_path)
+        if engine == "AMBER":
+                if not pmemd:
+                        process = BSS.Process.Amber(system, protocol)
+                elif pmemd:
+                        process = BSS.Process.Amber(system, protocol, exe=pmemd_path)
+
+        elif engine == "GROMACS":
+        process = BSS.Process.Gromacs(system, protocol)
 
         # Start the process.
         process.start()
