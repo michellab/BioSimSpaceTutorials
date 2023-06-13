@@ -13,7 +13,7 @@ This workshop tutorial walks you through how to setup funnel metadynamics (fun-m
 The workshop is divided into three parts, each linked below:
 
 ## 1. Introduction and some theory of fun-metaD
-As an introduction, look [here](01_Introduction.md) for an explanation of funnel metadynamics.
+As an introduction, look [here](01_Introduction.md) for an explanation of funnel metadynamics, and consult [this Jupyter NB](01_bss-fun-metaD-introduction.ipynb).
 
 ## 2. Simulation setup and restraint visualisation
 For a step-by-step guide on how to visualise the funnel restraints and how to set up the fun-metaD simulations, follow [this Jupyter NB](02_bss-fun-metad-tutorial.ipynb).
