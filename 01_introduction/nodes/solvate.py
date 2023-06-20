@@ -3,9 +3,9 @@
 
 # Author: Lester Hedges<br>
 # Email:&nbsp;&nbsp; lester.hedges@bristol.ac.uk
-# 
+#
 # # Solvation
-# 
+#
 # A node to solvate a parameterised molecular system. An appropriate box size will be determine from the axis-aligned bounding box of the molecules in the system
 
 # In[ ]:
@@ -17,10 +17,14 @@ import BioSimSpace as BSS
 # In[ ]:
 
 
-node = BSS.Gateway.Node("A node to solvate a parameterised molecular system. An appropriate box size will be determine from the axis-aligned bounding box of the molecules in the system.")
-node.addAuthor(name="Lester Hedges",
-               email="lester.hedges@bristol.ac.uk",
-               affiliation="University of Bristol")
+node = BSS.Gateway.Node(
+    "A node to solvate a parameterised molecular system. An appropriate box size will be determine from the axis-aligned bounding box of the molecules in the system."
+)
+node.addAuthor(
+    name="Lester Hedges",
+    email="lester.hedges@bristol.ac.uk",
+    affiliation="University of Bristol",
+)
 node.setLicense("GPLv3")
 
 
@@ -29,34 +33,33 @@ node.setLicense("GPLv3")
 # In[ ]:
 
 
-node.addInput("files", BSS.Gateway.FileSet(
-    help="A set of molecular input files.")
+node.addInput("files", BSS.Gateway.FileSet(help="A set of molecular input files."))
+
+node.addInput(
+    "water_model",
+    BSS.Gateway.String(
+        help="The water model.", allowed=BSS.Solvent.waterModels(), default="tip3p"
+    ),
 )
 
-node.addInput("water_model", BSS.Gateway.String
-(
-    help="The water model.",
-    allowed=BSS.Solvent.waterModels(),
-    default="tip3p")
+node.addInput(
+    "box",
+    BSS.Gateway.String(
+        help="The type of simulation box.", allowed=BSS.Box.boxTypes(), default="cubic"
+    ),
 )
 
-node.addInput("box", BSS.Gateway.String
-(
-    help="The type of simulation box.",
-    allowed=BSS.Box.boxTypes(),
-    default="cubic")
+node.addInput(
+    "neutralise",
+    BSS.Gateway.Boolean(
+        help="Whether to neutralise the system. Ions will be added on top of any specified with 'ion_conc'",
+        default=True,
+    ),
 )
 
-node.addInput("neutralise", BSS.Gateway.Boolean
-(
-    help="Whether to neutralise the system. Ions will be added on top of any specified with 'ion_conc'",
-    default=True)
-)
-
-node.addInput("ion_conc", BSS.Gateway.Float
-(
-    help="The ion concentration in mol per litre",
-    default=0)
+node.addInput(
+    "ion_conc",
+    BSS.Gateway.Float(help="The ion concentration in mol per litre", default=0),
 )
 
 
@@ -99,7 +102,7 @@ padding = 15 * BSS.Units.Length.angstrom
 
 # Work out an appropriate box. This will used in each dimension to ensure
 # that the cutoff constraints are satisfied if the molecule rotates.
-box_length = max(box_size) + 2*padding
+box_length = max(box_size) + 2 * padding
 
 
 # Get the box parameters for the chosen box type.
@@ -121,7 +124,7 @@ solvated = BSS.Solvent.solvate(
     box=box,
     angles=angles,
     is_neutral=node.getInput("neutralise"),
-    ion_conc=node.getInput("ion_conc")
+    ion_conc=node.getInput("ion_conc"),
 )
 
 
@@ -131,8 +134,7 @@ solvated = BSS.Solvent.solvate(
 
 
 node.setOutput(
-    "solvated",
-    BSS.IO.saveMolecules("solvated", solvated, system.fileFormat())
+    "solvated", BSS.IO.saveMolecules("solvated", solvated, system.fileFormat())
 )
 
 
@@ -142,4 +144,3 @@ node.setOutput(
 
 
 node.validate()
-

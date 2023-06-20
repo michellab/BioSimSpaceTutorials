@@ -30,8 +30,11 @@ except ImportError:
 
 
 if nbf:
+
     class JupyterNotebookCreator(object):
-        def __init__(self, nbname, networkfile=None, experimentalfile=None, custom_heading=None):
+        def __init__(
+            self, nbname, networkfile=None, experimentalfile=None, custom_heading=None
+        ):
             r"""
             Parameters:
             -----------
@@ -44,11 +47,11 @@ if nbf:
             """
             self._notebook_name = nbname
             if networkfile is None:
-                self._networkfile = ['tests/io/ic50_exp.dat']
+                self._networkfile = ["tests/io/ic50_exp.dat"]
             else:
                 self._networkfile = networkfile
             if experimentalfile is None:
-                self._experimentalfile = 'tests/io/ic50_exp.dat'
+                self._experimentalfile = "tests/io/ic50_exp.dat"
             else:
                 self._experimentalfile = experimentalfile
             self._custom_heading = custom_heading
@@ -91,7 +94,8 @@ if nbf:
             cell_list.append(self._generate_heading())
             cell_list.append(self._generate_imports())
 
-            pG = """\
+            pG = (
+                """\
     # Creating and populating the perturbation network
     pG = n_graph.PerturbationGraph()
     # Change the path below to the csv file containing the individual perturbations
@@ -104,7 +108,9 @@ if nbf:
     computed_relative_DDGs = pG.freeEnergyInKcal
     print ("Free energies computed from the perturbation network are: ")
     print ("---------------------------------------- ")
-    pG.write_free_energies(computed_relative_DDGs)""" % self._networkfile
+    pG.write_free_energies(computed_relative_DDGs)"""
+                % self._networkfile
+            )
 
             cell_list.append(self._generate_custom_code_cell(pG))
             exp_markdown = """
@@ -114,14 +120,17 @@ if nbf:
     `IC_50_file` variable """
             cell_list.append(self._generate_custom_markdown_cell(exp_markdown))
 
-            exp_code = """\
+            exp_code = (
+                """\
     experiments = n_ex.ExperimentalData()
     IC_50_file = '%s'
     experiments.compute_DDG_from_IC50s(IC_50_file, reference=target_compound)
     experimental_DDGs = experiments.freeEnergiesInKcal
     print ("Free energies computed from IC50 data: ")
     print ("---------------------------------------- ")
-    pG.write_free_energies(experimental_DDGs)""" % self._experimentalfile
+    pG.write_free_energies(experimental_DDGs)"""
+                % self._experimentalfile
+            )
             cell_list.append(self._generate_custom_code_cell(exp_code))
 
             plots_markdown = """
@@ -157,7 +166,7 @@ if nbf:
     print ("Mue confidence is: %.2f < %.2f < %.2f" %(mue_confidence[1], mue_confidence[0], mue_confidence[2]))
     print ("tau confidence is: %.2f < %.2f < %.2f" %(tau_confidence[1], tau_confidence[0], tau_confidence[2]))"""
             cell_list.append(self._generate_custom_code_cell(stats_code))
-            nb['cells'] = cell_list
+            nb["cells"] = cell_list
             return nb
 
         def _generate_custom_notebook(self):
@@ -169,5 +178,5 @@ if nbf:
                 nb = self._generate_default_notebook()
             else:
                 nb = self._generate_default_notebook()
-            with open(self._notebook_name, 'w') as f:
+            with open(self._notebook_name, "w") as f:
                 nbf.write(nb, f)

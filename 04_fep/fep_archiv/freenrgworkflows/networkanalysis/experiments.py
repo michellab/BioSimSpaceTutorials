@@ -47,7 +47,9 @@ class ExperimentalData(object):
         self._RTkcal = 1.987203611 * temperature
         self._keys = None
 
-    def compute_affinities(self, filename, data_type=None, comments=None, delimiter=','):
+    def compute_affinities(
+        self, filename, data_type=None, comments=None, delimiter=","
+    ):
         r"""
 
 
@@ -65,9 +67,10 @@ class ExperimentalData(object):
         -------
 
         """
-        if data_type not in ['k_D', 'IC50', 'pIC50', 'K_i']:
+        if data_type not in ["k_D", "IC50", "pIC50", "K_i"]:
             raise ValueError(
-                'The data_type you have specified is not recognised please choose from: k_D, IC50, pIC50, K_i')
+                "The data_type you have specified is not recognised please choose from: k_D, IC50, pIC50, K_i"
+            )
         data = pd.read_csv(filename, comment=comments, delimiter=delimiter)
         error_list = []
         error_list_kj = []
@@ -77,7 +80,7 @@ class ExperimentalData(object):
         self._DG_in_kcal = []
         self._DG_in_kJ = []
 
-        if data_type == 'IC50':
+        if data_type == "IC50":
             if len(data.columns) == 2:
                 error = self._kTkcal * np.log(2)
                 error_kj = self._kTkJ * np.log(2)
@@ -97,10 +100,14 @@ class ExperimentalData(object):
             dG = dG - np.mean(dG)
             dG_kj_mol = dG_kj_mol - np.mean(dG_kj_mol)
             for i in range(len(data)):
-                self._DG_in_kcal.append({data.iloc[i, 0]: dG[i], 'error': error_list[i]})
-                self._DG_in_kJ.append({data.iloc[i, 0]: dG_kj_mol[i], 'error': error_list_kj[i]})
+                self._DG_in_kcal.append(
+                    {data.iloc[i, 0]: dG[i], "error": error_list[i]}
+                )
+                self._DG_in_kJ.append(
+                    {data.iloc[i, 0]: dG_kj_mol[i], "error": error_list_kj[i]}
+                )
 
-        elif data_type == 'k_D':
+        elif data_type == "k_D":
             if len(data.columns) == 2:
                 error = self._kTkcal * np.log(2)
                 error_kj = self._kTkJ * np.log(2)
@@ -121,12 +128,16 @@ class ExperimentalData(object):
             dG = dG - np.mean(dG)
             dG_kj_mol = dG_kj_mol - np.mean(dG_kj_mol)
             for i in range(len(data)):
-                self._DG_in_kcal.append({data.iloc[i, 0]: dG[i], 'error': error_list[i]})
-                self._DG_in_kJ.append({data.iloc[i, 0]: dG_kj_mol[i], 'error': error_list_kj[i]})
+                self._DG_in_kcal.append(
+                    {data.iloc[i, 0]: dG[i], "error": error_list[i]}
+                )
+                self._DG_in_kJ.append(
+                    {data.iloc[i, 0]: dG_kj_mol[i], "error": error_list_kj[i]}
+                )
 
-        elif data_type == 'pIC50':
+        elif data_type == "pIC50":
             raise NotImplementedError
-        elif data_type == 'k_i':
+        elif data_type == "k_i":
             raise NotImplementedError
 
     def compute_DDG_from_IC50s(self, filename, reference=None, smiles_string=False):
@@ -135,19 +146,21 @@ class ExperimentalData(object):
             file containing ic50 data, format - compound name, ic50 value, error
         """
         warnings.warn(
-            'compute_DDG_from_IC50s is deprecated use compute_affinites instead.',
-            DeprecationWarning, stacklevel=2)
+            "compute_DDG_from_IC50s is deprecated use compute_affinites instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         self._keys = []
         self._ic50s = []
         self._DG_in_kcal = []
         self._DG_in_kJ = []
-        f = open(filename, 'r')
+        f = open(filename, "r")
         for line in f.readlines():
             curr_ic50 = {}
-            fields = line.split(',')
+            fields = line.split(",")
             curr_ic50[fields[0]] = float(fields[1].strip())
             if smiles_string and len(fields) > 2:
-                curr_ic50['smiles'] = fields[2].strip()
+                curr_ic50["smiles"] = fields[2].strip()
             # note down the keys
             self._keys.append(fields[0])
             self._ic50s.append(curr_ic50)  # append to list of ic50 compounds.
@@ -164,17 +177,19 @@ class ExperimentalData(object):
         for k in range(len(self._keys)):
             key = self._keys[k]
             ic50 = self._ic50s[k][key]
-            r = float(ic50 / float(self._ic50s[reference_index][self._referenceCompound]))
+            r = float(
+                ic50 / float(self._ic50s[reference_index][self._referenceCompound])
+            )
             a_kcal = {}
             a_kcal[key] = self._kTkcal * np.log(r)
-            a_kcal['error'] = self._kTkcal * np.log(2)
+            a_kcal["error"] = self._kTkcal * np.log(2)
             self._DG_in_kcal.append(a_kcal)
             a_kJ = {}
             a_kJ[key] = self._kTkJ * np.log(r)
-            a_kJ['error'] = self._kTkJ * np.log(2)
+            a_kJ["error"] = self._kTkJ * np.log(2)
             self._DG_in_kJ.append(a_kJ)
 
-    def compute_DDG_from_kD(self, filename, reference=None, delimiter=','):
+    def compute_DDG_from_kD(self, filename, reference=None, delimiter=","):
         r"""Reads KDs from file and converts them to DDG values to a given reference compound
         Parameters:
         ----------
@@ -184,13 +199,15 @@ class ExperimentalData(object):
             Name of the reference compound which will be used to compute DDGs for
         """
         warnings.warn(
-            'compute_DDG_from_kD is deprecated use compute_affinites instead.',
-            DeprecationWarning, stacklevel=2)
+            "compute_DDG_from_kD is deprecated use compute_affinites instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         self._kD = []
         self._DG_in_kcal = []
         self._DG_in_kJ = []
         self._keys = []
-        with open(filename, 'r') as f:
+        with open(filename, "r") as f:
             lines = f.readlines()
             for line in lines:
                 fields = line.strip().split(delimiter)
@@ -213,19 +230,19 @@ class ExperimentalData(object):
             r = float(kD / float(self._kD[reference_index][self._referenceCompound]))
             a_kcal = {}
             a_kcal[key] = self._RTkcal * np.log(r)
-            a_kcal['error'] = self._RTkcal * np.log(2)
+            a_kcal["error"] = self._RTkcal * np.log(2)
 
             # computation for KJ/mol
             self._DG_in_kcal.append(a_kcal)
             a_kJ = {}
             a_kJ[key] = self._RTkJ * np.log(r)
-            a_kJ['error'] = self._RTkJ * np.log(2)
+            a_kJ["error"] = self._RTkJ * np.log(2)
             self._DG_in_kJ.append(a_kJ)
 
-    def read_free_energies(self, filename, kcal=True, comment='#'):
+    def read_free_energies(self, filename, kcal=True, comment="#"):
         r"""Read free energies from a file
         filename : string
-            Filename containing free energies        
+            Filename containing free energies
 
         """
         self._keys = []
@@ -233,19 +250,19 @@ class ExperimentalData(object):
         self._DG_in_kcal = []
         self._DG_in_kJ = []
         if not kcal:
-            raise (NotImplementedError('This has not been implemented yet'))
+            raise (NotImplementedError("This has not been implemented yet"))
         else:
-            f = open(filename, 'r')
+            f = open(filename, "r")
             for line in f.readlines():
                 if line.startswith(comment):
                     continue
                 curr_ic50 = {}
-                fields = line.split(',')
-                if fields[1] == 'NoPred':
+                fields = line.split(",")
+                if fields[1] == "NoPred":
                     continue
                 F_kcal = {}
                 F_kcal[fields[0]] = float(fields[1])
-                F_kcal['error'] = float(fields[2].strip())
+                F_kcal["error"] = float(fields[2].strip())
                 # note down the keys
                 self._keys.append(fields[0])
                 self._DG_in_kcal.append(F_kcal)  # append to list of ic50 compounds.

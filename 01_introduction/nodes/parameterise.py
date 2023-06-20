@@ -3,9 +3,9 @@
 
 # Author: Lester Hedges<br>
 # Email:&nbsp;&nbsp; lester.hedges@bristol.ac.uk
-# 
+#
 # # Parameterisation
-# 
+#
 # A node to perform parameterisation of a molecule loaded from PDB file. Saves the parameterised molecule in to AMBER format files.
 
 # In[ ]:
@@ -17,10 +17,14 @@ import BioSimSpace as BSS
 # In[ ]:
 
 
-node = BSS.Gateway.Node("A node to perform parameterisation of a molecule loaded from PDB file. Saves the parameterised molecule in to AMBER format files.")
-node.addAuthor(name="Lester Hedges",
-               email="lester.hedges@bristol.ac.uk",
-               affiliation="University of Bristol")
+node = BSS.Gateway.Node(
+    "A node to perform parameterisation of a molecule loaded from PDB file. Saves the parameterised molecule in to AMBER format files."
+)
+node.addAuthor(
+    name="Lester Hedges",
+    email="lester.hedges@bristol.ac.uk",
+    affiliation="University of Bristol",
+)
 node.setLicense("GPLv3")
 
 
@@ -29,28 +33,35 @@ node.setLicense("GPLv3")
 # In[ ]:
 
 
-node.addInput("pdb", BSS.Gateway.File
-(
-    help="A Protein Data Bank (PDB) file containing a single molecule.")
+node.addInput(
+    "pdb",
+    BSS.Gateway.File(
+        help="A Protein Data Bank (PDB) file containing a single molecule."
+    ),
 )
 
-node.addInput("forcefield", BSS.Gateway.String
-(
-    help="The force field to parameterise the molecule with.",
-    allowed=BSS.Parameters.forceFields())
+node.addInput(
+    "forcefield",
+    BSS.Gateway.String(
+        help="The force field to parameterise the molecule with.",
+        allowed=BSS.Parameters.forceFields(),
+    ),
 )
 
-node.addInput("water_model", BSS.Gateway.String
-(
-    help="The water model to use for ion parameters.",
-    allowed=BSS.Solvent.waterModels(),
-    default="tip3p")
+node.addInput(
+    "water_model",
+    BSS.Gateway.String(
+        help="The water model to use for ion parameters.",
+        allowed=BSS.Solvent.waterModels(),
+        default="tip3p",
+    ),
 )
 
-node.addInput("pdb4amber", BSS.Gateway.Boolean
-(
-    help="Whether to pre-process the PDB file using pdb4amber.",
-    default=False)
+node.addInput(
+    "pdb4amber",
+    BSS.Gateway.Boolean(
+        help="Whether to pre-process the PDB file using pdb4amber.", default=False
+    ),
 )
 
 
@@ -82,9 +93,7 @@ molecule = BSS.IO.readPDB(node.getInput("pdb"), pdb4amber=node.getInput("pdb4amb
 
 
 molecule = BSS.Parameters.parameterise(
-    molecule,
-    node.getInput("forcefield"),
-    water_model=node.getInput("water_model")
+    molecule, node.getInput("forcefield"), water_model=node.getInput("water_model")
 ).getMolecule()
 
 
@@ -94,8 +103,7 @@ molecule = BSS.Parameters.parameterise(
 
 
 node.setOutput(
-    "parameterised",
-    BSS.IO.saveMolecules("parameterised", molecule, ["prm7", "rst7"])
+    "parameterised", BSS.IO.saveMolecules("parameterised", molecule, ["prm7", "rst7"])
 )
 
 
@@ -105,4 +113,3 @@ node.setOutput(
 
 
 node.validate()
-

@@ -31,9 +31,14 @@ import pandas as pd
 
 
 class NetworkAnalyser(object):
-
-    def __init__(self, use_weights=True, target_compound=None, iterations=10000, verbose=False, 
-                balance_hysteresis=True):
+    def __init__(
+        self,
+        use_weights=True,
+        target_compound=None,
+        iterations=10000,
+        verbose=False,
+        balance_hysteresis=True,
+    ):
         self._weights = {}
         self._ddG_edges = {}
         self._compoundList = None
@@ -56,15 +61,23 @@ class NetworkAnalyser(object):
         comments : String
             passing comments string along to deal with comment headers
         """
-        df1 = pd.read_csv(path, header='infer', nrows=n, comment=comments)
+        df1 = pd.read_csv(path, header="infer", nrows=n, comment=comments)
         df2 = pd.read_csv(path, header=None, nrows=n, comment=comments)
         sim = (df1.dtypes.values == df2.dtypes.values).mean()
         columns = len(df1.columns)
-        return 'infer' if sim < th else None, columns
+        return "infer" if sim < th else None, columns
 
-    def read_perturbations_pandas(self, filename, delimiter=',', comments=None, source='lig_1', target='lig_2',
-                                  edge_attr=['freenrg', 'error'], save_graph=True):
-        """ Reads a networkx compatible csv file using pandas dataframes
+    def read_perturbations_pandas(
+        self,
+        filename,
+        delimiter=",",
+        comments=None,
+        source="lig_1",
+        target="lig_2",
+        edge_attr=["freenrg", "error"],
+        save_graph=True,
+    ):
+        """Reads a networkx compatible csv file using pandas dataframes
 
         Parameters:
         -----------
@@ -97,20 +110,30 @@ class NetworkAnalyser(object):
             col_head = [source, target, edge_attr[0], edge_attr[1]]
             col_diff = n_cols - len(col_head)
             if col_diff == 0:
-                data = pd.read_csv(filename, delimiter=delimiter, comment=comments, names=col_head)
+                data = pd.read_csv(
+                    filename, delimiter=delimiter, comment=comments, names=col_head
+                )
             elif col_diff == 1:
-                col_head.append('engine')
-                data = pd.read_csv(filename, delimiter=delimiter, comment=comments, names=col_head)
+                col_head.append("engine")
+                data = pd.read_csv(
+                    filename, delimiter=delimiter, comment=comments, names=col_head
+                )
             elif col_diff > 1:
-                col_head.append('engine')
+                col_head.append("engine")
                 for x in range(col_diff - 1):
-                    col_head.append('not_needed_' + str(x))
-                data = pd.read_csv(filename, delimiter=delimiter, comment=comments, names=col_head)
+                    col_head.append("not_needed_" + str(x))
+                data = pd.read_csv(
+                    filename, delimiter=delimiter, comment=comments, names=col_head
+                )
             elif col_diff < 0:
-                raise ValueError("You don't have enough columns in your free energy perturbation results file")
+                raise ValueError(
+                    "You don't have enough columns in your free energy perturbation results file"
+                )
 
         else:
-            data = pd.read_csv(filename, delimiter=delimiter, comment=comments, header=header)
+            data = pd.read_csv(
+                filename, delimiter=delimiter, comment=comments, header=header
+            )
 
         # Getting rid of any NANs, this may make a network disconnected
         data = data.dropna()
@@ -118,8 +141,13 @@ class NetworkAnalyser(object):
         # print(data)
 
         # Now convert the pandas data frame to a networkx graph
-        graph = nx.from_pandas_edgelist(data, source=source, target=target, edge_attr=edge_attr,
-                                        create_using=nx.DiGraph())
+        graph = nx.from_pandas_edgelist(
+            data,
+            source=source,
+            target=target,
+            edge_attr=edge_attr,
+            create_using=nx.DiGraph(),
+        )
 
         # We want to know what the largest component is, so we know if we may not be able to estimate certain free
         # energies
@@ -129,11 +157,12 @@ class NetworkAnalyser(object):
         self._compoundList = list(graph.nodes())
         self._compoundList.sort()
         if len(largest) < len(self._compoundList):
-            warnings.warn('Provided network is disconnected. Doing analysis on subgraph.') # FIXME
+            warnings.warn(
+                "Provided network is disconnected. Doing analysis on subgraph."
+            )  # FIXME
 
         # Doing analysis for all the nodes
         for node in self._compoundList:
-
             if node not in self._ddG_edges:
                 self._ddG_edges[node] = {}
                 self._weights[node] = {}
@@ -166,8 +195,16 @@ class NetworkAnalyser(object):
         if save_graph:
             self._graph = graph
 
-    def add_data_to_graph_pandas(self, filename, delimiter=',', comments=None, source='lig_1', target='lig_2',
-                                  edge_attr=['freenrg', 'error'], save_graph=True):
+    def add_data_to_graph_pandas(
+        self,
+        filename,
+        delimiter=",",
+        comments=None,
+        source="lig_1",
+        target="lig_2",
+        edge_attr=["freenrg", "error"],
+        save_graph=True,
+    ):
         r"""
         Adds data to an existing graph from a csv file using pandas dataframe
 
@@ -201,38 +238,52 @@ class NetworkAnalyser(object):
             col_head = [source, target, edge_attr[0], edge_attr[1]]
             col_diff = n_cols - len(col_head)
             if col_diff == 0:
-                data = pd.read_csv(filename, delimiter=delimiter, comment=comments, names=col_head)
+                data = pd.read_csv(
+                    filename, delimiter=delimiter, comment=comments, names=col_head
+                )
             elif col_diff == 1:
-                col_head.append('engine')
-                data = pd.read_csv(filename, delimiter=delimiter, comment=comments, names=col_head)
+                col_head.append("engine")
+                data = pd.read_csv(
+                    filename, delimiter=delimiter, comment=comments, names=col_head
+                )
             elif col_diff > 1:
-                col_head.append('engine')
+                col_head.append("engine")
                 for x in range(col_diff - 1):
-                    col_head.append('not_needed_' + str(x))
-                data = pd.read_csv(filename, delimiter=delimiter, comment=comments, names=col_head)
+                    col_head.append("not_needed_" + str(x))
+                data = pd.read_csv(
+                    filename, delimiter=delimiter, comment=comments, names=col_head
+                )
             elif col_diff < 0:
-                raise ValueError("You don't have enough columns in your free energy perturbation results file")
+                raise ValueError(
+                    "You don't have enough columns in your free energy perturbation results file"
+                )
 
         else:
-            data = pd.read_csv(filename, delimiter=delimiter, comment=comments, header=header)
+            data = pd.read_csv(
+                filename, delimiter=delimiter, comment=comments, header=header
+            )
 
         # Getting rid of any NANs, this may make a network disconnected
         data = data.dropna()
 
         # Now convert the pandas data frame to a networkx graph
-        newGraph = nx.from_pandas_edgelist(data, source=source, target=target, edge_attr=edge_attr,
-                                        create_using=nx.DiGraph())
+        newGraph = nx.from_pandas_edgelist(
+            data,
+            source=source,
+            target=target,
+            edge_attr=edge_attr,
+            create_using=nx.DiGraph(),
+        )
 
         averaged_edge_counter, added_edge_counter = 0, 0
 
         if self._graph != None:
             for u, v, w in newGraph.edges(data=True):
                 if self._graph.has_edge(u, v):
-
                     # compute average freenrg and propagate error.
                     z = self._graph.get_edge_data(u, v)
-                    mean_edge = np.mean([z['freenrg'], w['freenrg']])
-                    prop_error = 0.5 * np.sqrt(z['error'] ** 2 + w['error'] ** 2)
+                    mean_edge = np.mean([z["freenrg"], w["freenrg"]])
+                    prop_error = 0.5 * np.sqrt(z["error"] ** 2 + w["error"] ** 2)
 
                     # replace the edge with new one.
                     self._ddG_edges[u][v] = mean_edge
@@ -241,17 +292,27 @@ class NetworkAnalyser(object):
                     averaged_edge_counter += 1
 
                 else:
-                    self._ddG_edges[u][v] = w['freenrg']
-                    self._weights[u][v] = w['error']
+                    self._ddG_edges[u][v] = w["freenrg"]
+                    self._weights[u][v] = w["error"]
                     added_edge_counter += 1
         else:
-            raise ValueError("No graph present to add data to. Use read_perturbations_pandas() instead.")
+            raise ValueError(
+                "No graph present to add data to. Use read_perturbations_pandas() instead."
+            )
 
-        print(f"Added additional data to {averaged_edge_counter} edges; added {added_edge_counter} new edges.")
+        print(
+            f"Added additional data to {averaged_edge_counter} edges; added {added_edge_counter} new edges."
+        )
 
-    def read_perturbations(self, filename, delimiter=',', comments='#', nodetype=str,
-                           data=(('weight', float), ('error', float))):
-        r""" Read perturbations from networkx graph file
+    def read_perturbations(
+        self,
+        filename,
+        delimiter=",",
+        comments="#",
+        nodetype=str,
+        data=(("weight", float), ("error", float)),
+    ):
+        r"""Read perturbations from networkx graph file
 
         Parameters
         ----------
@@ -271,18 +332,26 @@ class NetworkAnalyser(object):
         """
 
         warnings.warn(
-            'read_perturbations is deprecated, please use read_perturbations_pandas',
-            DeprecationWarning, stacklevel=2)
-        graph = nx.read_edgelist(filename, delimiter=delimiter, comments=comments, create_using=nx.DiGraph(),
-                                 nodetype=nodetype, data=data)
+            "read_perturbations is deprecated, please use read_perturbations_pandas",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        graph = nx.read_edgelist(
+            filename,
+            delimiter=delimiter,
+            comments=comments,
+            create_using=nx.DiGraph(),
+            nodetype=nodetype,
+            data=data,
+        )
 
         # populate compound list:
         self._compoundList = list(graph.nodes())
         self._compoundList.sort()
         if self._verbose:
-            print('The graph is:')
+            print("The graph is:")
             print(graph.nodes())
-            print('done')
+            print("done")
 
         f = open(filename)
         lines = f.readlines()
@@ -303,7 +372,7 @@ class NetworkAnalyser(object):
             print("Processed ", len(self._ddG_edges), " molecules")
 
     def _get_avg_nrg(self, mol1, mol2):
-        """ Two molecular IDs return an average energy
+        """Two molecular IDs return an average energy
         Parameters:
         -----------
         mol1 : string
@@ -332,7 +401,7 @@ class NetworkAnalyser(object):
         return eng2
 
     def _compute_weight_matrix(self):
-        """ Diagonal matrix containing weights that correspond to the adjacency matrix
+        """Diagonal matrix containing weights that correspond to the adjacency matrix
         Returns:
         -------
         W : 2D numpy array
@@ -342,7 +411,11 @@ class NetworkAnalyser(object):
         for mol1 in self._ddG_edges:
             for mol2 in self._ddG_edges[mol1]:
                 # Only handle links one way round: if both links present then only take one of them
-                if mol1 < mol2 or mol2 not in self._ddG_edges or mol1 not in self._ddG_edges[mol2]:
+                if (
+                    mol1 < mol2
+                    or mol2 not in self._ddG_edges
+                    or mol1 not in self._ddG_edges[mol2]
+                ):
                     if self.use_weights:
                         w.append(self._get_avg_weight(mol1, mol2))
                     else:
@@ -351,7 +424,7 @@ class NetworkAnalyser(object):
         return W
 
     def _compute_vector(self):
-        """ Vector containing the pairwise DDG values
+        """Vector containing the pairwise DDG values
         Returns:
         -------
         b : numpy array
@@ -361,12 +434,15 @@ class NetworkAnalyser(object):
         for mol1 in self._ddG_edges:
             for mol2 in self._ddG_edges[mol1]:
                 # Only handle links one way round: if both links present then only take one of them
-                if mol1 < mol2 or mol2 not in self._ddG_edges or mol1 not in self._ddG_edges[mol2]:
+                if (
+                    mol1 < mol2
+                    or mol2 not in self._ddG_edges
+                    or mol1 not in self._ddG_edges[mol2]
+                ):
                     b.append(self._get_avg_nrg(mol1, mol2))
         return b
 
     def _compute_adjacency_matrix(self):
-
         firstrow = [0] * len(self._compoundList)
         firstrow[0] = 1
         A = np.array([firstrow], dtype="float64")
@@ -374,7 +450,11 @@ class NetworkAnalyser(object):
         for name1 in self._ddG_edges:
             for name2 in self._ddG_edges[name1]:
                 # Only handle links one way round: if both links present then only take one of them
-                if name1 < name2 or name2 not in self._ddG_edges or name1 not in self._ddG_edges[name2]:
+                if (
+                    name1 < name2
+                    or name2 not in self._ddG_edges
+                    or name1 not in self._ddG_edges[name2]
+                ):
                     row = [0] * len(self._compoundList)
                     row[self._compoundList.index(name1)] = -1
                     row[self._compoundList.index(name2)] = 1
@@ -383,11 +463,11 @@ class NetworkAnalyser(object):
 
     def _compute_free_energies(self):
         """
-            Solves the least square graph problem and populates _free_energies.
+        Solves the least square graph problem and populates _free_energies.
 
-            Errors are computed using boostrapping and the
-            Run 'self.iterations' iterations of bootstrap error
-            analysis and return the standard deviation of each value as well.
+        Errors are computed using boostrapping and the
+        Run 'self.iterations' iterations of bootstrap error
+        analysis and return the standard deviation of each value as well.
         """
 
         self._free_energies = []
@@ -406,7 +486,7 @@ class NetworkAnalyser(object):
             print("----------")
             print("b is: ")
             print(b)
-            print('----------')
+            print("----------")
         AT_W_A = np.dot((np.dot(np.transpose(A), W)), A)
         AT_W_b = np.dot((np.dot(np.transpose(A), W)), b)
         dG = np.linalg.solve(AT_W_A, AT_W_b)
@@ -436,25 +516,29 @@ class NetworkAnalyser(object):
         std_dG = [np.std(err[i, :], ddof=1) for i in range(len(dG))]
 
         for c_idx in range(len(self._compoundList)):
-            entry = {self._compoundList[c_idx]: dG[c_idx], 'error': std_dG[c_idx]}
+            entry = {self._compoundList[c_idx]: dG[c_idx], "error": std_dG[c_idx]}
             self._free_energies.append(entry)
 
     def _error_estimate(self, minh=0.4):
         """
-            Create the hysteresis vector holding the pairwise hysteresis values
-            The minimum hysteresis value is minh (also used if a link is unidirectional)
+        Create the hysteresis vector holding the pairwise hysteresis values
+        The minimum hysteresis value is minh (also used if a link is unidirectional)
         """
         h = [0]
         for mol1 in self._ddG_edges:
             for mol2 in self._ddG_edges[mol1]:
                 # Only handle links one way round: if both links present then only take one of them
-                if (mol1 < mol2 or mol2 not in self._ddG_edges or mol1 not in self._ddG_edges[mol2]):
+                if (
+                    mol1 < mol2
+                    or mol2 not in self._ddG_edges
+                    or mol1 not in self._ddG_edges[mol2]
+                ):
                     h.append((self._get_hysteresis(mol1, mol2, minh)))
         return h
 
     def _get_hysteresis(self, mol1, mol2, minh=0.4):
-        """ Given two keys, return the hysteresis of the links, or minh
-            if that is higher. If either link is missing returns minh.
+        """Given two keys, return the hysteresis of the links, or minh
+        if that is higher. If either link is missing returns minh.
         """
         try:
             eng1 = self._ddG_edges[mol1][mol2]
@@ -469,16 +553,16 @@ class NetworkAnalyser(object):
         # penalty as low ddG edges, instead of high ddG edges being over-penalised.
         hys = eng1 + eng2
 
-        rel_hys = hys/max(abs(eng1), abs(eng2))
-        
+        rel_hys = hys / max(abs(eng1), abs(eng2))
+
         if self.balance_hysteresis:
             return max(minh, abs(rel_hys))
         else:
             return max(minh, abs(hys))
 
     def _get_avg_weight(self, mol1, mol2):
-        """ Given two keys, return the average weight of
-            the links, otherwise just whichever value exists
+        """Given two keys, return the average weight of
+        the links, otherwise just whichever value exists
         """
         try:
             wt1 = self._weights[mol1][mol2]
@@ -508,26 +592,30 @@ class NetworkAnalyser(object):
             Default = None
         """
         if filename is not None:
-            f = open(filename, 'w')
+            f = open(filename, "w")
         else:
-            print ('#FREE ENERGIES ARE:')
+            print("#FREE ENERGIES ARE:")
         for d in freeEnergies:
             for k, v in iter(d.items()):
-                if k == 'error':
+                if k == "error":
                     error = v
                 else:
                     r_energy_k = k
                     r_energy_v = v
             if filename is not None:
                 if fmt is None:
-                    f.write('%s, %f, %f\n' % (r_energy_k, r_energy_v, error))
+                    f.write("%s, %f, %f\n" % (r_energy_k, r_energy_v, error))
                 else:
                     f.write(fmt % (r_energy_k, r_energy_v, error))
             else:
                 if fmt is None:
-                    print('{:10s} {:5.3f} +/- {:5.3f}'.format(r_energy_k, r_energy_v, error))
+                    print(
+                        "{:10s} {:5.3f} +/- {:5.3f}".format(
+                            r_energy_k, r_energy_v, error
+                        )
+                    )
                 else:
-                    print (fmt % (r_energy_k, r_energy_v, error))
+                    print(fmt % (r_energy_k, r_energy_v, error))
         if filename is not None:
             f.close()
 
@@ -537,8 +625,7 @@ class NetworkAnalyser(object):
 
     @property
     def freeEnergyInKcal(self, balance_hysteresis=True):
-        """ Return the free energies as a list of dictionaries
-        """
+        """Return the free energies as a list of dictionaries"""
 
         self._compute_free_energies()
         return self._free_energies
@@ -559,11 +646,19 @@ class PerturbationGraph(object):
         self._compoundList = []
         self._free_energies = []
         warnings.warn(
-            'PerturbationGraph is deprecated use the NetworkAnnalyser class instead.',
-            DeprecationWarning, stacklevel=2)
+            "PerturbationGraph is deprecated use the NetworkAnnalyser class instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
 
-    def populate_pert_graph(self, filename, delimiter=',', comments='#', nodetype=str,
-                            data=(('weight', float), ('error', float))):
+    def populate_pert_graph(
+        self,
+        filename,
+        delimiter=",",
+        comments="#",
+        nodetype=str,
+        data=(("weight", float), ("error", float)),
+    ):
         r"""
         Reads data from a correctly formatted csv file into a networkx digraph
         Parameters
@@ -573,7 +668,7 @@ class PerturbationGraph(object):
             File structure should be:
             node1,node2,DG,eDG,other_attributes
         delimiter : String
-            delimiter for network file 
+            delimiter for network file
             Default = ','
         comments : String
             Symbol used for comments in network file
@@ -584,22 +679,29 @@ class PerturbationGraph(object):
             Default, weight and error on Free energies of node
         """
         if self._graph is None:
-            graph = nx.read_edgelist(filename, delimiter=delimiter, comments=comments, create_using=nx.DiGraph(),
-                                     nodetype=nodetype, data=data)
+            graph = nx.read_edgelist(
+                filename,
+                delimiter=delimiter,
+                comments=comments,
+                create_using=nx.DiGraph(),
+                nodetype=nodetype,
+                data=data,
+            )
             self._graph = self._symmetrize_graph(graph)
             self._compoundList = np.sort(self._graph.nodes())
         else:
-            warnings.warn(UserWarning(
-                "Warning...........Use the method add_data_to_graph, to add further data to an existing graph"))
+            warnings.warn(
+                UserWarning(
+                    "Warning...........Use the method add_data_to_graph, to add further data to an existing graph"
+                )
+            )
             return 1
 
-    def populate_graph(self, filename, delimiter=',', comments='#'):
-        r"""alternative way of populating graph
-
-        """
+    def populate_graph(self, filename, delimiter=",", comments="#"):
+        r"""alternative way of populating graph"""
         g = nx.DiGraph()
         # add bit to check you can read file
-        f = open(filename, 'r')
+        f = open(filename, "r")
         data = f.readlines()
         f.close()
 
@@ -608,26 +710,38 @@ class PerturbationGraph(object):
         for d in data:
             l = d.strip().split(delimiter)
             if g.has_edge(l[0], l[1]):
-                print('Must do something with edge: %s,%s' % (l[0], l[1]))
+                print("Must do something with edge: %s,%s" % (l[0], l[1]))
                 a = g.get_edge_data(l[0], l[1])
-                a['weight_list'].append(float(l[2]))
-                g.edges[l[0], l[1]]['weight_list'] = a['weight_list']
+                a["weight_list"].append(float(l[2]))
+                g.edges[l[0], l[1]]["weight_list"] = a["weight_list"]
             else:
-                g.add_edge(l[0], l[1], weight=float(l[2]), error=float(l[3]), weight_list=[float(l[2])])
+                g.add_edge(
+                    l[0],
+                    l[1],
+                    weight=float(l[2]),
+                    error=float(l[3]),
+                    weight_list=[float(l[2])],
+                )
         for e in g.edges:
             e_data = g.get_edge_data(e[0], e[1])
-            if 'weight_list' in e_data:
-                w_list = e_data['weight_list']
+            if "weight_list" in e_data:
+                w_list = e_data["weight_list"]
                 if len(w_list) > 1:
                     print(e[0], e[1])
                     print((w_list))
-                    g.edges[e[0], e[1]]['weight'] = np.mean(w_list)
-                    g.edges[e[0], e[1]]['error'] = np.std(w_list)
+                    g.edges[e[0], e[1]]["weight"] = np.mean(w_list)
+                    g.edges[e[0], e[1]]["error"] = np.std(w_list)
         self._graph = self._symmetrize_graph(g)
         self._compoundList = np.sort(self._graph.nodes())
 
-    def add_data_to_graph(self, filename, delimiter=',', comments='#', nodetype=str,
-                          data=(('weight', float), ('error', float))):
+    def add_data_to_graph(
+        self,
+        filename,
+        delimiter=",",
+        comments="#",
+        nodetype=str,
+        data=(("weight", float), ("error", float)),
+    ):
         r"""
         Adds data to an existing graph from a csv file in the right networkx format
         Parameters
@@ -637,7 +751,7 @@ class PerturbationGraph(object):
             File structure should be:
             node1,node2,DG,eDG,other_attributes
         delimiter : String
-            delimiter for network file 
+            delimiter for network file
             Default = ','
         comments : String
             Symbol used for comments in network file
@@ -647,15 +761,21 @@ class PerturbationGraph(object):
         data : list
             Default, weight and error on Free energies of node
         """
-        newGraph = nx.read_edgelist(filename, delimiter=delimiter, comments=comments, create_using=nx.DiGraph(),
-                                    nodetype=nodetype, data=data)
+        newGraph = nx.read_edgelist(
+            filename,
+            delimiter=delimiter,
+            comments=comments,
+            create_using=nx.DiGraph(),
+            nodetype=nodetype,
+            data=data,
+        )
         newGraph = self._symmetrize_graph(newGraph)
         if self._graph != None:
             for u, v, w in newGraph.edges(data=True):
                 if self._graph.has_edge(u, v):
                     z = self._graph.get_edge_data(u, v)
-                    mean_edge = np.mean([z['weight'], w['weight']])
-                    error = 0.5 * np.sqrt(z['error'] ** 2 + w['error'] ** 2)
+                    mean_edge = np.mean([z["weight"], w["weight"]])
+                    error = 0.5 * np.sqrt(z["error"] ** 2 + w["error"] ** 2)
                     self._graph.remove_edge(u, v)
                     self._graph.add_edge(u, v, weight=mean_edge, error=error)
                 else:
@@ -664,7 +784,7 @@ class PerturbationGraph(object):
             self._graph = newGraph
 
     def remove_compound_from_graph(self, compound):
-        r""" removes a node from the current graph
+        r"""removes a node from the current graph
         Parameters
         ----------
         compound : string
@@ -691,24 +811,35 @@ class PerturbationGraph(object):
         for u, v, w_forward in graph.edges(data=True):
             if graph.has_edge(v, u):
                 w_backward = graph.get_edge_data(v, u)
-                avg_weight_forw = np.mean([w_forward['weight'], -w_backward['weight']])
+                avg_weight_forw = np.mean([w_forward["weight"], -w_backward["weight"]])
                 avg_weight_back = -avg_weight_forw
-                error = np.std([w_forward['weight'], -w_backward['weight']]) / np.sqrt(2.0)
+                error = np.std([w_forward["weight"], -w_backward["weight"]]) / np.sqrt(
+                    2.0
+                )
                 if error == 0.0:
-                    error = np.mean([w_forward['error'], w_backward['error']])
+                    error = np.mean([w_forward["error"], w_backward["error"]])
                 symmetrizedGraph.add_edge(u, v, weight=avg_weight_forw, error=error)
                 symmetrizedGraph.add_edge(v, u, weight=avg_weight_back, error=error)
             else:
-                symmetrizedGraph.add_edge(u, v, weight=w_forward['weight'], error=w_forward['error'])
+                symmetrizedGraph.add_edge(
+                    u, v, weight=w_forward["weight"], error=w_forward["error"]
+                )
         for u, v, w in symmetrizedGraph.edges(data=True):
             if not symmetrizedGraph.has_edge(v, u):
-                assymetric_w = -w['weight']
-                assymetric_e = -w['error']
+                assymetric_w = -w["weight"]
+                assymetric_e = -w["error"]
                 symmetrizedGraph.add_edge(v, u, weight=assymetric_w, error=assymetric_e)
         return symmetrizedGraph
 
-    def format_free_energies(self, merge_BM=False, kT=0.594, intermed_ID=None, compound_order=None, weighted=True,
-                             path_dictionary=None):
+    def format_free_energies(
+        self,
+        merge_BM=False,
+        kT=0.594,
+        intermed_ID=None,
+        compound_order=None,
+        weighted=True,
+        path_dictionary=None,
+    ):
         r"""
          Parameters
         ----------
@@ -734,7 +865,9 @@ class PerturbationGraph(object):
         mols = {}
         if weighted:
             if not self._weightedPathAverages and path_dictionary == None:
-                print('compute weighted path averages for network first in order to format free energies')
+                print(
+                    "compute weighted path averages for network first in order to format free energies"
+                )
                 sys.exit(1)
             elif path_dictionary:
                 freeEnergies = path_dictionary
@@ -742,19 +875,21 @@ class PerturbationGraph(object):
                 freeEnergies = self._weightedPathAverages
         else:
             if not self._pathAverages:
-                print('compute path averages for network first in order to format free energies')
+                print(
+                    "compute path averages for network first in order to format free energies"
+                )
                 sys.exit(1)
             else:
                 freeEnergies = self._pathAveages
 
         for data in freeEnergies:
             keys = list(data.keys())
-            if keys[0] != 'error':
+            if keys[0] != "error":
                 mol = keys[0]
             else:
                 mol = keys[1]
             nrg = data[mol]
-            err = data['error']
+            err = data["error"]
             if merge_BM:
                 elems = mol.split("_BM")
                 moln = elems[0]
@@ -771,9 +906,11 @@ class PerturbationGraph(object):
             if set(compound_order).issubset(ids):
                 ids = compound_order
             else:
-                print ("The list of compounds you provided does not match the ones stored in the perturbation network")
-                print ("Compounds are:")
-                print (ids)
+                print(
+                    "The list of compounds you provided does not match the ones stored in the perturbation network"
+                )
+                print("Compounds are:")
+                print(ids)
                 sys.exit(1)
         for mol in ids:
             if intermed_ID is not None:
@@ -783,12 +920,12 @@ class PerturbationGraph(object):
             errtot = 0.0
             for nrg, err in mols[mol]:
                 nrgtot += np.exp(-nrg / kT)
-                errtot += err ** 2
+                errtot += err**2
             nrgtot = -kT * np.log(nrgtot)
             errtot = np.sqrt(errtot)
             a = {}
             a[mol] = nrgtot
-            a['error'] = errtot
+            a["error"] = errtot
             self._free_energies.append(a)
 
     def write_free_energies(self, freeEnergies, filename=None, fmt=None):
@@ -805,33 +942,37 @@ class PerturbationGraph(object):
             Default = None
         """
         if filename is not None:
-            f = open(filename, 'w')
+            f = open(filename, "w")
         else:
-            print ('#FREE ENERGIES ARE:')
+            print("#FREE ENERGIES ARE:")
         for d in freeEnergies:
             for k, v in iter(d.items()):
-                if k == 'error':
+                if k == "error":
                     error = v
                 else:
                     r_energy_k = k
                     r_energy_v = v
             if filename is not None:
                 if fmt is None:
-                    f.write('%s, %f, %f\n' % (r_energy_k, r_energy_v, error))
+                    f.write("%s, %f, %f\n" % (r_energy_k, r_energy_v, error))
                 else:
                     f.write(fmt % (r_energy_k, r_energy_v, error))
             else:
                 if fmt is None:
-                    print('{:10s} {:5.3f} +/- {:5.3f}'.format(r_energy_k, r_energy_v, error))
+                    print(
+                        "{:10s} {:5.3f} +/- {:5.3f}".format(
+                            r_energy_k, r_energy_v, error
+                        )
+                    )
                 else:
-                    print (fmt % (r_energy_k, r_energy_v, error))
+                    print(fmt % (r_energy_k, r_energy_v, error))
         if filename is not None:
             f.close()
 
     def shift_free_energies(self, shift_value=0.0):
         for d in self._free_energies:
             for k, v in iter(d.items()):
-                if k != 'error':
+                if k != "error":
                     d[k] = d[k] - shift_value
 
     def compute_average_paths(self, target_node):
@@ -852,8 +993,13 @@ class PerturbationGraph(object):
                 sum = 0
                 error = 0.0
                 for node in range(len(p) - 1):
-                    sum = sum + self._graph.get_edge_data(p[node], p[node + 1])['weight']
-                    error = error + self._graph.get_edge_data(p[node], p[node + 1])['error'] ** 2
+                    sum = (
+                        sum + self._graph.get_edge_data(p[node], p[node + 1])["weight"]
+                    )
+                    error = (
+                        error
+                        + self._graph.get_edge_data(p[node], p[node + 1])["error"] ** 2
+                    )
                 sum_list.append(sum)
                 err_list.append(error)
                 error = np.sqrt(error)
@@ -863,12 +1009,12 @@ class PerturbationGraph(object):
             avg_std = np.std(np.array(sum_list))
             # print ("Average sum for path to %s is %f " %(n,avg_sum))
             a = {str(n): avg_sum}
-            a['error'] = avg_std
+            a["error"] = avg_std
             # a['error']=sqrt(avg_err)
             self._pathAverages.append(a)
 
     def compute_weighted_avg_paths(self, target_node):
-        r""" computes all possible paths to a target node and returns a weighted average based on the errors along the edges of the path
+        r"""computes all possible paths to a target node and returns a weighted average based on the errors along the edges of the path
         Parameters
         ----------
         target_node : string
@@ -878,7 +1024,7 @@ class PerturbationGraph(object):
         self._weighted_paths = True
         self._weightedPathAverages = []
         a = {target_node: 0.0}
-        a['error'] = 0.0
+        a["error"] = 0.0
         self._weightedPathAverages.append(a)
         for n in self._compoundList:
             if n == target_node:
@@ -890,8 +1036,14 @@ class PerturbationGraph(object):
                 summing = 0
                 error = 0.0
                 for node in range(len(p) - 1):
-                    summing = summing + self._graph.get_edge_data(p[node], p[node + 1])['weight']
-                    error = error + self._graph.get_edge_data(p[node], p[node + 1])['error'] ** 2
+                    summing = (
+                        summing
+                        + self._graph.get_edge_data(p[node], p[node + 1])["weight"]
+                    )
+                    error = (
+                        error
+                        + self._graph.get_edge_data(p[node], p[node + 1])["error"] ** 2
+                    )
                 sum_list.append(summing)
                 error = np.sqrt(error)
                 err_list.append(error)
@@ -906,12 +1058,12 @@ class PerturbationGraph(object):
                 avg_err = avg_err + path_weights[i] * err_list[i] ** 2
             avg_err = np.sqrt(avg_err)
             a = {str(n): avg_sum}
-            a['error'] = avg_err
+            a["error"] = avg_err
             self._weightedPathAverages.append(a)
 
     def get_cycles(self, max_length=4, closure_threshold=1.0, print_all=False):
         r"""
-        TODO: elaborate and find good way of saving this information 
+        TODO: elaborate and find good way of saving this information
         """
         # cycle closure
         cyc = nx.simple_cycles(self._graph)
@@ -919,20 +1071,31 @@ class PerturbationGraph(object):
             sum = 0
             error = 0
             if len(c) > 2:
-                sum = self._graph.get_edge_data(c[-1], c[0])['weight']
-                error = (self._graph.get_edge_data(c[-1], c[0])['error']) ** 2
+                sum = self._graph.get_edge_data(c[-1], c[0])["weight"]
+                error = (self._graph.get_edge_data(c[-1], c[0])["error"]) ** 2
                 for node in range(len(c) - 1):
-                    sum = sum + self._graph.get_edge_data(c[node], c[node + 1])['weight']
-                    error = error + (self._graph.get_edge_data(c[node], c[node + 1])['error']) ** 2
+                    sum = (
+                        sum + self._graph.get_edge_data(c[node], c[node + 1])["weight"]
+                    )
+                    error = (
+                        error
+                        + (self._graph.get_edge_data(c[node], c[node + 1])["error"])
+                        ** 2
+                    )
                 error = np.sqrt(error)
                 if len(c) <= max_length and not print_all:
                     if sum > closure_threshold:
-                        print ('DDG for cycle %s is %.2f +/- %.2f kcal/mol' % (c, sum, error))
+                        print(
+                            "DDG for cycle %s is %.2f +/- %.2f kcal/mol"
+                            % (c, sum, error)
+                        )
                 if print_all:
-                    print ('DDG for cycle %s is %.2f +/- %.2f kcal/mol' % (c, sum, error))
+                    print(
+                        "DDG for cycle %s is %.2f +/- %.2f kcal/mol" % (c, sum, error)
+                    )
 
     def rename_compounds(self):
-        warnings.warn(NotImplementedError)('This function is not implemented yet')
+        warnings.warn(NotImplementedError)("This function is not implemented yet")
         sys.exit(1)
 
     @property
@@ -945,7 +1108,7 @@ class PerturbationGraph(object):
         Return
         ------
         pathAverages : dictionary
-            dictionary containing averaged free energies for each path, with paths weighted in the same way 
+            dictionary containing averaged free energies for each path, with paths weighted in the same way
         """
         return self._pathAverages
 

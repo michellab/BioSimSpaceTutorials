@@ -3,9 +3,9 @@
 
 # Author: Lester Hedges<br>
 # Email:&nbsp;&nbsp; lester.hedges@bristol.ac.uk
-# 
+#
 # # Equilibration
-# 
+#
 # A node to perform equilibration of a molecular system. Saves the equilibration system to AMBER format files along with a DCD trajectory.
 
 # In[ ]:
@@ -17,10 +17,14 @@ import BioSimSpace as BSS
 # In[ ]:
 
 
-node = BSS.Gateway.Node("A node to perform equilibration. Saves the equlibrated molecular configuration and trajectory to file.")
-node.addAuthor(name="Lester Hedges",
-               email="lester.hedges@bristol.ac.uk",
-               affiliation="University of Bristol")
+node = BSS.Gateway.Node(
+    "A node to perform equilibration. Saves the equlibrated molecular configuration and trajectory to file."
+)
+node.addAuthor(
+    name="Lester Hedges",
+    email="lester.hedges@bristol.ac.uk",
+    affiliation="University of Bristol",
+)
 node.setLicense("GPLv3")
 
 
@@ -29,65 +33,75 @@ node.setLicense("GPLv3")
 # In[ ]:
 
 
-node.addInput("files", BSS.Gateway.FileSet
-(
-    help="A set of molecular input files.")
+node.addInput("files", BSS.Gateway.FileSet(help="A set of molecular input files."))
+
+node.addInput(
+    "runtime",
+    BSS.Gateway.Time(
+        help="The run time.",
+        unit="nanoseconds",
+        minimum=0.02 * BSS.Units.Time.nanosecond,
+        maximum=10 * BSS.Units.Time.nanosecond,
+        default=0.02 * BSS.Units.Time.nanosecond,
+    ),
 )
 
-node.addInput("runtime", BSS.Gateway.Time
-(
-    help="The run time.",
-    unit="nanoseconds",
-    minimum=0.02*BSS.Units.Time.nanosecond,
-    maximum=10*BSS.Units.Time.nanosecond,
-    default=0.02*BSS.Units.Time.nanosecond)
+node.addInput(
+    "temperature_start",
+    BSS.Gateway.Temperature(
+        help="The initial temperature.",
+        unit="kelvin",
+        minimum=0 * BSS.Units.Temperature.kelvin,
+        maximum=1000 * BSS.Units.Temperature.kelvin,
+        default=0 * BSS.Units.Temperature.kelvin,
+    ),
 )
 
-node.addInput("temperature_start", BSS.Gateway.Temperature
-(
-    help="The initial temperature.",
-    unit="kelvin",
-    minimum=0*BSS.Units.Temperature.kelvin,
-    maximum=1000*BSS.Units.Temperature.kelvin,
-    default=0*BSS.Units.Temperature.kelvin)
+node.addInput(
+    "temperature_end",
+    BSS.Gateway.Temperature(
+        help="The final temperature.",
+        unit="kelvin",
+        minimum=0 * BSS.Units.Temperature.kelvin,
+        maximum=1000 * BSS.Units.Temperature.kelvin,
+        default=300 * BSS.Units.Temperature.kelvin,
+    ),
 )
 
-node.addInput("temperature_end", BSS.Gateway.Temperature
-(
-    help="The final temperature.",
-    unit="kelvin",
-    minimum=0*BSS.Units.Temperature.kelvin,
-    maximum=1000*BSS.Units.Temperature.kelvin,
-    default=300*BSS.Units.Temperature.kelvin)
+node.addInput(
+    "restraint",
+    BSS.Gateway.String(
+        help="The type of restraint.",
+        allowed=BSS.Protocol.Equilibration.restraints(),
+        default="none",
+    ),
 )
 
-node.addInput("restraint", BSS.Gateway.String
-(
-    help="The type of restraint.",
-    allowed=BSS.Protocol.Equilibration.restraints(),
-    default="none")
+node.addInput(
+    "report_interval",
+    BSS.Gateway.Integer(
+        help="The number of integration steps between reporting output.",
+        minimum=100,
+        maximum=10000,
+        default=100,
+    ),
 )
 
-node.addInput("report_interval", BSS.Gateway.Integer
-(
-    help="The number of integration steps between reporting output.",
-    minimum=100,
-    maximum=10000,
-    default=100)
+node.addInput(
+    "restart_interval",
+    BSS.Gateway.Integer(
+        help="The number of integration steps between saving trajectory frames.",
+        minimum=100,
+        maximum=10000,
+        default=500,
+    ),
 )
 
-node.addInput("restart_interval", BSS.Gateway.Integer
-(
-    help="The number of integration steps between saving trajectory frames.",
-    minimum=100,
-    maximum=10000,
-    default=500)
-)
-
-node.addInput("engine", BSS.Gateway.String(
-    help="The molecular dynamics engine.",
-    allowed=BSS.MD.engines(),
-    default="auto")
+node.addInput(
+    "engine",
+    BSS.Gateway.String(
+        help="The molecular dynamics engine.", allowed=BSS.MD.engines(), default="auto"
+    ),
 )
 
 
@@ -96,7 +110,9 @@ node.addInput("engine", BSS.Gateway.String(
 # In[ ]:
 
 
-node.addOutput("equilibrated", BSS.Gateway.FileSet(help="The equilibrated molecular system."))
+node.addOutput(
+    "equilibrated", BSS.Gateway.FileSet(help="The equilibrated molecular system.")
+)
 node.addOutput("trajectory", BSS.Gateway.File(help="The trajectory file."))
 
 
@@ -115,7 +131,7 @@ system = BSS.IO.readMolecules(node.getInput("files"))
 
 
 # Set up the equilibration protocol.
-# 
+#
 # (Note that the keyword arguments happen to have the same name as the input requirements. This need not be the case.)
 
 # In[ ]:
@@ -125,7 +141,7 @@ protocol = BSS.Protocol.Equilibration(
     runtime=node.getInput("runtime"),
     temperature_start=node.getInput("temperature_start"),
     temperature_end=node.getInput("temperature_end"),
-    restraint=node.getInput("restraint")
+    restraint=node.getInput("restraint"),
 )
 
 
@@ -164,8 +180,7 @@ formats += ",pdb"
 
 # Write to file and bind to the output.
 node.setOutput(
-    "equilibrated",
-    BSS.IO.saveMolecules("equilibrated", process.getSystem(), formats)
+    "equilibrated", BSS.IO.saveMolecules("equilibrated", process.getSystem(), formats)
 )
 
 
@@ -193,4 +208,3 @@ node.setOutput("trajectory", "equilibrated.dcd")
 
 
 node.validate()
-

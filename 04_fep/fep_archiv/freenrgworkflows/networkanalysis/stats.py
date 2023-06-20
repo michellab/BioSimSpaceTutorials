@@ -51,30 +51,32 @@ class freeEnergyStats(object):
         Be loud and noisy!
         Default = False
     """
-    def __init__(self, prediction=None, target=None, compound_list=None, verbose=False):
 
+    def __init__(self, prediction=None, target=None, compound_list=None, verbose=False):
         self.data_comp = None
         self.data_exp = None
         self._compound_list = None
         if prediction is not None:
             if target is None:
-                raise ValueError("If you give a prediction you also need to give a target value")
+                raise ValueError(
+                    "If you give a prediction you also need to give a target value"
+                )
             else:
                 if compound_list is None:
                     cl_exp = set().union(*(d.keys() for d in target))
                     cl_comp = set().union(*(d.keys() for d in prediction))
                     compound_list = list(set(cl_exp).intersection(cl_comp))
-                    if 'error' in compound_list:
-                        index = compound_list.index('error')
+                    if "error" in compound_list:
+                        index = compound_list.index("error")
                         compound_list.pop(index)
                     self._compound_list = compound_list
                 else:
-                        self._compound_list = compound_list
+                    self._compound_list = compound_list
             for k in self._compound_list:
                 comp = next(item for item in prediction if k in item)
                 exp = next(item for item in target if k in item)
                 val = comp[k]
-                err = comp['error']
+                err = comp["error"]
                 self.data_comp.append([val, err])
                 val = exp[k]
                 self.data_exp.append(val)
@@ -101,7 +103,9 @@ class freeEnergyStats(object):
         self._tau_from_data = None
         self._rmse_from_data = None
 
-    def generate_statistics(self, comp_data, exp_data, compound_list=None, repeats=1000):
+    def generate_statistics(
+        self, comp_data, exp_data, compound_list=None, repeats=1000
+    ):
         r"""
         Parameters
         ----------
@@ -123,8 +127,8 @@ class freeEnergyStats(object):
             cl_exp = set().union(*(d.keys() for d in exp_data))
             cl_comp = set().union(*(d.keys() for d in comp_data))
             compound_list = list(set(cl_exp).intersection(cl_comp))
-            if 'error' in compound_list:
-                index = compound_list.index('error')
+            if "error" in compound_list:
+                index = compound_list.index("error")
                 compound_list.pop(index)
             self._compound_list = compound_list
         else:
@@ -135,14 +139,16 @@ class freeEnergyStats(object):
             comp = next(item for item in comp_data if k in item)
             exp = next(item for item in exp_data if k in item)
             val = comp[k]
-            err = comp['error']
+            err = comp["error"]
             self.data_comp.append([val, err])
             val = exp[k]
             self.data_exp.append(val)
 
-        new_data = np.array(self.data_comp)[:,0]
+        new_data = np.array(self.data_comp)[:, 0]
         self._R_from_data, p = scipy.stats.pearsonr(new_data, np.array(self.data_exp))
-        self._tau_from_data = scipy.stats.kendalltau(new_data, np.array(self.data_exp))[0]
+        self._tau_from_data = scipy.stats.kendalltau(new_data, np.array(self.data_exp))[
+            0
+        ]
         self._rmse_from_data = self._calculate_rmse(new_data, np.array(self.data_exp))
         self._mue_from_data = self._calculate_mue(new_data, np.array(self.data_exp))
 
@@ -174,9 +180,9 @@ class freeEnergyStats(object):
             self._rmse.append(rmse)
 
     def _calculate_predictive_index(self, prediction, target):
-        '''r This function needs to be implemented properly'''
-        raise NotImplementedError('Calculating predictive index not implemented yet.')
-        '''sumwijcij = 0.0
+        """r This function needs to be implemented properly"""
+        raise NotImplementedError("Calculating predictive index not implemented yet.")
+        """sumwijcij = 0.0
         sumwij = 0.0
 
         keys = series1.keys()
@@ -204,22 +210,21 @@ class freeEnergyStats(object):
                 sumwij += wij
         PI = sumwijcij/sumwij
         return PI
-        '''
+        """
 
     def _calculate_rmse(self, prediction, target):
-            return np.sqrt(np.mean(np.square(target - prediction)))
+        return np.sqrt(np.mean(np.square(target - prediction)))
 
     def _calculate_r2(self, prediction, target):
         r_value, p = scipy.stats.pearsonr(prediction, target)
 
-        return r_value ** 2, r_value
+        return r_value**2, r_value
 
     def _calculate_tau(self, prediction, target):
         tau = scipy.stats.kendalltau(prediction, target)
         return tau[0]
 
     def _calculate_mue(self, prediction, target):
-
         sumdev = 0.0
         for x in range(0, len(prediction)):
             sumdev += abs(prediction[x] - target[x])
@@ -241,8 +246,11 @@ class freeEnergyStats(object):
     @confidence_interval.setter
     def confidence_interval(self, confidence_interval):
         if confidence_interval < 0 or confidence_interval > 1:
-            warnings.warn(UserWarning(
-                'Confidence interval needs to be between 0 and 1, please try something like 0.68 for one sigma confidence'))
+            warnings.warn(
+                UserWarning(
+                    "Confidence interval needs to be between 0 and 1, please try something like 0.68 for one sigma confidence"
+                )
+            )
         self._confidence_interval = confidence_interval
 
     @property

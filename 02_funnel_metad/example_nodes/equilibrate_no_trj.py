@@ -3,9 +3,9 @@
 
 # Author: Dominykas Lukauskis<br>
 # Email:&nbsp;&nbsp; dominykas.lukauskis.19@ucl.ac.uk
-# 
+#
 # # Equilibration
-# 
+#
 # A node to perform equilibration of a molecular system. Saves the equilibration system to AMBER format files along with a DCD trajectory.
 
 # In[ ]:
@@ -15,15 +15,19 @@ import BioSimSpace as BSS
 import os
 
 # set this just in case its missing in the env
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 # In[ ]:
 
 
-node = BSS.Gateway.Node("A node to perform equilibration. Saves the equlibrated molecular configuration to file.")
-node.addAuthor(name="Dominykas Lukauskis",
-               email="dominykas.lukauskis.19@ucl.ac.uk",
-               affiliation="University College London")
+node = BSS.Gateway.Node(
+    "A node to perform equilibration. Saves the equlibrated molecular configuration to file."
+)
+node.addAuthor(
+    name="Dominykas Lukauskis",
+    email="dominykas.lukauskis.19@ucl.ac.uk",
+    affiliation="University College London",
+)
 node.setLicense("GPLv3")
 
 
@@ -32,50 +36,57 @@ node.setLicense("GPLv3")
 # In[ ]:
 
 
-node.addInput("files", BSS.Gateway.FileSet
-(
-    help="A set of molecular input files.")
+node.addInput("files", BSS.Gateway.FileSet(help="A set of molecular input files."))
+
+node.addInput(
+    "engine",
+    BSS.Gateway.String(
+        help="The molecular dynamics engine.",
+        allowed=BSS.MD.engines(),
+        default="OpenMM",
+    ),
 )
 
-node.addInput("engine", BSS.Gateway.String
-(
-    help="The molecular dynamics engine.",
-    allowed=BSS.MD.engines(),
-    default="OpenMM")
+node.addInput(
+    "runtime",
+    BSS.Gateway.Time(
+        help="The run time.",
+        unit="nanoseconds",
+        minimum=0.02 * BSS.Units.Time.nanosecond,
+        maximum=10 * BSS.Units.Time.nanosecond,
+        default=2 * BSS.Units.Time.nanosecond,
+    ),
 )
 
-node.addInput("runtime", BSS.Gateway.Time
-(
-    help="The run time.",
-    unit="nanoseconds",
-    minimum=0.02*BSS.Units.Time.nanosecond,
-    maximum=10*BSS.Units.Time.nanosecond,
-    default=2*BSS.Units.Time.nanosecond)
+node.addInput(
+    "temperature_start",
+    BSS.Gateway.Temperature(
+        help="The initial temperature.",
+        unit="kelvin",
+        minimum=0 * BSS.Units.Temperature.kelvin,
+        maximum=1000 * BSS.Units.Temperature.kelvin,
+        default=0 * BSS.Units.Temperature.kelvin,
+    ),
 )
 
-node.addInput("temperature_start", BSS.Gateway.Temperature
-(
-    help="The initial temperature.",
-    unit="kelvin",
-    minimum=0*BSS.Units.Temperature.kelvin,
-    maximum=1000*BSS.Units.Temperature.kelvin,
-    default=0*BSS.Units.Temperature.kelvin)
+node.addInput(
+    "temperature_end",
+    BSS.Gateway.Temperature(
+        help="The final temperature.",
+        unit="kelvin",
+        minimum=0 * BSS.Units.Temperature.kelvin,
+        maximum=1000 * BSS.Units.Temperature.kelvin,
+        default=300 * BSS.Units.Temperature.kelvin,
+    ),
 )
 
-node.addInput("temperature_end", BSS.Gateway.Temperature
-(
-    help="The final temperature.",
-    unit="kelvin",
-    minimum=0*BSS.Units.Temperature.kelvin,
-    maximum=1000*BSS.Units.Temperature.kelvin,
-    default=300*BSS.Units.Temperature.kelvin)
-)
-
-node.addInput("restraint", BSS.Gateway.String
-(
-    help="The type of restraint.",
-    allowed=BSS.Protocol.Equilibration.restraints(),
-    default="none")
+node.addInput(
+    "restraint",
+    BSS.Gateway.String(
+        help="The type of restraint.",
+        allowed=BSS.Protocol.Equilibration.restraints(),
+        default="none",
+    ),
 )
 
 # We now need to define the output of the node. In this case we will return a set of files representing the equilibrated molecular system in AMBER format and a single file containing the trajectory frames.
@@ -83,7 +94,9 @@ node.addInput("restraint", BSS.Gateway.String
 # In[ ]:
 
 
-node.addOutput("equilibrated", BSS.Gateway.FileSet(help="The equilibrated molecular system."))
+node.addOutput(
+    "equilibrated", BSS.Gateway.FileSet(help="The equilibrated molecular system.")
+)
 
 
 # In[ ]:
@@ -101,7 +114,7 @@ system = BSS.IO.readMolecules(node.getInput("files"))
 
 
 # Set up the equilibration protocol.
-# 
+#
 # (Note that the keyword arguments happen to have the same name as the input requirements. This need not be the case.)
 
 # In[ ]:
@@ -111,7 +124,7 @@ protocol = BSS.Protocol.Equilibration(
     runtime=node.getInput("runtime"),
     temperature_start=node.getInput("temperature_start"),
     temperature_end=node.getInput("temperature_end"),
-    restraint=node.getInput("restraint")
+    restraint=node.getInput("restraint"),
 )
 
 
@@ -121,11 +134,13 @@ protocol = BSS.Protocol.Equilibration(
 
 engine = node.getInput("engine")
 
-if engine == 'OpenMM':
-    process = BSS.Process.OpenMM(system, protocol, platform='CUDA')
-elif engine == 'Amber':
-    process = BSS.Process.Amber(system, protocol, exe='/home/model/MD-SOFTWARE/amber18-gnu-cu10/bin/pmemd.cuda')
-elif engine == 'Gromacs':
+if engine == "OpenMM":
+    process = BSS.Process.OpenMM(system, protocol, platform="CUDA")
+elif engine == "Amber":
+    process = BSS.Process.Amber(
+        system, protocol, exe="/home/model/MD-SOFTWARE/amber18-gnu-cu10/bin/pmemd.cuda"
+    )
+elif engine == "Gromacs":
     process = BSS.Process.Gromacs(system, protocol)
 
 process.start()
@@ -158,8 +173,7 @@ formats += ",pdb"
 
 # Write to file and bind to the output.
 node.setOutput(
-    "equilibrated",
-    BSS.IO.saveMolecules("equilibrated", process.getSystem(), formats)
+    "equilibrated", BSS.IO.saveMolecules("equilibrated", process.getSystem(), formats)
 )
 
 
@@ -169,5 +183,3 @@ node.setOutput(
 
 
 node.validate()
-
-

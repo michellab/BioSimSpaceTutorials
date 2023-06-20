@@ -2,7 +2,7 @@
 # coding: utf-8
 
 # # Funnel metadynamics
-# 
+#
 # This is a node to perform a funnel metadynamics simulation on a solvated protein-ligand complex.
 
 # In[ ]:
@@ -16,9 +16,10 @@ import BioSimSpace as BSS
 # In[ ]:
 
 
-node = BSS.Gateway.Node("Perform funnel metadynamics on a solvated protein-ligand complex.")
-node.addAuthor(name="Dominykas Lukauskis",
-               email="dominykas.lukauskis.19@ucl.ac.uk")
+node = BSS.Gateway.Node(
+    "Perform funnel metadynamics on a solvated protein-ligand complex."
+)
+node.addAuthor(name="Dominykas Lukauskis", email="dominykas.lukauskis.19@ucl.ac.uk")
 
 
 # Add the inputs to the node.
@@ -26,48 +27,54 @@ node.addAuthor(name="Dominykas Lukauskis",
 # In[ ]:
 
 
-node.addInput("files", BSS.Gateway.FileSet
-(
-    help="A set of molecular input files.")
+node.addInput("files", BSS.Gateway.FileSet(help="A set of molecular input files."))
+
+node.addInput(
+    "runtime",
+    BSS.Gateway.Time(
+        help="The run time.",
+        unit="nanoseconds",
+        minimum=5 * BSS.Units.Time.nanosecond,
+        maximum=2000 * BSS.Units.Time.nanosecond,
+        default=1000 * BSS.Units.Time.nanosecond,
+    ),
 )
 
-node.addInput("runtime", BSS.Gateway.Time
-(
-    help="The run time.",
-    unit="nanoseconds",
-    minimum=5*BSS.Units.Time.nanosecond,
-    maximum=2000*BSS.Units.Time.nanosecond,
-    default=1000*BSS.Units.Time.nanosecond)
+node.addInput(
+    "hill_height",
+    BSS.Gateway.Energy(
+        help="The hill height.",
+        unit="kj per mol",
+        minimum=1 * BSS.Units.Energy.kj_per_mol,
+        maximum=10 * BSS.Units.Energy.kj_per_mol,
+        default=1.5 * BSS.Units.Energy.kj_per_mol,
+    ),
 )
 
-node.addInput("hill_height", BSS.Gateway.Energy
-(
-    help="The hill height.",
-    unit="kj per mol",
-    minimum=1*BSS.Units.Energy.kj_per_mol,
-    maximum=10*BSS.Units.Energy.kj_per_mol,
-    default=1.5*BSS.Units.Energy.kj_per_mol)
+node.addInput(
+    "bias_factor",
+    BSS.Gateway.Float(
+        help="The bias factor for well-tempered metadynamics.",
+        minimum=1.0,
+        maximum=100.0,
+        default=10.0,
+    ),
 )
 
-node.addInput("bias_factor", BSS.Gateway.Float
-(
-    help="The bias factor for well-tempered metadynamics.",
-    minimum=1.0,
-    maximum=100.0,
-    default=10.0)
+node.addInput(
+    "engine",
+    BSS.Gateway.String(
+        help="The molecular dynamics engine.",
+        allowed=BSS.Metadynamics.engines(),
+        default="OpenMM",
+    ),
 )
 
-node.addInput("engine", BSS.Gateway.String
-(
-    help="The molecular dynamics engine.",
-    allowed=BSS.Metadynamics.engines(),
-    default="OpenMM")
-)
-
-node.addInput("work_dir", BSS.Gateway.String
-(
-    help="The working directory for the simulation.",
-    default="fun_metad")
+node.addInput(
+    "work_dir",
+    BSS.Gateway.String(
+        help="The working directory for the simulation.", default="fun_metad"
+    ),
 )
 
 
@@ -78,7 +85,9 @@ node.addInput("work_dir", BSS.Gateway.String
 
 node.addOutput(
     "final",
-    BSS.Gateway.FileSet(help="The final system, in the original format plus a PDB file.")
+    BSS.Gateway.FileSet(
+        help="The final system, in the original format plus a PDB file."
+    ),
 )
 
 
@@ -112,7 +121,8 @@ p0, p1 = BSS.Metadynamics.CollectiveVariable.makeFunnel(system)
 
 
 cv = BSS.Metadynamics.CollectiveVariable.Funnel(
-    p0, p1, upper_bound=BSS.Metadynamics.Bound(value=3.5*BSS.Units.Length.nanometer))
+    p0, p1, upper_bound=BSS.Metadynamics.Bound(value=3.5 * BSS.Units.Length.nanometer)
+)
 
 
 # Create the metadynamics protocol, passing the collective variable and user-defined configuration parameters.
@@ -125,7 +135,7 @@ protocol = BSS.Protocol.Metadynamics(
     runtime=node.getInput("runtime"),
     hill_height=node.getInput("hill_height"),
     bias_factor=node.getInput("bias_factor"),
-    restart_interval=500000
+    restart_interval=500000,
 )
 
 
@@ -134,16 +144,19 @@ protocol = BSS.Protocol.Metadynamics(
 # In[ ]:
 
 
-engine=node.getInput("engine")
-work_dir=node.getInput("work_dir")
+engine = node.getInput("engine")
+work_dir = node.getInput("work_dir")
 
-if engine == 'OpenMM':
-    process = BSS.Process.OpenMM(system, protocol, platform='CUDA',work_dir=work_dir)
-elif engine == 'Amber':
-    process = BSS.Process.Amber(system, protocol, 
-                                exe='/home/model/MD-SOFTWARE/amber18-gnu-cu10/bin/pmemd.cuda', 
-                                work_dir=work_dir)
-elif engine == 'Gromacs':
+if engine == "OpenMM":
+    process = BSS.Process.OpenMM(system, protocol, platform="CUDA", work_dir=work_dir)
+elif engine == "Amber":
+    process = BSS.Process.Amber(
+        system,
+        protocol,
+        exe="/home/model/MD-SOFTWARE/amber18-gnu-cu10/bin/pmemd.cuda",
+        work_dir=work_dir,
+    )
+elif engine == "Gromacs":
     process = BSS.Process.Gromacs(system, protocol, work_dir=work_dir)
 
 process.start()
@@ -170,10 +183,7 @@ if process.isError():
 
 final_system = process.getSystem()
 formats = system.fileFormat() + ",pdb"
-node.setOutput(
-    "final",
-    BSS.IO.saveMolecules("final", final_system, formats)
-)
+node.setOutput("final", BSS.IO.saveMolecules("final", final_system, formats))
 
 
 # Validate the node.
@@ -182,4 +192,3 @@ node.setOutput(
 
 
 node.validate()
-
